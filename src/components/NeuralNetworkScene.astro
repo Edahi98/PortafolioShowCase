@@ -1,0 +1,175 @@
+<canvas
+	id="neural-scene"
+	class="h-[280px] w-full sm:h-[380px] lg:h-[440px]"
+	aria-hidden="true"
+></canvas>
+
+<script>
+	import * as THREE from 'three';
+	import { animate } from 'animejs';
+
+	const canvas = document.getElementById('neural-scene') as HTMLCanvasElement | null;
+	if (canvas) {
+		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		const scene = new THREE.Scene();
+
+		const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+		camera.position.set(0, 0.6, 7.5);
+		camera.lookAt(0, 0, 0);
+
+		const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+		scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+
+		const keyLight = new THREE.DirectionalLight(0x22d3ee, 1);
+		keyLight.position.set(4, 5, 4);
+		scene.add(keyLight);
+
+		const rimLight = new THREE.DirectionalLight(0xa855f7, 0.8);
+		rimLight.position.set(-4, -3, -3);
+		scene.add(rimLight);
+
+		const palette = [0x22d3ee, 0x6366f1, 0xa855f7];
+		const network = new THREE.Group();
+
+		// Layered neural network: input, two hidden layers, output.
+		const layerSizes = [4, 6, 6, 3];
+		const layerSpacingX = 6 / (layerSizes.length - 1);
+		const nodeSpacingY = 0.75;
+
+		type Node = { mesh: THREE.Mesh; layer: number; x: number; y: number; z: number };
+		const nodes: Node[] = [];
+
+		let globalIndex = 0;
+		layerSizes.forEach((count, layer) => {
+			const x = -3 + layer * layerSpacingX;
+			const color = palette[layer % palette.length];
+
+			for (let i = 0; i < count; i += 1) {
+				const y = (i - (count - 1) / 2) * nodeSpacingY;
+				const z = Math.sin(globalIndex * 12.9898) * 0.35;
+
+				const geometry = new THREE.SphereGeometry(0.12, 16, 16);
+				const material = new THREE.MeshStandardMaterial({
+					color,
+					emissive: color,
+					emissiveIntensity: 0.6,
+					roughness: 0.4,
+					metalness: 0.2,
+				});
+				const mesh = new THREE.Mesh(geometry, material);
+				mesh.position.set(x, y, z);
+				network.add(mesh);
+				nodes.push({ mesh, layer, x, y, z });
+
+				globalIndex += 1;
+			}
+		});
+
+		// Dense connections between adjacent layers, drawn as a single line batch.
+		const linePositions: number[] = [];
+		const edges: { from: Node; to: Node }[] = [];
+		for (let layer = 0; layer < layerSizes.length - 1; layer += 1) {
+			const currentLayerNodes = nodes.filter((n) => n.layer === layer);
+			const nextLayerNodes = nodes.filter((n) => n.layer === layer + 1);
+			currentLayerNodes.forEach((from) => {
+				nextLayerNodes.forEach((to) => {
+					linePositions.push(from.x, from.y, from.z, to.x, to.y, to.z);
+					edges.push({ from, to });
+				});
+			});
+		}
+
+		const lineGeometry = new THREE.BufferGeometry();
+		lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+		const lineMaterial = new THREE.LineBasicMaterial({
+			color: 0x6366f1,
+			transparent: true,
+			opacity: 0.18,
+		});
+		network.add(new THREE.LineSegments(lineGeometry, lineMaterial));
+
+		network.scale.setScalar(0.85);
+		scene.add(network);
+
+		function resize() {
+			if (!canvas) return;
+			const width = canvas.clientWidth;
+			const height = canvas.clientHeight;
+			renderer.setSize(width, height, false);
+			camera.aspect = width / height || 1;
+			camera.updateProjectionMatrix();
+		}
+
+		window.addEventListener('resize', resize);
+		resize();
+
+		if (!prefersReducedMotion) {
+			// Pulses of light travelling along random synapses, animated with anime.js.
+			const pulseCount = 16;
+			for (let i = 0; i < pulseCount; i += 1) {
+				const edge = edges[Math.floor(Math.random() * edges.length)];
+				const color = palette[edge.from.layer % palette.length];
+
+				const pulseGeometry = new THREE.SphereGeometry(0.06, 8, 8);
+				const pulseMaterial = new THREE.MeshBasicMaterial({
+					color,
+					transparent: true,
+					opacity: 0,
+					blending: THREE.AdditiveBlending,
+				});
+				const pulse = new THREE.Mesh(pulseGeometry, pulseMaterial);
+				pulse.position.set(edge.from.x, edge.from.y, edge.from.z);
+				network.add(pulse);
+
+				const duration = 1400 + Math.random() * 1400;
+				const delay = Math.random() * 1200;
+
+				animate(pulse.position, {
+					x: [edge.from.x, edge.to.x],
+					y: [edge.from.y, edge.to.y],
+					z: [edge.from.z, edge.to.z],
+					duration,
+					delay,
+					loop: true,
+					direction: 'alternate',
+					ease: 'inOutSine',
+				});
+
+				animate(pulseMaterial, {
+					opacity: [0, 1, 1, 0],
+					duration,
+					delay,
+					loop: true,
+					direction: 'alternate',
+					ease: 'inOutSine',
+				});
+			}
+
+			// Activation wave rippling left to right across the layers.
+			nodes.forEach((node) => {
+				animate(node.mesh.material, {
+					emissiveIntensity: [0.6, 1.6, 0.6],
+					duration: 2200,
+					delay: node.layer * 260 + Math.random() * 200,
+					loop: true,
+					ease: 'inOutSine',
+				});
+			});
+		}
+
+		const clock = new THREE.Clock();
+
+		function animateFrame() {
+			requestAnimationFrame(animateFrame);
+			if (!prefersReducedMotion) {
+				network.rotation.y = Math.sin(clock.getElapsedTime() * 0.15) * 0.35;
+			}
+			renderer.render(scene, camera);
+		}
+
+		animateFrame();
+	}
+</script>
