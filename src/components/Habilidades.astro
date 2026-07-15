@@ -1,12 +1,6 @@
 ---
-const lenguajes = [
-	{ nombre: 'C#', icono: 'cs' },
-	{ nombre: 'TypeScript', icono: 'ts' },
-	{ nombre: 'JavaScript', icono: 'js' },
-	{ nombre: 'Python', icono: 'py' },
-	{ nombre: 'Rust', icono: 'rust' },
-	{ nombre: 'Java', icono: 'java' },
-];
+import LanguageGrid from './atoms/LanguageGrid.astro';
+
 const herramientas = ['Docker', 'Deno', 'N8N', 'Node.js', 'Ollama', 'Git / GitHub'];
 const habilidadesBlandas = [
 	'Adaptabilidad',
@@ -20,23 +14,7 @@ const habilidadesBlandas = [
 <section id="habilidades" class="grid scroll-mt-24 gap-12 sm:grid-cols-3">
 	<div class="flex flex-col gap-4">
 		<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Lenguajes</h2>
-		<div class="grid grid-cols-3 gap-3">
-			{
-				lenguajes.map((lang) => (
-					<div class="glass-card flex flex-col items-center gap-2 rounded-2xl p-4 transition hover:border-primary/60">
-						<img
-							src={`https://skillicons.dev/icons?i=${lang.icono}`}
-							alt={lang.nombre}
-							width="40"
-							height="40"
-							loading="lazy"
-							class="h-10 w-10"
-						/>
-						<span class="font-mono text-xs text-slate-300">{lang.nombre}</span>
-					</div>
-				))
-			}
-		</div>
+		<LanguageGrid />
 	</div>
 	<div class="flex flex-col gap-4">
 		<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Herramientas</h2>
