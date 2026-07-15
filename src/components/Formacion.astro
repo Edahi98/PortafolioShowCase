@@ -12,6 +12,7 @@ const certificaciones = [
 		titulo: 'Bootcamp Solana Blockchain (WEB3)',
 		institucion: 'WayLearn Latinoamérica',
 		periodo: 'Febrero 2026 - Marzo 2026',
+		href: '/certificado-solana',
 	},
 ];
 ---
@@ -34,13 +35,25 @@ const certificaciones = [
 		<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Certificación</h2>
 		<div class="flex flex-col gap-4">
 			{
-				certificaciones.map((item) => (
-					<div class="glass-card rounded-2xl p-6">
-						<h3 class="font-semibold text-slate-100">{item.titulo}</h3>
-						<p class="text-sm text-slate-400">{item.institucion}</p>
-						<p class="font-mono text-xs text-primary">{item.periodo}</p>
-					</div>
-				))
+				certificaciones.map((item) =>
+					item.href ? (
+						<a
+							href={item.href}
+							class="glass-card rounded-2xl p-6 transition hover:border-primary/60"
+						>
+							<h3 class="font-semibold text-slate-100">{item.titulo}</h3>
+							<p class="text-sm text-slate-400">{item.institucion}</p>
+							<p class="font-mono text-xs text-primary">{item.periodo}</p>
+							<p class="mt-2 font-mono text-xs text-secondary">Ver certificado &rarr;</p>
+						</a>
+					) : (
+						<div class="glass-card rounded-2xl p-6">
+							<h3 class="font-semibold text-slate-100">{item.titulo}</h3>
+							<p class="text-sm text-slate-400">{item.institucion}</p>
+							<p class="font-mono text-xs text-primary">{item.periodo}</p>
+						</div>
+					)
+				)
 			}
 		</div>
 	</div>

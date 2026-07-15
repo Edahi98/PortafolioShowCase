@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+---
+<html lang="es" class="scroll-smooth">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Certificado Solana Bootcamp · Edahi Yaxquin Avila Garcia</title>
+		<meta
+			name="description"
+			content="Certificado del Bootcamp Solana Blockchain (WEB3) de WayLearn Latinoamérica."
+		/>
+	</head>
+	<body class="min-h-screen text-slate-200 antialiased">
+		<Navbar />
+		<main class="mx-auto flex max-w-5xl flex-col gap-8 px-6 py-16 sm:px-8">
+			<div class="flex flex-col gap-3">
+				<a
+					href="/#formacion"
+					class="w-fit font-mono text-xs tracking-widest text-primary uppercase transition hover:text-secondary"
+				>
+					&larr; Volver a Formación
+				</a>
+				<h1 class="text-2xl font-bold sm:text-4xl">
+					<span class="text-gradient">Bootcamp Solana Blockchain (WEB3)</span>
+				</h1>
+				<p class="text-sm text-slate-400">
+					WayLearn Latinoamérica &middot; Febrero 2026 - Marzo 2026
+				</p>
+			</div>
+
+			<div class="glass-card overflow-hidden rounded-2xl">
+				<iframe
+					src="/certificados/solana-waylearn.pdf"
+					title="Certificado Bootcamp Solana WayLearn"
+					class="h-[80vh] w-full"
+				></iframe>
+			</div>
+
+			<a
+				href="/certificados/solana-waylearn.pdf"
+				target="_blank"
+				rel="noreferrer"
+				class="w-fit rounded-full border border-border px-5 py-2 text-sm font-semibold text-slate-200 transition hover:border-primary hover:text-primary"
+			>
+				Abrir PDF en una pestaña nueva
+			</a>
+		</main>
+	</body>
+</html>
