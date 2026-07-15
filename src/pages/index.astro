@@ -1,13 +1,234 @@
 ---
 import '../styles/global.css';
+
+const proyectos = [
+	{
+		nombre: 'Sistema de Gestión de Inventario de Casa',
+		descripcion:
+			'Aplicación web con Node.js y automatización de gestión desde un chatbot de Telegram con agente de IA local, creado con Langchain y Langgraph.',
+		stack: ['Node.js', 'Telegram Bot', 'Langchain', 'Langgraph', 'IA Local'],
+	},
+	{
+		nombre: 'Sistema de Gestión Escolar',
+		descripcion:
+			'Descarga masiva de expedientes de estudiantes para la Universidad Tecnológica de Tecámac, con pruebas de estrés.',
+		stack: ['C#', '.NET', 'Pruebas de estrés'],
+	},
+	{
+		nombre: 'Sistema POS - Paletería',
+		descripcion:
+			'Aplicación web con algoritmos de Machine Learning, desarrollada con metodología DevOps.',
+		stack: ['Laravel', 'Machine Learning', 'DevOps'],
+	},
+	{
+		nombre: 'Sistema de Gestión de Inventario - Taller Mecánico',
+		descripcion: 'Aplicación web para clientes y ventas, desplegada con Docker y Nginx.',
+		stack: ['Laravel', 'Docker', 'Nginx'],
+	},
+	{
+		nombre: 'Sistema de Gestión de Control de Cambios',
+		descripcion:
+			'Manejo de versiones de documentos para Gestión de Calidad, con extracción de metadatos asistida por IA local, Machine Learning y heurística para equipos de bajos recursos.',
+		stack: ['IA Local', 'Machine Learning', 'Heurística'],
+	},
+];
+
+const formacion = [
+	{
+		titulo: 'Ingeniería en Desarrollo y Gestión de Software',
+		institucion: 'Universidad Tecnológica de Tecámac',
+		periodo: '2025 - 2026',
+	},
+];
+
+const certificaciones = [
+	{
+		titulo: 'Bootcamp Solana Blockchain (WEB3)',
+		institucion: 'WayLearn Latinoamérica',
+		periodo: 'Febrero 2026 - Marzo 2026',
+	},
+];
+
+const lenguajes = ['C#', 'TypeScript / JavaScript', 'Python', 'Rust', 'Java'];
+const herramientas = ['Docker', 'Deno', 'N8N', 'Node.js', 'Ollama', 'Git / GitHub'];
+const habilidadesBlandas = [
+	'Adaptabilidad',
+	'Creatividad e innovación',
+	'Cumplimiento de metas',
+	'Trabajo en equipo',
+	'Proactividad',
+	'Iniciativa',
+];
 ---
 <html lang="es">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Portafolio</title>
+		<title>Edahi Yaxquin Avila Garcia · Portafolio</title>
+		<meta
+			name="description"
+			content="Portafolio de Edahi Yaxquin Avila Garcia, desarrollador de software."
+		/>
 	</head>
-	<body>
-		<h1 class="text-3xl font-bold">Bienvenido a mi portafolio</h1>
+	<body class="min-h-screen text-slate-200 antialiased">
+		<main class="mx-auto flex max-w-5xl flex-col gap-24 px-6 py-20 sm:px-8">
+			<!-- Hero -->
+			<section class="flex flex-col gap-6">
+				<p class="font-mono text-sm tracking-widest text-primary uppercase">Portafolio</p>
+				<h1 class="text-4xl font-bold sm:text-6xl">
+					<span class="text-gradient">Edahi Yaxquin Avila Garcia</span>
+				</h1>
+				<p class="max-w-2xl text-lg text-slate-400">
+					Me apasiona enfrentar desafíos que parecen imposibles y convertirlos en soluciones
+					reales. Soy un profesional autodidacta por convicción, con experiencia desarrollando
+					aplicaciones móviles y proyectos de desarrollo web.
+				</p>
+				<div class="flex flex-wrap gap-4 pt-2">
+					<a
+						href="mailto:garciaedahi3822@gmail.com"
+						class="rounded-full bg-gradient-to-r from-primary to-secondary px-5 py-2 text-sm font-semibold text-slate-950 transition hover:opacity-90"
+					>
+						Contactar
+					</a>
+					<a
+						href="https://github.com/Edahi98"
+						target="_blank"
+						rel="noreferrer"
+						class="rounded-full border border-border px-5 py-2 text-sm font-semibold text-slate-200 transition hover:border-primary hover:text-primary"
+					>
+						github.com/Edahi98
+					</a>
+				</div>
+			</section>
+
+			<!-- Sobre mí -->
+			<section class="flex flex-col gap-6">
+				<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Sobre mí</h2>
+				<div class="glass-card rounded-2xl p-8">
+					<p class="text-slate-300">
+						Autodidacta enfocado en resolver problemas reales con automatización, inteligencia
+						artificial local y buenas prácticas de ingeniería de software.
+					</p>
+				</div>
+			</section>
+
+			<!-- Proyectos -->
+			<section class="flex flex-col gap-6">
+				<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Proyectos</h2>
+				<div class="grid gap-6 sm:grid-cols-2">
+					{
+						proyectos.map((proyecto) => (
+							<article class="glass-card flex flex-col gap-3 rounded-2xl p-6 transition hover:border-primary/60">
+								<h3 class="text-lg font-semibold text-slate-100">{proyecto.nombre}</h3>
+								<p class="text-sm text-slate-400">{proyecto.descripcion}</p>
+								<div class="mt-auto flex flex-wrap gap-2 pt-2">
+									{proyecto.stack.map((tech) => (
+										<span class="rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-primary">
+											{tech}
+										</span>
+									))}
+								</div>
+							</article>
+						))
+					}
+				</div>
+			</section>
+
+			<!-- Formación y Certificación -->
+			<section class="grid gap-12 sm:grid-cols-2">
+				<div class="flex flex-col gap-6">
+					<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Formación</h2>
+					<div class="flex flex-col gap-4">
+						{
+							formacion.map((item) => (
+								<div class="glass-card rounded-2xl p-6">
+									<h3 class="font-semibold text-slate-100">{item.titulo}</h3>
+									<p class="text-sm text-slate-400">{item.institucion}</p>
+									<p class="font-mono text-xs text-primary">{item.periodo}</p>
+								</div>
+							))
+						}
+					</div>
+				</div>
+				<div class="flex flex-col gap-6">
+					<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">
+						Certificación
+					</h2>
+					<div class="flex flex-col gap-4">
+						{
+							certificaciones.map((item) => (
+								<div class="glass-card rounded-2xl p-6">
+									<h3 class="font-semibold text-slate-100">{item.titulo}</h3>
+									<p class="text-sm text-slate-400">{item.institucion}</p>
+									<p class="font-mono text-xs text-primary">{item.periodo}</p>
+								</div>
+							))
+						}
+					</div>
+				</div>
+			</section>
+
+			<!-- Habilidades -->
+			<section class="grid gap-12 sm:grid-cols-3">
+				<div class="flex flex-col gap-4">
+					<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Lenguajes</h2>
+					<div class="flex flex-wrap gap-2">
+						{
+							lenguajes.map((lang) => (
+								<span class="rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-slate-200">
+									{lang}
+								</span>
+							))
+						}
+					</div>
+				</div>
+				<div class="flex flex-col gap-4">
+					<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Herramientas</h2>
+					<div class="flex flex-wrap gap-2">
+						{
+							herramientas.map((tool) => (
+								<span class="rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-slate-200">
+									{tool}
+								</span>
+							))
+						}
+					</div>
+				</div>
+				<div class="flex flex-col gap-4">
+					<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">
+						Habilidades blandas
+					</h2>
+					<div class="flex flex-wrap gap-2">
+						{
+							habilidadesBlandas.map((skill) => (
+								<span class="rounded-full border border-border bg-surface-2 px-3 py-1 text-xs text-slate-200">
+									{skill}
+								</span>
+							))
+						}
+					</div>
+				</div>
+			</section>
+
+			<!-- Contacto -->
+			<footer class="flex flex-col gap-3 border-t border-border pt-10 text-sm text-slate-400">
+				<p class="font-mono text-xs tracking-widest text-secondary uppercase">Contacto</p>
+				<div class="flex flex-wrap gap-x-6 gap-y-2">
+					<a href="mailto:garciaedahi3822@gmail.com" class="transition hover:text-primary">
+						garciaedahi3822@gmail.com
+					</a>
+					<a href="tel:+5637137597" class="transition hover:text-primary">+52 56 3713 7597</a>
+					<span>Ecatepec, Estado de México</span>
+					<a
+						href="https://github.com/Edahi98"
+						target="_blank"
+						rel="noreferrer"
+						class="transition hover:text-primary"
+					>
+						github.com/Edahi98
+					</a>
+				</div>
+			</footer>
+		</main>
 	</body>
 </html>
