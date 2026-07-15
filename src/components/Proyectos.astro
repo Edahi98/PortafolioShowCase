@@ -1,0 +1,53 @@
+---
+const proyectos = [
+	{
+		nombre: 'Sistema de Gestión de Inventario de Casa',
+		descripcion:
+			'Aplicación web con Node.js y automatización de gestión desde un chatbot de Telegram con agente de IA local, creado con Langchain y Langgraph.',
+		stack: ['Node.js', 'Telegram Bot', 'Langchain', 'Langgraph', 'IA Local'],
+	},
+	{
+		nombre: 'Sistema de Gestión Escolar',
+		descripcion:
+			'Descarga masiva de expedientes de estudiantes para la Universidad Tecnológica de Tecámac, con pruebas de estrés.',
+		stack: ['C#', '.NET', 'Pruebas de estrés'],
+	},
+	{
+		nombre: 'Sistema POS - Paletería',
+		descripcion:
+			'Aplicación web con algoritmos de Machine Learning, desarrollada con metodología DevOps.',
+		stack: ['Laravel', 'Machine Learning', 'DevOps'],
+	},
+	{
+		nombre: 'Sistema de Gestión de Inventario - Taller Mecánico',
+		descripcion: 'Aplicación web para clientes y ventas, desplegada con Docker y Nginx.',
+		stack: ['Laravel', 'Docker', 'Nginx'],
+	},
+	{
+		nombre: 'Sistema de Gestión de Control de Cambios',
+		descripcion:
+			'Manejo de versiones de documentos para Gestión de Calidad, con extracción de metadatos asistida por IA local, Machine Learning y heurística para equipos de bajos recursos.',
+		stack: ['IA Local', 'Machine Learning', 'Heurística'],
+	},
+];
+---
+<section id="proyectos" class="flex scroll-mt-24 flex-col gap-6">
+	<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Proyectos</h2>
+	<div class="grid gap-6 sm:grid-cols-2">
+		{
+			proyectos.map((proyecto) => (
+				<article class="glass-card flex flex-col gap-3 rounded-2xl p-6 transition hover:border-primary/60">
+					<h3 class="text-lg font-semibold text-slate-100">{proyecto.nombre}</h3>
+					<p class="text-sm text-slate-400">{proyecto.descripcion}</p>
+					<div class="mt-auto flex flex-wrap gap-2 pt-2">
+						{proyecto.stack.map((tech) => (
+							<span class="rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-primary">
+								{tech}
+							</span>
+						))}
+					</div>
+				</article>
+			))
+		}
+	</div>
+</section>
