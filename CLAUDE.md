@@ -4,7 +4,7 @@ Portafolio personal de Edahi Yaxquin Avila Garcia, construido con Astro + Tailwi
 
 ## Stack
 
-- Astro 5 (TypeScript strict), sin framework de UI adicional.
+- Astro 5 (TypeScript strict). React (`@astrojs/react`) solo para islas puntuales que necesitan interactividad con estado (p. ej. `FlipCard`); el resto del sitio es Astro sin framework de UI.
 - Tailwind CSS v4 vía `@tailwindcss/vite` (sin `tailwind.config`; el theme se define con `@theme` en `src/styles/global.css`).
 - Three.js para gráficos 3D (`src/components/DockerScene.astro`, `src/components/NeuralNetworkScene.astro`), cargado con `<script>` client-side dentro del componente Astro (sin framework de reactividad).
 - anime.js v4 (`animate` de `'animejs'`) para animar propiedades de objetos Three.js (posición de partículas, `emissiveIntensity`) en `NeuralNetworkScene.astro`.
@@ -27,7 +27,7 @@ Al agregar nuevas secciones o páginas, reutilizar estas clases/variables en lug
 
 ## Contenido
 
-`src/pages/index.astro` solo compone las secciones del Home; cada sección vive como componente en `src/components/`: `Hero`, `SobreMi`, `Proyectos`, `Formacion`, `Habilidades`, `Contacto` (más `Navbar`, `DockerScene` y `NeuralNetworkScene`). Las piezas pequeñas y reutilizables dentro de una sección van en `src/components/atoms/` (p. ej. `LanguageGrid` y `ToolGrid`, los grids de lenguajes/herramientas con íconos de [skillicons.dev](https://skillicons.dev); `SoftSkillList`, la lista de habilidades blandas). El contenido proviene del CV de Canva "Edahi CV". Si el CV se actualiza, reflejar los cambios en el componente correspondiente.
+`src/pages/index.astro` solo compone las secciones del Home; cada sección vive como componente en `src/components/`: `Hero`, `SobreMi`, `Proyectos`, `Formacion`, `Habilidades`, `Contacto` (más `Navbar`, `DockerScene` y `NeuralNetworkScene`). Las piezas pequeñas y reutilizables dentro de una sección van en `src/components/atoms/` (p. ej. `LanguageGrid` y `ToolGrid`, los grids de lenguajes/herramientas con íconos de [skillicons.dev](https://skillicons.dev); `SoftSkillList`, la lista de habilidades blandas). Los componentes React (islas) viven en `src/components/react/`; por ejemplo `FlipCard`, una tarjeta tipo memorama (ícono al frente, nombre al voltear con click) reutilizada por `LanguageGrid` y `ToolGrid` con `client:visible`. El contenido proviene del CV de Canva "Edahi CV". Si el CV se actualiza, reflejar los cambios en el componente correspondiente.
 
 ## Certificados
 

@@ -1,4 +1,6 @@
 ---
+import FlipCard from '../react/FlipCard.tsx';
+
 // skillicons.dev no incluye n8n ni ollama; para esos dos se usa simpleicons.org (en blanco).
 const herramientas = [
 	{ nombre: 'Docker', icono: 'docker', fuente: 'skillicons' },
@@ -19,17 +21,7 @@ function iconoUrl(tool: (typeof herramientas)[number]) {
 <div class="grid grid-cols-3 gap-3">
 	{
 		herramientas.map((tool) => (
-			<div class="glass-card flex flex-col items-center gap-2 rounded-2xl p-4 transition hover:border-primary/60">
-				<img
-					src={iconoUrl(tool)}
-					alt={tool.nombre}
-					width="40"
-					height="40"
-					loading="lazy"
-					class="h-10 w-10"
-				/>
-				<span class="font-mono text-xs text-slate-300">{tool.nombre}</span>
-			</div>
+			<FlipCard client:visible iconSrc={iconoUrl(tool)} alt={tool.nombre} label={tool.nombre} />
 		))
 	}
 </div>
