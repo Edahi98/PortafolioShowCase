@@ -2,6 +2,25 @@
 
 Portafolio personal de Edahi Yaxquin Avila Garcia, construido con [Astro](https://astro.build) y [Tailwind CSS](https://tailwindcss.com).
 
+🔗 **Demo en vivo:** [portafolioshowcase.vercel.app](https://portafolioshowcase.vercel.app)
+
+## Capturas
+
+| Hero | Móvil |
+| :--: | :--: |
+| ![Hero con escena 3D de contenedores](./docs/screenshots/hero.png) | ![Vista móvil](./docs/screenshots/mobile.png) |
+
+| Sección de Proyectos |
+| :--: |
+| ![Sección de Proyectos](./docs/screenshots/proyectos.png) |
+
+<details>
+<summary>Ver página completa</summary>
+
+![Home completo](./docs/screenshots/home-full.png)
+
+</details>
+
 ## Stack
 
 - **Astro 5** (TypeScript en modo `strict`)
