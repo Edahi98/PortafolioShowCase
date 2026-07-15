@@ -33,6 +33,11 @@ export const proyectos: Proyecto[] = [
 		slug: 'creamyx',
 		imagenes: [
 			{
+				src: '/proyectos/creamyx/sitio-publico-productos.jpg',
+				alt: 'Catálogo público de Creamyx',
+				descripcion: 'Sitio público: catálogo de productos con filtros por categoría (Todos, Aguas, Paleta).',
+			},
+			{
 				src: '/proyectos/creamyx/panel-gestion.jpg',
 				alt: 'Panel de gestión de Creamyx',
 				descripcion: 'Panel de gestión: accesos rápidos a Dashboard, POS/Ventas y Productos, con métricas del día.',
