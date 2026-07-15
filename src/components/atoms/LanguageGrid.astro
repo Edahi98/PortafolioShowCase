@@ -1,6 +1,4 @@
 ---
-import FlipCard from '../react/FlipCard.tsx';
-
 const lenguajes = [
 	{ nombre: 'C#', icono: 'cs' },
 	{ nombre: 'TypeScript', icono: 'ts' },
@@ -13,12 +11,17 @@ const lenguajes = [
 <div class="grid grid-cols-3 gap-3">
 	{
 		lenguajes.map((lang) => (
-			<FlipCard
-				client:visible
-				iconSrc={`https://skillicons.dev/icons?i=${lang.icono}`}
-				alt={lang.nombre}
-				label={lang.nombre}
-			/>
+			<div class="glass-card flex flex-col items-center gap-2 rounded-2xl p-4 transition hover:border-primary/60">
+				<img
+					src={`https://skillicons.dev/icons?i=${lang.icono}`}
+					alt={lang.nombre}
+					width="40"
+					height="40"
+					loading="lazy"
+					class="h-10 w-10"
+				/>
+				<span class="font-mono text-xs text-slate-300">{lang.nombre}</span>
+			</div>
 		))
 	}
 </div>
