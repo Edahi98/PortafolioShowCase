@@ -4,15 +4,27 @@ type FlipCardProps = {
 	label: string;
 	iconSrc?: string;
 	alt?: string;
+	/** Si se define, la tarjeta queda controlada externamente (p. ej. por una búsqueda). */
+	flipped?: boolean;
+	onToggle?: () => void;
 };
 
-export default function FlipCard({ label, iconSrc, alt }: FlipCardProps) {
-	const [flipped, setFlipped] = useState(false);
+export default function FlipCard({ label, iconSrc, alt, flipped: flippedProp, onToggle }: FlipCardProps) {
+	const [internalFlipped, setInternalFlipped] = useState(false);
+	const flipped = flippedProp ?? internalFlipped;
+
+	function handleClick() {
+		if (onToggle) {
+			onToggle();
+		} else {
+			setInternalFlipped((prev) => !prev);
+		}
+	}
 
 	return (
 		<button
 			type="button"
-			onClick={() => setFlipped((prev) => !prev)}
+			onClick={handleClick}
 			aria-pressed={flipped}
 			aria-label={label}
 			className="h-28 w-full cursor-pointer [perspective:800px]"
