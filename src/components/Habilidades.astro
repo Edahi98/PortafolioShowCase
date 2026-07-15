@@ -1,15 +1,8 @@
 ---
 import LanguageGrid from './atoms/LanguageGrid.astro';
+import SoftSkillList from './atoms/SoftSkillList.astro';
 
 const herramientas = ['Docker', 'Deno', 'N8N', 'Node.js', 'Ollama', 'Git / GitHub'];
-const habilidadesBlandas = [
-	'Adaptabilidad',
-	'Creatividad e innovación',
-	'Cumplimiento de metas',
-	'Trabajo en equipo',
-	'Proactividad',
-	'Iniciativa',
-];
 ---
 <section id="habilidades" class="grid scroll-mt-24 gap-12 sm:grid-cols-3">
 	<div class="flex flex-col gap-4">
@@ -30,14 +23,6 @@ const habilidadesBlandas = [
 	</div>
 	<div class="flex flex-col gap-4">
 		<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Habilidades blandas</h2>
-		<div class="flex flex-wrap gap-2">
-			{
-				habilidadesBlandas.map((skill) => (
-					<span class="rounded-full border border-border bg-surface-2 px-3 py-1 text-xs text-slate-200">
-						{skill}
-					</span>
-				))
-			}
-		</div>
+		<SoftSkillList />
 	</div>
 </section>
