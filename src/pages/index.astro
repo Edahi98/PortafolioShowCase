@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
+import DockerScene from '../components/DockerScene.astro';
 
 const proyectos = [
 	{
@@ -75,32 +76,35 @@ const habilidadesBlandas = [
 		<Navbar />
 		<main class="mx-auto flex max-w-5xl flex-col gap-24 px-6 py-20 sm:px-8">
 			<!-- Hero -->
-			<section id="inicio" class="flex scroll-mt-24 flex-col gap-6">
-				<p class="font-mono text-sm tracking-widest text-primary uppercase">Portafolio</p>
-				<h1 class="text-4xl font-bold sm:text-6xl">
-					<span class="text-gradient">Edahi Yaxquin Avila Garcia</span>
-				</h1>
-				<p class="max-w-2xl text-lg text-slate-400">
-					Me apasiona enfrentar desafíos que parecen imposibles y convertirlos en soluciones
-					reales. Soy un profesional autodidacta por convicción, con experiencia desarrollando
-					aplicaciones móviles y proyectos de desarrollo web.
-				</p>
-				<div class="flex flex-wrap gap-4 pt-2">
-					<a
-						href="mailto:garciaedahi3822@gmail.com"
-						class="rounded-full bg-gradient-to-r from-primary to-secondary px-5 py-2 text-sm font-semibold text-slate-950 transition hover:opacity-90"
-					>
-						Contactar
-					</a>
-					<a
-						href="https://github.com/Edahi98"
-						target="_blank"
-						rel="noreferrer"
-						class="rounded-full border border-border px-5 py-2 text-sm font-semibold text-slate-200 transition hover:border-primary hover:text-primary"
-					>
-						github.com/Edahi98
-					</a>
+			<section id="inicio" class="grid scroll-mt-24 items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
+				<div class="flex flex-col gap-6">
+					<p class="font-mono text-sm tracking-widest text-primary uppercase">Portafolio</p>
+					<h1 class="text-4xl font-bold sm:text-6xl">
+						<span class="text-gradient">Edahi Yaxquin Avila Garcia</span>
+					</h1>
+					<p class="max-w-2xl text-lg text-slate-400">
+						Me apasiona enfrentar desafíos que parecen imposibles y convertirlos en soluciones
+						reales. Soy un profesional autodidacta por convicción, con experiencia desarrollando
+						aplicaciones móviles y proyectos de desarrollo web.
+					</p>
+					<div class="flex flex-wrap gap-4 pt-2">
+						<a
+							href="mailto:garciaedahi3822@gmail.com"
+							class="rounded-full bg-gradient-to-r from-primary to-secondary px-5 py-2 text-sm font-semibold text-slate-950 transition hover:opacity-90"
+						>
+							Contactar
+						</a>
+						<a
+							href="https://github.com/Edahi98"
+							target="_blank"
+							rel="noreferrer"
+							class="rounded-full border border-border px-5 py-2 text-sm font-semibold text-slate-200 transition hover:border-primary hover:text-primary"
+						>
+							github.com/Edahi98
+						</a>
+					</div>
 				</div>
+				<DockerScene />
 			</section>
 
 			<!-- Sobre mí -->

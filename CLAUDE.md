@@ -6,6 +6,7 @@ Portafolio personal de Edahi Yaxquin Avila Garcia, construido con Astro + Tailwi
 
 - Astro 5 (TypeScript strict), sin framework de UI adicional.
 - Tailwind CSS v4 vía `@tailwindcss/vite` (sin `tailwind.config`; el theme se define con `@theme` en `src/styles/global.css`).
+- Three.js para gráficos 3D (`src/components/DockerScene.astro`), cargado con `<script>` client-side dentro del componente Astro (sin framework de reactividad).
 
 ## Tema visual: degradado elegante, esencia tech
 
