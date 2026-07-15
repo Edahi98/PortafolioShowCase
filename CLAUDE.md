@@ -27,4 +27,4 @@ Al agregar nuevas secciones o páginas, reutilizar estas clases/variables en lug
 
 ## Contenido
 
-El contenido de la página Home (`src/pages/index.astro`) proviene del CV de Canva "Edahi CV". Si el CV se actualiza, reflejar los cambios ahí (proyectos, formación, certificaciones, habilidades, contacto).
+`src/pages/index.astro` solo compone las secciones del Home; cada sección vive como componente en `src/components/`: `Hero`, `SobreMi`, `Proyectos`, `Formacion`, `Habilidades`, `Contacto` (más `Navbar`, `DockerScene` y `NeuralNetworkScene`). El contenido proviene del CV de Canva "Edahi CV". Si el CV se actualiza, reflejar los cambios en el componente correspondiente.
