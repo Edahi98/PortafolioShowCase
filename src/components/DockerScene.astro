@@ -1,0 +1,121 @@
+<canvas
+	id="docker-scene"
+	class="h-[280px] w-full sm:h-[380px] lg:h-[440px]"
+	aria-hidden="true"
+></canvas>
+
+<script>
+	import * as THREE from 'three';
+
+	const canvas = document.getElementById('docker-scene') as HTMLCanvasElement | null;
+	if (canvas) {
+		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		const scene = new THREE.Scene();
+
+		const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+		camera.position.set(4.5, 3, 6.5);
+		camera.lookAt(0, 0, 0);
+
+		const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+		const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+		scene.add(ambientLight);
+
+		const keyLight = new THREE.DirectionalLight(0x22d3ee, 1.2);
+		keyLight.position.set(5, 6, 4);
+		scene.add(keyLight);
+
+		const rimLight = new THREE.DirectionalLight(0xa855f7, 0.9);
+		rimLight.position.set(-5, -2, -4);
+		scene.add(rimLight);
+
+		const palette = [0x22d3ee, 0xa855f7, 0x6366f1];
+
+		// Docker-style shipping containers: wide, low boxes with corrugated ridge lines.
+		function createContainer(width: number, height: number, depth: number, color: number) {
+			const group = new THREE.Group();
+
+			const geometry = new THREE.BoxGeometry(width, height, depth);
+			const material = new THREE.MeshStandardMaterial({
+				color,
+				metalness: 0.35,
+				roughness: 0.4,
+				transparent: true,
+				opacity: 0.28,
+			});
+			const box = new THREE.Mesh(geometry, material);
+			group.add(box);
+
+			const edges = new THREE.EdgesGeometry(geometry);
+			const edgeMaterial = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.9 });
+			group.add(new THREE.LineSegments(edges, edgeMaterial));
+
+			// corrugated ridge lines along the long side, like a shipping container
+			const ridgeCount = 6;
+			const ridgeMaterial = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.35 });
+			for (let i = 1; i < ridgeCount; i += 1) {
+				const x = -width / 2 + (width / ridgeCount) * i;
+				const points = [
+					new THREE.Vector3(x, -height / 2, depth / 2),
+					new THREE.Vector3(x, height / 2, depth / 2),
+				];
+				const ridgeGeometry = new THREE.BufferGeometry().setFromPoints(points);
+				group.add(new THREE.Line(ridgeGeometry, ridgeMaterial));
+			}
+
+			return group;
+		}
+
+		const containers = [
+			{ w: 2.4, h: 1, d: 1.2, x: -1.4, y: 0, z: 0, color: palette[0] },
+			{ w: 2.4, h: 1, d: 1.2, x: 1.1, y: 0, z: 0.4, color: palette[1] },
+			{ w: 2.4, h: 1, d: 1.2, x: -0.2, y: 1.15, z: -0.3, color: palette[2] },
+			{ w: 1.6, h: 1, d: 1.2, x: 1.6, y: 1.15, z: 0.6, color: palette[0] },
+		];
+
+		const containerGroup = new THREE.Group();
+		const meshes: { mesh: THREE.Group; baseY: number; speed: number; offset: number }[] = [];
+
+		containers.forEach((c, i) => {
+			const mesh = createContainer(c.w, c.h, c.d, c.color);
+			mesh.position.set(c.x, c.y, c.z);
+			containerGroup.add(mesh);
+			meshes.push({ mesh, baseY: c.y, speed: 0.6 + i * 0.15, offset: i * 1.3 });
+		});
+
+		containerGroup.position.set(0, -0.6, 0);
+		scene.add(containerGroup);
+
+		function resize() {
+			if (!canvas) return;
+			const width = canvas.clientWidth;
+			const height = canvas.clientHeight;
+			renderer.setSize(width, height, false);
+			camera.aspect = width / height || 1;
+			camera.updateProjectionMatrix();
+		}
+
+		window.addEventListener('resize', resize);
+		resize();
+
+		const clock = new THREE.Clock();
+
+		function animate() {
+			requestAnimationFrame(animate);
+			const t = clock.getElapsedTime();
+
+			if (!prefersReducedMotion) {
+				containerGroup.rotation.y = t * 0.25;
+				meshes.forEach(({ mesh, baseY, speed, offset }) => {
+					mesh.position.y = baseY + Math.sin(t * speed + offset) * 0.08;
+				});
+			}
+
+			renderer.render(scene, camera);
+		}
+
+		animate();
+	}
+</script>
