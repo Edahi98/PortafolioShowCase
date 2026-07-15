@@ -1,0 +1,65 @@
+---
+import '../../styles/global.css';
+import Navbar from '../../components/Navbar.astro';
+import { proyectos } from '../../data/proyectos';
+
+export function getStaticPaths() {
+	return proyectos
+		.filter((proyecto) => proyecto.slug)
+		.map((proyecto) => ({
+			params: { slug: proyecto.slug },
+			props: { proyecto },
+		}));
+}
+
+const { proyecto } = Astro.props;
+---
+<html lang="es" class="scroll-smooth">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{proyecto.nombre} · Edahi Yaxquin Avila Garcia</title>
+		<meta name="description" content={proyecto.descripcion} />
+	</head>
+	<body class="min-h-screen text-slate-200 antialiased">
+		<Navbar />
+		<main class="mx-auto flex max-w-5xl flex-col gap-8 px-6 py-16 sm:px-8">
+			<div class="flex flex-col gap-3">
+				<a
+					href="/#proyectos"
+					class="w-fit font-mono text-xs tracking-widest text-primary uppercase transition hover:text-secondary"
+				>
+					&larr; Volver a Proyectos
+				</a>
+				<h1 class="text-2xl font-bold sm:text-4xl">
+					<span class="text-gradient">{proyecto.nombre}</span>
+				</h1>
+				<p class="max-w-2xl text-sm text-slate-400">{proyecto.descripcion}</p>
+				<div class="flex flex-wrap gap-2 pt-2">
+					{proyecto.stack.map((tech: string) => (
+						<span class="rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-primary">
+							{tech}
+						</span>
+					))}
+				</div>
+			</div>
+
+			{
+				proyecto.imagenes && proyecto.imagenes.length > 0 ? (
+					<div class="flex flex-col gap-6">
+						{proyecto.imagenes.map((imagen: { src: string; alt: string; descripcion: string }) => (
+							<figure class="glass-card overflow-hidden rounded-2xl">
+								<img src={imagen.src} alt={imagen.alt} loading="lazy" class="w-full" />
+								<figcaption class="border-t border-border px-6 py-4 text-sm text-slate-400">
+									{imagen.descripcion}
+								</figcaption>
+							</figure>
+						))}
+					</div>
+				) : (
+					<p class="font-mono text-xs text-slate-500">Capturas próximamente.</p>
+				)
+			}
+		</main>
+	</body>
+</html>

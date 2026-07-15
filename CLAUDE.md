@@ -33,3 +33,9 @@ Al agregar nuevas secciones o páginas, reutilizar estas clases/variables en lug
 ## Certificados
 
 Los certificados (PDF) viven en `public/certificados/` y se muestran en una página dedicada (p. ej. `src/pages/certificado-solana.astro`) con el PDF embebido en un `<iframe>`, siguiendo el mismo layout con `Navbar` y las clases del tema. El punto de entrada es la tarjeta correspondiente en `Formacion.astro` (propiedad `href` en el objeto de `certificaciones`), que se renderiza como `<a>` en vez de `<div>` cuando existe.
+
+## Showcase de proyectos
+
+Los datos de `Proyectos.astro` viven en `src/data/proyectos.ts` (`Proyecto[]`, con `slug` e `imagenes` opcionales). Cuando un proyecto tiene `slug`, su tarjeta se renderiza como `<a href="/proyectos/{slug}">` con "Ver proyecto →"; sin `slug` se renderiza como `<article>` estático. La ruta dinámica `src/pages/proyectos/[slug].astro` usa `getStaticPaths()` sobre `proyectos` filtrando por `slug`, y muestra la galería de `imagenes` (o "Capturas próximamente." si el arreglo está vacío) con el mismo layout que `certificado-solana.astro`. Las capturas de cada proyecto viven en `public/proyectos/<slug>/`, recortadas para no mostrar barras de navegador/SO (barra de direcciones, marcadores, barra de tareas de Windows, barra de estado de Android, etc.) — solo el contenido de la app.
+
+Nota sobre imágenes pegadas en el chat: las imágenes que el usuario pega inline (no como adjunto vía `@ruta`) no existen como archivo accesible por las herramientas de shell/lectura en este entorno remoto; solo se reciben como contenido multimodal del mensaje. Para procesarlas (p. ej. recortarlas), hay que extraer su base64 desde el transcript de la sesión (`/root/.claude/projects/<proyecto>/<session-id>.jsonl`, bloques `content[].type == "image"` con `source.data`), decodificarlas a archivos temporales, y trabajar sobre esos archivos.
