@@ -1,6 +1,7 @@
 export type ProyectoImagen = {
 	src: string;
 	alt: string;
+	descripcion: string;
 };
 
 export type Proyecto = {
@@ -31,13 +32,41 @@ export const proyectos: Proyecto[] = [
 		stack: ['Laravel', 'Machine Learning', 'DevOps'],
 		slug: 'creamyx',
 		imagenes: [
-			{ src: '/proyectos/creamyx/panel-gestion.jpg', alt: 'Panel de gestión de Creamyx' },
-			{ src: '/proyectos/creamyx/pos.jpg', alt: 'Punto de venta (POS) de Creamyx' },
-			{ src: '/proyectos/creamyx/productos.jpg', alt: 'Catálogo de productos de Creamyx' },
-			{ src: '/proyectos/creamyx/nuevo-producto.jpg', alt: 'Formulario de nuevo producto de Creamyx' },
-			{ src: '/proyectos/creamyx/ventas.jpg', alt: 'Historial de ventas de Creamyx' },
-			{ src: '/proyectos/creamyx/dashboard.jpg', alt: 'Dashboard de Creamyx' },
-			{ src: '/proyectos/creamyx/configuracion-critica.jpg', alt: 'Configuración crítica de Creamyx' },
+			{
+				src: '/proyectos/creamyx/panel-gestion.jpg',
+				alt: 'Panel de gestión de Creamyx',
+				descripcion: 'Panel de gestión: accesos rápidos a Dashboard, POS/Ventas y Productos, con métricas del día.',
+			},
+			{
+				src: '/proyectos/creamyx/pos.jpg',
+				alt: 'Punto de venta (POS) de Creamyx',
+				descripcion: 'Punto de venta (POS): selección de productos por categoría para armar el carrito de una venta.',
+			},
+			{
+				src: '/proyectos/creamyx/productos.jpg',
+				alt: 'Catálogo de productos de Creamyx',
+				descripcion: 'Catálogo de productos: listado con precio y stock, y accesos para dar de alta uno nuevo.',
+			},
+			{
+				src: '/proyectos/creamyx/nuevo-producto.jpg',
+				alt: 'Formulario de nuevo producto de Creamyx',
+				descripcion: 'Alta de producto: formulario con nombre, categoría, tipo de venta, descripción e imagen.',
+			},
+			{
+				src: '/proyectos/creamyx/ventas.jpg',
+				alt: 'Historial de ventas de Creamyx',
+				descripcion: 'Historial de ventas: totales del día y detalle de cada transacción, con exportación a PDF.',
+			},
+			{
+				src: '/proyectos/creamyx/dashboard.jpg',
+				alt: 'Dashboard de Creamyx',
+				descripcion: 'Dashboard: resumen general con accesos directos a Productos, Ventas y Reportes.',
+			},
+			{
+				src: '/proyectos/creamyx/configuracion-critica.jpg',
+				alt: 'Configuración crítica de Creamyx',
+				descripcion: 'Configuración crítica: ajustes sensibles del sistema y estado general (usuarios, ventas, ingresos).',
+			},
 		],
 	},
 	{
