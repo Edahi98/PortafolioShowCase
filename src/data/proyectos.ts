@@ -30,7 +30,15 @@ export const proyectos: Proyecto[] = [
 			'Aplicación web con algoritmos de Machine Learning, desarrollada con metodología DevOps.',
 		stack: ['Laravel', 'Machine Learning', 'DevOps'],
 		slug: 'creamyx',
-		imagenes: [],
+		imagenes: [
+			{ src: '/proyectos/creamyx/panel-gestion.jpg', alt: 'Panel de gestión de Creamyx' },
+			{ src: '/proyectos/creamyx/pos.jpg', alt: 'Punto de venta (POS) de Creamyx' },
+			{ src: '/proyectos/creamyx/productos.jpg', alt: 'Catálogo de productos de Creamyx' },
+			{ src: '/proyectos/creamyx/nuevo-producto.jpg', alt: 'Formulario de nuevo producto de Creamyx' },
+			{ src: '/proyectos/creamyx/ventas.jpg', alt: 'Historial de ventas de Creamyx' },
+			{ src: '/proyectos/creamyx/dashboard.jpg', alt: 'Dashboard de Creamyx' },
+			{ src: '/proyectos/creamyx/configuracion-critica.jpg', alt: 'Configuración crítica de Creamyx' },
+		],
 	},
 	{
 		nombre: 'Sistema de Gestión de Inventario - Taller Mecánico',
