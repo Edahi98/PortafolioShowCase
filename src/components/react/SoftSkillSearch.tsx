@@ -6,9 +6,26 @@ type SoftSkillSearchProps = {
 	skills: string[];
 };
 
+function shouldFlipFromUrl() {
+	if (typeof window === 'undefined') return false;
+	return new URLSearchParams(window.location.search).get('flip') === 'habilidades-blandas';
+}
+
 export default function SoftSkillSearch({ skills }: SoftSkillSearchProps) {
 	const [query, setQuery] = useState('');
-	const [flipped, setFlipped] = useState<Set<number>>(new Set());
+	// Flip manual (click) o disparado por el botón del hero; la búsqueda lo sobreescribe mientras hay texto.
+	const [manualFlipped, setManualFlipped] = useState<Set<number>>(new Set());
+
+	// El estado inicial debe coincidir con el HTML renderizado en el servidor (sin voltear) para
+	// evitar un mismatch de hidratación; el flip por URL se aplica ya montado, en el cliente.
+	useEffect(() => {
+		if (!shouldFlipFromUrl()) return;
+		setManualFlipped(new Set(skills.map((_, id) => id)));
+
+		const url = new URL(window.location.href);
+		url.searchParams.delete('flip');
+		window.history.replaceState({}, '', url);
+	}, [skills]);
 
 	const miniSearch = useMemo(() => {
 		const index = new MiniSearch<{ id: number; text: string }>({
@@ -19,18 +36,17 @@ export default function SoftSkillSearch({ skills }: SoftSkillSearchProps) {
 		return index;
 	}, [skills]);
 
-	useEffect(() => {
+	const searchFlipped = useMemo(() => {
 		const trimmed = query.trim();
-		if (!trimmed) {
-			setFlipped(new Set());
-			return;
-		}
+		if (!trimmed) return null;
 		const results = miniSearch.search(trimmed, { prefix: true, fuzzy: 0.2 });
-		setFlipped(new Set(results.map((result) => result.id as number)));
+		return new Set(results.map((result) => result.id as number));
 	}, [query, miniSearch]);
 
+	const flipped = searchFlipped ?? manualFlipped;
+
 	function toggleCard(id: number) {
-		setFlipped((prev) => {
+		setManualFlipped((prev) => {
 			const next = new Set(prev);
 			if (next.has(id)) {
 				next.delete(id);
