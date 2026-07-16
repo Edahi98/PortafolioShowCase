@@ -11,6 +11,7 @@ export type Proyecto = {
 	slug?: string;
 	imagenes?: ProyectoImagen[];
 	repoUrl?: string;
+	dockerHubUrl?: string;
 };
 
 export const proyectos: Proyecto[] = [
@@ -81,6 +82,7 @@ export const proyectos: Proyecto[] = [
 		stack: ['Laravel', 'Docker', 'Nginx'],
 		slug: 'taller-mecanico',
 		repoUrl: 'https://github.com/Edahi98/LosHermanos_Inventario',
+		dockerHubUrl: 'https://hub.docker.com/r/edahisnacke/los-hermanos-web',
 		imagenes: [
 			{
 				src: '/proyectos/taller-mecanico/home.jpg',

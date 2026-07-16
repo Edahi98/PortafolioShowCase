@@ -58,6 +58,23 @@ const { proyecto } = Astro.props;
 							/>
 						</a>
 					)}
+					{proyecto.dockerHubUrl && (
+						<a
+							href={proyecto.dockerHubUrl}
+							target="_blank"
+							rel="noreferrer"
+							aria-label="Ver imagen en Docker Hub"
+							class="transition hover:opacity-80"
+						>
+							<img
+								src="https://skillicons.dev/icons?i=docker"
+								alt="Imagen en Docker Hub"
+								width={28}
+								height={28}
+								class="h-7 w-7"
+							/>
+						</a>
+					)}
 				</div>
 			</div>
 
