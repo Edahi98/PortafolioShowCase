@@ -9,6 +9,7 @@ Portafolio personal de Edahi Yaxquin Avila Garcia, construido con Astro + Tailwi
 - Three.js para gráficos 3D (`src/components/DockerScene.astro`, `src/components/NeuralNetworkScene.astro`), cargado con `<script>` client-side dentro del componente Astro (sin framework de reactividad).
 - anime.js v4 (`animate` de `'animejs'`) para animar propiedades de objetos Three.js (posición de partículas, `emissiveIntensity`) en `NeuralNetworkScene.astro`.
 - MiniSearch para la búsqueda de habilidades blandas en `SoftSkillSearch.tsx` (índice en memoria sobre el arreglo de habilidades, con `prefix` y `fuzzy` habilitados).
+- `@lucide/astro` (paquete oficial de Lucide para Astro) para íconos SVG puntuales dentro de componentes `.astro`, p. ej. `Crown` en `Proyectos.astro` para destacar un proyecto.
 
 ## Tema visual: degradado elegante, esencia tech
 

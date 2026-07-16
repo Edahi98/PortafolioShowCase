@@ -12,6 +12,8 @@ export type Proyecto = {
 	imagenes?: ProyectoImagen[];
 	repoUrl?: string;
 	dockerHubUrl?: string;
+	destacado?: boolean;
+	notaCapturas?: string;
 };
 
 export const proyectos: Proyecto[] = [
@@ -26,6 +28,8 @@ export const proyectos: Proyecto[] = [
 		descripcion:
 			'Descarga masiva de expedientes de estudiantes para la Universidad Tecnológica de Tecámac, con pruebas de estrés.',
 		stack: ['C#', '.NET', 'Pruebas de estrés'],
+		destacado: true,
+		notaCapturas: 'No se pueden mostrar capturas por derechos de autor.',
 	},
 	{
 		nombre: 'Sistema POS - Paletería',
