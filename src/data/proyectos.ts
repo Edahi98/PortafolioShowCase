@@ -10,6 +10,7 @@ export type Proyecto = {
 	stack: string[];
 	slug?: string;
 	imagenes?: ProyectoImagen[];
+	repoUrl?: string;
 };
 
 export const proyectos: Proyecto[] = [
@@ -79,6 +80,7 @@ export const proyectos: Proyecto[] = [
 		descripcion: 'Aplicación web para clientes y ventas, desplegada con Docker y Nginx.',
 		stack: ['Laravel', 'Docker', 'Nginx'],
 		slug: 'taller-mecanico',
+		repoUrl: 'https://github.com/Edahi98/LosHermanos_Inventario',
 		imagenes: [
 			{
 				src: '/proyectos/taller-mecanico/home.jpg',
