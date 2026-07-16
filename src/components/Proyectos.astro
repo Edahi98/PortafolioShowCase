@@ -7,12 +7,14 @@ import { proyectos } from '../data/proyectos';
 		{
 			proyectos.map((proyecto) =>
 				proyecto.slug ? (
-					<a
-						href={`/proyectos/${proyecto.slug}`}
-						class="glass-card group relative flex flex-col gap-3 overflow-hidden rounded-2xl p-6 transition hover:border-primary/60"
-					>
+					<div class="glass-card group relative flex flex-col gap-3 overflow-hidden rounded-2xl p-6 transition hover:border-primary/60">
+						<a
+							href={`/proyectos/${proyecto.slug}`}
+							aria-label={`Ver proyecto: ${proyecto.nombre}`}
+							class="absolute inset-0 z-0"
+						/>
 						{proyecto.imagenes && proyecto.imagenes.length > 0 && (
-							<div class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+							<div class="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
 								<img
 									src={proyecto.imagenes[0].src}
 									alt=""
@@ -21,7 +23,45 @@ import { proyectos } from '../data/proyectos';
 								<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/85 to-surface/50" />
 							</div>
 						)}
-						<div class="relative flex flex-1 flex-col gap-3">
+						{(proyecto.repoUrl || proyecto.dockerHubUrl) && (
+							<div class="pointer-events-none absolute top-4 right-4 z-10 flex gap-2">
+								{proyecto.repoUrl && (
+									<a
+										href={proyecto.repoUrl}
+										target="_blank"
+										rel="noreferrer"
+										aria-label="Ver repositorio en GitHub"
+										class="pointer-events-auto rounded-full bg-surface/80 p-1.5 backdrop-blur transition hover:opacity-80"
+									>
+										<img
+											src="https://skillicons.dev/icons?i=github"
+											alt="Repositorio en GitHub"
+											width={20}
+											height={20}
+											class="h-5 w-5"
+										/>
+									</a>
+								)}
+								{proyecto.dockerHubUrl && (
+									<a
+										href={proyecto.dockerHubUrl}
+										target="_blank"
+										rel="noreferrer"
+										aria-label="Ver imagen en Docker Hub"
+										class="pointer-events-auto rounded-full bg-surface/80 p-1.5 backdrop-blur transition hover:opacity-80"
+									>
+										<img
+											src="https://skillicons.dev/icons?i=docker"
+											alt="Imagen en Docker Hub"
+											width={20}
+											height={20}
+											class="h-5 w-5"
+										/>
+									</a>
+								)}
+							</div>
+						)}
+						<div class="pointer-events-none relative z-0 flex flex-1 flex-col gap-3">
 							<h3 class="text-lg font-semibold text-slate-100">{proyecto.nombre}</h3>
 							<p class="text-sm text-slate-400">{proyecto.descripcion}</p>
 							<div class="mt-auto flex flex-wrap gap-2 pt-2">
@@ -33,7 +73,7 @@ import { proyectos } from '../data/proyectos';
 							</div>
 							<p class="font-mono text-xs text-secondary">Ver proyecto &rarr;</p>
 						</div>
-					</a>
+					</div>
 				) : (
 					<article class="glass-card flex flex-col gap-3 rounded-2xl p-6 transition hover:border-primary/60">
 						<h3 class="text-lg font-semibold text-slate-100">{proyecto.nombre}</h3>
