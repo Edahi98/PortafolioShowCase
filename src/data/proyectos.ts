@@ -78,6 +78,34 @@ export const proyectos: Proyecto[] = [
 		nombre: 'Sistema de Gestión de Inventario - Taller Mecánico',
 		descripcion: 'Aplicación web para clientes y ventas, desplegada con Docker y Nginx.',
 		stack: ['Laravel', 'Docker', 'Nginx'],
+		slug: 'taller-mecanico',
+		imagenes: [
+			{
+				src: '/proyectos/taller-mecanico/home.jpg',
+				alt: 'Página de inicio del inventario Los Hermanos',
+				descripcion: 'Inicio: presentación del sistema y accesos rápidos a Categorías, Marcas y Artículos.',
+			},
+			{
+				src: '/proyectos/taller-mecanico/articulos.jpg',
+				alt: 'Listado de artículos del inventario Los Hermanos',
+				descripcion: 'Artículos: listado filtrable por nombre, categoría y marca, con alta de nuevos artículos.',
+			},
+			{
+				src: '/proyectos/taller-mecanico/marcas.jpg',
+				alt: 'Listado de marcas del inventario Los Hermanos',
+				descripcion: 'Marcas: catálogo de marcas de refacciones, con filtro y alta de nuevas marcas.',
+			},
+			{
+				src: '/proyectos/taller-mecanico/categorias.jpg',
+				alt: 'Listado de categorías del inventario Los Hermanos',
+				descripcion: 'Categorías: catálogo de categorías de productos, con filtro y alta de nuevas categorías.',
+			},
+			{
+				src: '/proyectos/taller-mecanico/agregar-categoria.jpg',
+				alt: 'Formulario para agregar categoría en el inventario Los Hermanos',
+				descripcion: 'Alta de categoría: formulario simple para registrar una nueva categoría.',
+			},
+		],
 	},
 	{
 		nombre: 'Sistema de Gestión de Control de Cambios',
