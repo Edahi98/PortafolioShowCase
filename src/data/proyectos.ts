@@ -14,6 +14,7 @@ export type Proyecto = {
 	dockerHubUrl?: string;
 	destacado?: boolean;
 	notaCapturas?: string;
+	relacionados?: string[];
 };
 
 export const proyectos: Proyecto[] = [
@@ -120,6 +121,7 @@ export const proyectos: Proyecto[] = [
 		descripcion:
 			'Manejo de versiones de documentos para Gestión de Calidad, con extracción de metadatos asistida por IA local, Machine Learning y heurística para equipos de bajos recursos.',
 		stack: ['IA Local', 'Machine Learning', 'Heurística'],
+		relacionados: ['Denki Pipeline Designer', 'Tsubasa Engine'],
 	},
 	{
 		nombre: 'Denki Pipeline Designer',
@@ -128,6 +130,7 @@ export const proyectos: Proyecto[] = [
 		stack: ['Electron', 'React', 'TypeScript', 'Polars', 'Machine Learning'],
 		slug: 'denki-pipeline-designer',
 		repoUrl: 'https://github.com/Edahi98/DenkiPepelineDesigner',
+		relacionados: ['Sistema de Gestión de Control de Cambios', 'Tsubasa Engine'],
 		imagenes: [
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen1.png',
@@ -158,6 +161,7 @@ export const proyectos: Proyecto[] = [
 		stack: ['Python', 'Polars', 'Rust', 'scikit-learn', 'Flask'],
 		slug: 'tsubasa-engine',
 		repoUrl: 'https://github.com/Edahi98/TsubasaEngine',
+		relacionados: ['Sistema de Gestión de Control de Cambios', 'Denki Pipeline Designer'],
 		imagenes: [
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/TsubasaEngine/main/img/cliente.png',
