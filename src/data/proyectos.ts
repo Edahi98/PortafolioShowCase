@@ -122,6 +122,7 @@ export const proyectos: Proyecto[] = [
 			'Manejo de versiones de documentos para Gestión de Calidad, con extracción de metadatos asistida por IA local, Machine Learning y heurística para equipos de bajos recursos.',
 		stack: ['IA Local', 'Machine Learning', 'Heurística'],
 		relacionados: ['Denki Pipeline Designer', 'Tsubasa Engine'],
+		destacado: true,
 	},
 	{
 		nombre: 'Denki Pipeline Designer',
@@ -131,6 +132,7 @@ export const proyectos: Proyecto[] = [
 		slug: 'denki-pipeline-designer',
 		repoUrl: 'https://github.com/Edahi98/DenkiPepelineDesigner',
 		relacionados: ['Sistema de Gestión de Control de Cambios', 'Tsubasa Engine'],
+		destacado: true,
 		imagenes: [
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen1.png',
@@ -162,6 +164,7 @@ export const proyectos: Proyecto[] = [
 		slug: 'tsubasa-engine',
 		repoUrl: 'https://github.com/Edahi98/TsubasaEngine',
 		relacionados: ['Sistema de Gestión de Control de Cambios', 'Denki Pipeline Designer'],
+		destacado: true,
 		imagenes: [
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/TsubasaEngine/main/img/cliente.png',
