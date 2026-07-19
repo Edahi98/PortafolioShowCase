@@ -26,8 +26,10 @@ body {
 	color: transparent;
 }
 
-.glass-card {
-	background-color: color-mix(in oklab, var(--color-surface) 70%, transparent);
-	border: 1px solid var(--color-border);
-	backdrop-filter: blur(12px);
+@layer components {
+	.glass-card {
+		background-color: color-mix(in oklab, var(--color-surface) 70%, transparent);
+		border: 1px solid var(--color-border);
+		backdrop-filter: blur(12px);
+	}
 }
