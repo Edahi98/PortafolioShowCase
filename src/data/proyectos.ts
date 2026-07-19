@@ -23,6 +23,7 @@ export const proyectos: Proyecto[] = [
 		descripcion:
 			'Aplicación web con Node.js y automatización de gestión desde un chatbot de Telegram con agente de IA local, creado con Langchain y Langgraph.',
 		stack: ['Node.js', 'Telegram Bot', 'Langchain', 'Langgraph', 'IA Local'],
+		destacado: true,
 	},
 	{
 		nombre: 'Sistema de Gestión Escolar',
