@@ -1,5 +1,6 @@
 ---
 import '../../styles/global.css';
+import { Crown } from '@lucide/astro';
 import Navbar from '../../components/Navbar.astro';
 import { proyectos } from '../../data/proyectos';
 
@@ -35,8 +36,9 @@ const relacionados = (proyecto.relacionados ?? [])
 				>
 					&larr; Volver a Proyectos
 				</a>
-				<h1 class="text-2xl font-bold sm:text-4xl">
+				<h1 class="flex items-center gap-3 text-2xl font-bold sm:text-4xl">
 					<span class="text-gradient">{proyecto.nombre}</span>
+					{proyecto.destacado && <Crown class="h-6 w-6 shrink-0 text-amber-400 sm:h-8 sm:w-8" aria-label="Proyecto destacado" />}
 				</h1>
 				<p class="max-w-2xl text-sm text-slate-400">{proyecto.descripcion}</p>
 				<div class="flex flex-wrap items-center gap-2 pt-2">

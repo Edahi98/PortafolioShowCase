@@ -1,136 +1,165 @@
 ---
 import { Crown } from '@lucide/astro';
-import { proyectos } from '../data/proyectos';
+import { proyectos, type Proyecto } from '../data/proyectos';
+
+const destacados = proyectos.filter((p) => p.destacado);
+const resto = proyectos.filter((p) => !p.destacado);
 ---
-<section id="proyectos" class="flex scroll-mt-24 flex-col gap-6">
+<section id="proyectos" class="flex scroll-mt-24 flex-col gap-10">
 	<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Proyectos</h2>
-	<div class="grid gap-6 sm:grid-cols-2">
-		{
-			proyectos.map((proyecto) =>
-				proyecto.slug ? (
-					<div
-						class:list={[
-							'glass-card group relative flex flex-col gap-3 overflow-hidden rounded-2xl p-6 transition hover:border-primary/60',
-							proyecto.destacado && 'border-amber-400/50 shadow-[0_0_24px_-6px] shadow-amber-400/30',
-						]}
-					>
-						<a
-							href={`/proyectos/${proyecto.slug}`}
-							aria-label={`Ver proyecto: ${proyecto.nombre}`}
-							class="absolute inset-0 z-0"
-						/>
-						{proyecto.imagenes && proyecto.imagenes.length > 0 && (
-							<div class="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-								<img
-									src={proyecto.imagenes[0].src}
-									alt=""
-									class="h-full w-full object-cover"
-								/>
-								<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/85 to-surface/50" />
-							</div>
+	{
+		[destacados, resto].map(
+			(grupo, index) =>
+				grupo.length > 0 && (
+					<div class="flex flex-col gap-6">
+						{index === 0 ? (
+							<h3 class="flex items-center gap-2 font-mono text-xs tracking-widest text-amber-400 uppercase">
+								<Crown class="h-4 w-4" aria-hidden="true" />
+								Proyectos destacados
+							</h3>
+						) : (
+							<h3 class="font-mono text-xs tracking-widest text-secondary uppercase">Otros proyectos</h3>
 						)}
-						{(proyecto.repoUrl || proyecto.dockerHubUrl) && (
-							<div class="pointer-events-none absolute top-4 right-4 z-10 flex gap-2">
-								{proyecto.repoUrl && (
-									<a
-										href={proyecto.repoUrl}
-										target="_blank"
-										rel="noreferrer"
-										aria-label="Ver repositorio en GitHub"
-										class="pointer-events-auto rounded-full bg-surface/80 p-1.5 backdrop-blur transition hover:opacity-80"
+						<div class="grid gap-6 sm:grid-cols-2">
+						{
+							grupo.map((proyecto: Proyecto) =>
+								proyecto.slug ? (
+									<div
+										class:list={[
+											'glass-card group relative flex flex-col gap-3 overflow-hidden rounded-2xl p-6 transition hover:border-primary/60',
+											proyecto.destacado && 'border-amber-400/50 shadow-[0_0_24px_-6px] shadow-amber-400/30',
+										]}
 									>
-										<img
-											src="https://skillicons.dev/icons?i=github"
-											alt="Repositorio en GitHub"
-											width={20}
-											height={20}
-											class="h-5 w-5"
+										<a
+											href={`/proyectos/${proyecto.slug}`}
+											aria-label={`Ver proyecto: ${proyecto.nombre}`}
+											class="absolute inset-0 z-0"
 										/>
-									</a>
-								)}
-								{proyecto.dockerHubUrl && (
-									<a
-										href={proyecto.dockerHubUrl}
-										target="_blank"
-										rel="noreferrer"
-										aria-label="Ver imagen en Docker Hub"
-										class="pointer-events-auto rounded-full bg-surface/80 p-1.5 backdrop-blur transition hover:opacity-80"
+										{proyecto.imagenes && proyecto.imagenes.length > 0 && (
+											<div class="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+												<img
+													src={proyecto.imagenes[0].src}
+													alt=""
+													class="h-full w-full object-cover"
+												/>
+												<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/85 to-surface/50" />
+											</div>
+										)}
+										{(proyecto.repoUrl || proyecto.dockerHubUrl) && (
+											<div class="pointer-events-none absolute top-4 right-4 z-10 flex gap-2">
+												{proyecto.repoUrl && (
+													<a
+														href={proyecto.repoUrl}
+														target="_blank"
+														rel="noreferrer"
+														aria-label="Ver repositorio en GitHub"
+														class="pointer-events-auto rounded-full bg-surface/80 p-1.5 backdrop-blur transition hover:opacity-80"
+													>
+														<img
+															src="https://skillicons.dev/icons?i=github"
+															alt="Repositorio en GitHub"
+															width={20}
+															height={20}
+															class="h-5 w-5"
+														/>
+													</a>
+												)}
+												{proyecto.dockerHubUrl && (
+													<a
+														href={proyecto.dockerHubUrl}
+														target="_blank"
+														rel="noreferrer"
+														aria-label="Ver imagen en Docker Hub"
+														class="pointer-events-auto rounded-full bg-surface/80 p-1.5 backdrop-blur transition hover:opacity-80"
+													>
+														<img
+															src="https://skillicons.dev/icons?i=docker"
+															alt="Imagen en Docker Hub"
+															width={20}
+															height={20}
+															class="h-5 w-5"
+														/>
+													</a>
+												)}
+											</div>
+										)}
+										<div
+											class:list={[
+												'pointer-events-none relative z-0 flex flex-1 flex-col gap-3',
+												(proyecto.repoUrl || proyecto.dockerHubUrl) && 'pr-16',
+											]}
+										>
+											<div class="flex items-start gap-2">
+												<h3 class="text-lg font-semibold text-slate-100">{proyecto.nombre}</h3>
+												{proyecto.destacado && (
+													<Crown class="h-5 w-5 shrink-0 text-amber-400" aria-label="Proyecto destacado" />
+												)}
+											</div>
+											<p class="text-sm text-slate-400">{proyecto.descripcion}</p>
+											<div class="mt-auto flex flex-wrap gap-2 pt-2">
+												{proyecto.stack.map((tech) => (
+													<span class="rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-primary">
+														{tech}
+													</span>
+												))}
+											</div>
+											<p class="font-mono text-xs text-secondary">Ver proyecto &rarr;</p>
+										</div>
+									</div>
+								) : (
+									<article
+										class:list={[
+											'glass-card flex flex-col gap-3 rounded-2xl p-6 transition hover:border-primary/60',
+											proyecto.destacado && 'border-amber-400/50 shadow-[0_0_24px_-6px] shadow-amber-400/30',
+										]}
 									>
-										<img
-											src="https://skillicons.dev/icons?i=docker"
-											alt="Imagen en Docker Hub"
-											width={20}
-											height={20}
-											class="h-5 w-5"
-										/>
-									</a>
-								)}
-							</div>
-						)}
-						<div class="pointer-events-none relative z-0 flex flex-1 flex-col gap-3">
-							<div class="flex items-start justify-between gap-2">
-								<h3 class="text-lg font-semibold text-slate-100">{proyecto.nombre}</h3>
-								{proyecto.destacado && <Crown class="h-5 w-5 shrink-0 text-amber-400" aria-label="Proyecto destacado" />}
-							</div>
-							<p class="text-sm text-slate-400">{proyecto.descripcion}</p>
-							<div class="mt-auto flex flex-wrap gap-2 pt-2">
-								{proyecto.stack.map((tech) => (
-									<span class="rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-primary">
-										{tech}
-									</span>
-								))}
-							</div>
-							<p class="font-mono text-xs text-secondary">Ver proyecto &rarr;</p>
+										<div class="flex items-start gap-2">
+											<h3 class="text-lg font-semibold text-slate-100">{proyecto.nombre}</h3>
+											{proyecto.destacado && (
+												<Crown class="h-5 w-5 shrink-0 text-amber-400" aria-label="Proyecto destacado" />
+											)}
+										</div>
+										<p class="text-sm text-slate-400">{proyecto.descripcion}</p>
+										<div class="mt-auto flex flex-wrap gap-2 pt-2">
+											{proyecto.stack.map((tech) => (
+												<span class="rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-primary">
+													{tech}
+												</span>
+											))}
+										</div>
+										{proyecto.notaCapturas && (
+											<p class="font-mono text-xs text-slate-500 italic">{proyecto.notaCapturas}</p>
+										)}
+										{proyecto.relacionados && proyecto.relacionados.length > 0 && (
+											<div class="flex flex-wrap items-center gap-x-1 gap-y-1 pt-1">
+												<span class="font-mono text-xs text-slate-500">Relacionado:</span>
+												{proyecto.relacionados.map((nombreRel, i) => {
+													const rel = proyectos.find((p) => p.nombre === nombreRel);
+													return (
+														<>
+															{i > 0 && <span class="font-mono text-xs text-slate-500">,</span>}
+															{rel?.slug ? (
+																<a
+																	href={`/proyectos/${rel.slug}`}
+																	class="font-mono text-xs text-secondary transition hover:text-primary"
+																>
+																	{rel.nombre}
+																</a>
+															) : (
+																<span class="font-mono text-xs text-slate-400">{nombreRel}</span>
+															)}
+														</>
+													);
+												})}
+											</div>
+										)}
+									</article>
+								)
+							)
+						}
 						</div>
 					</div>
-				) : (
-					<article
-						class:list={[
-							'glass-card flex flex-col gap-3 rounded-2xl p-6 transition hover:border-primary/60',
-							proyecto.destacado && 'border-amber-400/50 shadow-[0_0_24px_-6px] shadow-amber-400/30',
-						]}
-					>
-						<div class="flex items-start justify-between gap-2">
-							<h3 class="text-lg font-semibold text-slate-100">{proyecto.nombre}</h3>
-							{proyecto.destacado && <Crown class="h-5 w-5 shrink-0 text-amber-400" aria-label="Proyecto destacado" />}
-						</div>
-						<p class="text-sm text-slate-400">{proyecto.descripcion}</p>
-						<div class="mt-auto flex flex-wrap gap-2 pt-2">
-							{proyecto.stack.map((tech) => (
-								<span class="rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-primary">
-									{tech}
-								</span>
-							))}
-						</div>
-						{proyecto.notaCapturas && (
-							<p class="font-mono text-xs text-slate-500 italic">{proyecto.notaCapturas}</p>
-						)}
-						{proyecto.relacionados && proyecto.relacionados.length > 0 && (
-							<div class="flex flex-wrap items-center gap-x-1 gap-y-1 pt-1">
-								<span class="font-mono text-xs text-slate-500">Relacionado:</span>
-								{proyecto.relacionados.map((nombreRel, i) => {
-									const rel = proyectos.find((p) => p.nombre === nombreRel);
-									return (
-										<>
-											{i > 0 && <span class="font-mono text-xs text-slate-500">,</span>}
-											{rel?.slug ? (
-												<a
-													href={`/proyectos/${rel.slug}`}
-													class="font-mono text-xs text-secondary transition hover:text-primary"
-												>
-													{rel.nombre}
-												</a>
-											) : (
-												<span class="font-mono text-xs text-slate-400">{nombreRel}</span>
-											)}
-										</>
-									);
-								})}
-							</div>
-						)}
-					</article>
 				)
-			)
-		}
-	</div>
+		)
+	}
 </section>
