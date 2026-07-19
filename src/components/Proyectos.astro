@@ -97,6 +97,29 @@ import { proyectos } from '../data/proyectos';
 						{proyecto.notaCapturas && (
 							<p class="font-mono text-xs text-slate-500 italic">{proyecto.notaCapturas}</p>
 						)}
+						{proyecto.relacionados && proyecto.relacionados.length > 0 && (
+							<div class="flex flex-wrap items-center gap-x-1 gap-y-1 pt-1">
+								<span class="font-mono text-xs text-slate-500">Relacionado:</span>
+								{proyecto.relacionados.map((nombreRel, i) => {
+									const rel = proyectos.find((p) => p.nombre === nombreRel);
+									return (
+										<>
+											{i > 0 && <span class="font-mono text-xs text-slate-500">,</span>}
+											{rel?.slug ? (
+												<a
+													href={`/proyectos/${rel.slug}`}
+													class="font-mono text-xs text-secondary transition hover:text-primary"
+												>
+													{rel.nombre}
+												</a>
+											) : (
+												<span class="font-mono text-xs text-slate-400">{nombreRel}</span>
+											)}
+										</>
+									);
+								})}
+							</div>
+						)}
 					</article>
 				)
 			)
