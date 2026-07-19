@@ -121,4 +121,50 @@ export const proyectos: Proyecto[] = [
 			'Manejo de versiones de documentos para Gestión de Calidad, con extracción de metadatos asistida por IA local, Machine Learning y heurística para equipos de bajos recursos.',
 		stack: ['IA Local', 'Machine Learning', 'Heurística'],
 	},
+	{
+		nombre: 'Denki Pipeline Designer',
+		descripcion:
+			'Aplicación de escritorio (Electron) para diseñar visualmente pipelines de datos y Machine Learning sobre Polars, arrastrando nodos y ejecutándolos contra un backend Python local.',
+		stack: ['Electron', 'React', 'TypeScript', 'Polars', 'Machine Learning'],
+		slug: 'denki-pipeline-designer',
+		repoUrl: 'https://github.com/Edahi98/DenkiPepelineDesigner',
+		imagenes: [
+			{
+				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen1.png',
+				alt: 'Canvas de diseño de pipelines de Denki',
+				descripcion: 'El canvas: arrastra nodos desde la paleta y conéctalos para armar el pipeline.',
+			},
+			{
+				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen2.png',
+				alt: 'Modal de resultado de ejecución de Denki',
+				descripcion: 'Resultado de ejecución: inspecciona el DataFrame/Series resultante, o su equivalente en SQL.',
+			},
+			{
+				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen3.png',
+				alt: 'Biblioteca de ejemplos de pipelines de Denki',
+				descripcion: 'Biblioteca de ejemplos: pipelines listos para cargar y aprender de ellos.',
+			},
+			{
+				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen4.png',
+				alt: 'Manual de referencia de nodos de Denki',
+				descripcion: 'Manual de nodos: ayuda contextual por categoría, con flujos típicos de un click.',
+			},
+		],
+	},
+	{
+		nombre: 'Tsubasa Engine',
+		descripcion:
+			'Motor de ejecución detrás de Denki: compila un grafo de nodos a un AST tipado y lo ejecuta con Polars, con ~177 operaciones sobre Series y un registro canónico en Rust.',
+		stack: ['Python', 'Polars', 'Rust', 'scikit-learn', 'Flask'],
+		slug: 'tsubasa-engine',
+		repoUrl: 'https://github.com/Edahi98/TsubasaEngine',
+		imagenes: [
+			{
+				src: 'https://raw.githubusercontent.com/Edahi98/TsubasaEngine/main/img/cliente.png',
+				alt: 'Denki Pipeline Designer, cliente visual de Tsubasa Engine',
+				descripcion:
+					'Denki Pipeline Designer: el editor visual cliente que arma el grafo de nodos y se lo manda a Tsubasa vía POST /execute.',
+			},
+		],
+	},
 ];
