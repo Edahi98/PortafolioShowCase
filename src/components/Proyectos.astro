@@ -1,9 +1,13 @@
 ---
-import { Crown } from '@lucide/astro';
+import { Crown, FileText } from '@lucide/astro';
 import { proyectos, type Proyecto } from '../data/proyectos';
 
 const destacados = proyectos.filter((p) => p.destacado);
 const resto = proyectos.filter((p) => !p.destacado);
+
+function badgeCount(p: Proyecto) {
+	return [p.repoUrl, p.dockerHubUrl, p.documentacionUrl].filter(Boolean).length;
+}
 ---
 <section id="proyectos" class="flex scroll-mt-24 flex-col gap-10">
 	<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Proyectos</h2>
@@ -45,7 +49,7 @@ const resto = proyectos.filter((p) => !p.destacado);
 												<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/85 to-surface/50" />
 											</div>
 										)}
-										{(proyecto.repoUrl || proyecto.dockerHubUrl) && (
+										{(proyecto.repoUrl || proyecto.dockerHubUrl || proyecto.documentacionUrl) && (
 											<div class="pointer-events-none absolute top-4 right-4 z-10 flex gap-2">
 												{proyecto.repoUrl && (
 													<a
@@ -81,12 +85,25 @@ const resto = proyectos.filter((p) => !p.destacado);
 														/>
 													</a>
 												)}
+												{proyecto.documentacionUrl && (
+													<a
+														href={proyecto.documentacionUrl}
+														target="_blank"
+														rel="noreferrer"
+														aria-label="Ver documentación"
+														class="pointer-events-auto flex h-8 w-8 items-center justify-center rounded-full border border-emerald-400/60 bg-emerald-400/20 text-emerald-300 shadow-[0_0_12px_-2px] shadow-emerald-400/50 backdrop-blur transition hover:bg-emerald-400/30"
+													>
+														<FileText class="h-4 w-4" aria-hidden="true" />
+													</a>
+												)}
 											</div>
 										)}
 										<div
 											class:list={[
 												'pointer-events-none relative z-0 flex flex-1 flex-col gap-3',
-												(proyecto.repoUrl || proyecto.dockerHubUrl) && 'pr-16',
+												badgeCount(proyecto) >= 3 && 'pr-32',
+												badgeCount(proyecto) === 2 && 'pr-24',
+												badgeCount(proyecto) === 1 && 'pr-16',
 											]}
 										>
 											<div class="flex items-start gap-2">

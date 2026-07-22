@@ -12,6 +12,7 @@ export type Proyecto = {
 	imagenes?: ProyectoImagen[];
 	repoUrl?: string;
 	dockerHubUrl?: string;
+	documentacionUrl?: string;
 	destacado?: boolean;
 	notaCapturas?: string;
 	relacionados?: string[];
@@ -89,6 +90,7 @@ export const proyectos: Proyecto[] = [
 		slug: 'taller-mecanico',
 		repoUrl: 'https://github.com/Edahi98/LosHermanos_Inventario',
 		dockerHubUrl: 'https://hub.docker.com/r/edahisnacke/los-hermanos-web',
+		documentacionUrl: '/proyectos/taller-mecanico/documentacion.pdf',
 		imagenes: [
 			{
 				src: '/proyectos/taller-mecanico/home.jpg',
