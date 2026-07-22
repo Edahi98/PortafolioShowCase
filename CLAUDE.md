@@ -4,11 +4,10 @@ Portafolio personal de Edahi Yaxquin Avila Garcia, construido con Astro + Tailwi
 
 ## Stack
 
-- Astro 5 (TypeScript strict). React (`@astrojs/react`) solo para islas puntuales que necesitan interactividad con estado (p. ej. `FlipCard`); el resto del sitio es Astro sin framework de UI.
+- Astro 5 (TypeScript strict), sin ningún framework de UI (no React/Vue/Svelte) — todo el sitio es Astro puro, sin islas ni hidratación client-side.
 - Tailwind CSS v4 vía `@tailwindcss/vite` (sin `tailwind.config`; el theme se define con `@theme` en `src/styles/global.css`).
 - Three.js para gráficos 3D (`src/components/DockerScene.astro`, `src/components/NeuralNetworkScene.astro`), cargado con `<script>` client-side dentro del componente Astro (sin framework de reactividad).
 - anime.js v4 (`animate` de `'animejs'`) para animar propiedades de objetos Three.js (posición de partículas, `emissiveIntensity`) en `NeuralNetworkScene.astro`.
-- MiniSearch para la búsqueda de habilidades blandas en `SoftSkillSearch.tsx` (índice en memoria sobre el arreglo de habilidades, con `prefix` y `fuzzy` habilitados).
 - `@lucide/astro` (paquete oficial de Lucide para Astro) para íconos SVG puntuales dentro de componentes `.astro`, p. ej. `Crown` en `Proyectos.astro` para destacar un proyecto.
 
 ## Tema visual: degradado elegante, esencia tech
@@ -29,7 +28,7 @@ Al agregar nuevas secciones o páginas, reutilizar estas clases/variables en lug
 
 ## Contenido
 
-`src/pages/index.astro` solo compone las secciones del Home; cada sección vive como componente en `src/components/`: `Hero`, `SobreMi`, `Proyectos`, `Formacion`, `Habilidades`, `Contacto` (más `Navbar`, `DockerScene` y `NeuralNetworkScene`). Las piezas pequeñas y reutilizables dentro de una sección van en `src/components/atoms/` (p. ej. `LanguageGrid` y `ToolGrid`, los grids de lenguajes/herramientas con íconos de [skillicons.dev](https://skillicons.dev); `SoftSkillList`, la lista de habilidades blandas). Los componentes React (islas) viven en `src/components/react/`: `FlipCard` es una tarjeta tipo memorama reutilizable (controlada vía props `flipped`/`onToggle`, o no controlada con estado interno si se omiten) que se usa sin `iconSrc` para mostrar un ícono genérico al frente y el nombre al voltear; `SoftSkillSearch` compone la barra de búsqueda (MiniSearch) y el grid de `FlipCard` para Habilidades blandas — las tarjetas cuyo nombre coincide con la búsqueda se voltean automáticamente. También responde al query param `?flip=habilidades-blandas` (usado por el botón "Ver habilidades blandas" del hero) volteando todas las tarjetas al llegar; ese estado se aplica en un `useEffect` posterior al montaje (no en el estado inicial) para no generar un mismatch de hidratación con React 19, que no parcha atributos divergentes tras hidratar. `LanguageGrid` y `ToolGrid` muestran ícono + nombre en tarjetas estáticas (sin flip). El contenido proviene del CV de Canva "Edahi CV". Si el CV se actualiza, reflejar los cambios en el componente correspondiente.
+`src/pages/index.astro` solo compone las secciones del Home; cada sección vive como componente en `src/components/`: `Hero`, `SobreMi`, `Proyectos`, `Formacion`, `Habilidades`, `Contacto` (más `Navbar`, `DockerScene` y `NeuralNetworkScene`). Las piezas pequeñas y reutilizables dentro de una sección van en `src/components/atoms/` (p. ej. `LanguageGrid` y `ToolGrid`, los grids de lenguajes/herramientas con íconos de [skillicons.dev](https://skillicons.dev); `SoftSkillList`, la lista de habilidades blandas). Las tres son tarjetas estáticas de Astro (sin JS ni frameworks de UI). `SoftSkillList` asigna a cada habilidad un color distinto (definido inline por tarjeta como clases literales de Tailwind, p. ej. `border-rose-400/40` / `bg-rose-400/10` / `text-rose-300`) fuera de la paleta cyan/púrpura/índigo del tema, para diferenciarlas visualmente sin salirse del tono oscuro general; las clases deben escribirse completas (no construidas dinámicamente con template strings) para que el escáner de Tailwind las detecte. El contenido proviene del CV de Canva "Edahi CV". Si el CV se actualiza, reflejar los cambios en el componente correspondiente.
 
 ## Certificados
 

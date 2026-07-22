@@ -1,13 +1,26 @@
 ---
-import SoftSkillSearch from '../react/SoftSkillSearch.tsx';
-
 const habilidadesBlandas = [
-	'Adaptabilidad',
-	'Creatividad e innovación',
-	'Cumplimiento de metas',
-	'Trabajo en equipo',
-	'Proactividad',
-	'Iniciativa',
+	{ nombre: 'Adaptabilidad', border: 'border-rose-400/40', bg: 'bg-rose-400/10', hover: 'hover:border-rose-400/70', text: 'text-rose-300' },
+	{ nombre: 'Creatividad e innovación', border: 'border-orange-400/40', bg: 'bg-orange-400/10', hover: 'hover:border-orange-400/70', text: 'text-orange-300' },
+	{ nombre: 'Cumplimiento de metas', border: 'border-amber-400/40', bg: 'bg-amber-400/10', hover: 'hover:border-amber-400/70', text: 'text-amber-300' },
+	{ nombre: 'Trabajo en equipo', border: 'border-lime-400/40', bg: 'bg-lime-400/10', hover: 'hover:border-lime-400/70', text: 'text-lime-300' },
+	{ nombre: 'Proactividad', border: 'border-teal-400/40', bg: 'bg-teal-400/10', hover: 'hover:border-teal-400/70', text: 'text-teal-300' },
+	{ nombre: 'Iniciativa', border: 'border-pink-400/40', bg: 'bg-pink-400/10', hover: 'hover:border-pink-400/70', text: 'text-pink-300' },
 ];
 ---
-<SoftSkillSearch client:visible skills={habilidadesBlandas} />
+<div class="grid grid-cols-2 gap-3">
+	{
+		habilidadesBlandas.map((skill) => (
+			<div
+				class:list={[
+					'flex items-center justify-center rounded-2xl border p-4 text-center backdrop-blur transition',
+					skill.border,
+					skill.bg,
+					skill.hover,
+				]}
+			>
+				<span class:list={['font-mono text-xs font-semibold', skill.text]}>{skill.nombre}</span>
+			</div>
+		))
+	}
+</div>
