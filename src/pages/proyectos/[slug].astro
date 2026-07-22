@@ -1,6 +1,6 @@
 ---
 import '../../styles/global.css';
-import { Crown } from '@lucide/astro';
+import { Crown, FileText } from '@lucide/astro';
 import Navbar from '../../components/Navbar.astro';
 import { proyectos } from '../../data/proyectos';
 
@@ -79,6 +79,17 @@ const relacionados = (proyecto.relacionados ?? [])
 								height={28}
 								class="h-7 w-7"
 							/>
+						</a>
+					)}
+					{proyecto.documentacionUrl && (
+						<a
+							href={proyecto.documentacionUrl}
+							target="_blank"
+							rel="noreferrer"
+							class="ml-1 inline-flex items-center gap-1.5 rounded-full border border-emerald-400/60 bg-emerald-400/15 px-3 py-1 font-mono text-xs font-semibold text-emerald-300 shadow-[0_0_12px_-2px] shadow-emerald-400/50 transition hover:bg-emerald-400/25"
+						>
+							<FileText class="h-3.5 w-3.5" aria-hidden="true" />
+							Documentación
 						</a>
 					)}
 				</div>
