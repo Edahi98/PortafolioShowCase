@@ -1,6 +1,6 @@
 ---
 import '../../styles/global.css';
-import { Crown, FileText } from '@lucide/astro';
+import { Boxes, Crown, FileText } from '@lucide/astro';
 import Navbar from '../../components/Navbar.astro';
 import { proyectos } from '../../data/proyectos';
 
@@ -16,6 +16,10 @@ export function getStaticPaths() {
 const { proyecto } = Astro.props;
 
 const relacionados = (proyecto.relacionados ?? [])
+	.map((nombre: string) => proyectos.find((p) => p.nombre === nombre))
+	.filter((p): p is (typeof proyectos)[number] => Boolean(p));
+
+const contenidos = (proyecto.contiene ?? [])
 	.map((nombre: string) => proyectos.find((p) => p.nombre === nombre))
 	.filter((p): p is (typeof proyectos)[number] => Boolean(p));
 ---
@@ -38,7 +42,13 @@ const relacionados = (proyecto.relacionados ?? [])
 				</a>
 				<h1 class="flex items-center gap-3 text-2xl font-bold sm:text-4xl">
 					<span class="text-gradient">{proyecto.nombre}</span>
-					{proyecto.destacado && <Crown class="h-6 w-6 shrink-0 text-amber-400 sm:h-8 sm:w-8" aria-label="Proyecto destacado" />}
+					{contenidos.length > 0 ? (
+						<Boxes class="h-6 w-6 shrink-0 text-red-400 sm:h-8 sm:w-8" aria-label="Proyecto contenedor" />
+					) : (
+						proyecto.destacado && (
+							<Crown class="h-6 w-6 shrink-0 text-amber-400 sm:h-8 sm:w-8" aria-label="Proyecto destacado" />
+						)
+					)}
 				</h1>
 				<p class="max-w-2xl text-sm text-slate-400">{proyecto.descripcion}</p>
 				<div class="flex flex-wrap items-center gap-2 pt-2">
@@ -109,6 +119,55 @@ const relacionados = (proyecto.relacionados ?? [])
 					</div>
 				) : (
 					<p class="font-mono text-xs text-slate-500">Capturas próximamente.</p>
+				)
+			}
+
+			{
+				contenidos.length > 0 && (
+					<div class="flex flex-col gap-3 border-t border-red-500/30 pt-8">
+						<h2 class="flex items-center gap-2 font-mono text-sm tracking-widest text-red-400 uppercase">
+							<Boxes class="h-4 w-4" aria-hidden="true" />
+							Integra &amp; encierra
+						</h2>
+						<div class="grid gap-3 sm:grid-cols-2">
+							{contenidos.map((sub) => (
+								<div class="rounded-xl border border-red-500/30 bg-red-500/5 p-4 backdrop-blur transition hover:border-red-400/60">
+									<div class="flex items-center justify-between gap-2">
+										<div class="flex items-center gap-1.5">
+											<p class="text-sm font-semibold text-slate-100">{sub.nombre}</p>
+											{sub.destacado && (
+												<Crown class="h-3.5 w-3.5 shrink-0 text-amber-400" aria-label="Proyecto destacado" />
+											)}
+										</div>
+										{sub.repoUrl && (
+											<a
+												href={sub.repoUrl}
+												target="_blank"
+												rel="noreferrer"
+												aria-label="Ver repositorio en GitHub"
+												class="transition hover:opacity-80"
+											>
+												<img
+													src="https://skillicons.dev/icons?i=github"
+													alt="Repositorio en GitHub"
+													width={18}
+													height={18}
+													class="h-[18px] w-[18px]"
+												/>
+											</a>
+										)}
+									</div>
+									<p class="mt-1 text-xs text-slate-400">{sub.descripcion}</p>
+									<a
+										href={`/proyectos/${sub.slug}`}
+										class="mt-2 inline-block font-mono text-xs text-secondary transition hover:text-primary"
+									>
+										Ver proyecto &rarr;
+									</a>
+								</div>
+							))}
+						</div>
+					</div>
 				)
 			}
 

@@ -16,6 +16,10 @@ export type Proyecto = {
 	destacado?: boolean;
 	notaCapturas?: string;
 	relacionados?: string[];
+	/** Nombres de otros proyectos que este proyecto integra/consume y muestra anidados en su propia tarjeta. */
+	contiene?: string[];
+	/** Nombre del proyecto contenedor que lo integra; si está presente, no se renderiza como tarjeta propia. */
+	anidadoEn?: string;
 };
 
 export const proyectos: Proyecto[] = [
@@ -128,14 +132,33 @@ export const proyectos: Proyecto[] = [
 		destacado: true,
 	},
 	{
+		nombre: 'RedDragon',
+		descripcion:
+			'Plataforma IDP (Intelligent Document Processing): un único endpoint que extrae doc/docx/xls/xlsx/pdf a XML y ejecuta un pipeline contra el motor Tsubasa. Integra a Tsubasa Engine y Denki Pipeline Designer como piezas propias, no como proyectos paralelos.',
+		stack: ['Python', 'FastAPI', 'Docker', 'React', 'Vite', 'TailwindCSS'],
+		slug: 'reddragon',
+		repoUrl: 'https://github.com/Edahi98/RedDragon',
+		destacado: true,
+		contiene: ['Tsubasa Engine', 'Denki Pipeline Designer'],
+		relacionados: ['Sistema de Gestión de Control de Cambios'],
+		imagenes: [
+			{
+				src: 'https://raw.githubusercontent.com/Edahi98/RedDragon/master/docs/assets/test-environment.png',
+				alt: 'Entorno de pruebas de RedDragon',
+				descripcion: 'Frontend de pruebas (React + Vite + TailwindCSS) para probar el flujo end-to-end sin el canvas visual de Denki.',
+			},
+		],
+	},
+	{
 		nombre: 'Denki Pipeline Designer',
 		descripcion:
 			'Aplicación de escritorio (Electron) para diseñar visualmente pipelines de datos y Machine Learning sobre Polars, arrastrando nodos y ejecutándolos contra un backend Python local.',
 		stack: ['Electron', 'React', 'TypeScript', 'Polars', 'Machine Learning'],
 		slug: 'denki-pipeline-designer',
 		repoUrl: 'https://github.com/Edahi98/DenkiPepelineDesigner',
-		relacionados: ['Sistema de Gestión de Control de Cambios', 'Tsubasa Engine'],
+		relacionados: ['Sistema de Gestión de Control de Cambios', 'Tsubasa Engine', 'RedDragon'],
 		destacado: true,
+		anidadoEn: 'RedDragon',
 		imagenes: [
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen1.png',
@@ -166,8 +189,9 @@ export const proyectos: Proyecto[] = [
 		stack: ['Python', 'Polars', 'Rust', 'scikit-learn', 'Flask'],
 		slug: 'tsubasa-engine',
 		repoUrl: 'https://github.com/Edahi98/TsubasaEngine',
-		relacionados: ['Sistema de Gestión de Control de Cambios', 'Denki Pipeline Designer'],
+		relacionados: ['Sistema de Gestión de Control de Cambios', 'Denki Pipeline Designer', 'RedDragon'],
 		destacado: true,
+		anidadoEn: 'RedDragon',
 		imagenes: [
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/TsubasaEngine/main/img/cliente.png',
