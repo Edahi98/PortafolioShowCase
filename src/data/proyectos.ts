@@ -26,14 +26,14 @@ export const proyectos: Proyecto[] = [
 	{
 		nombre: 'Sistema de Gestión de Inventario de Casa',
 		descripcion:
-			'Aplicación web con Node.js y automatización de gestión desde un chatbot de Telegram con agente de IA local, creado con Langchain y Langgraph.',
+			'Saber qué hay en casa sin abrir un solo cajón. Todo lo que entra y sale queda registrado, y se consulta o se actualiza escribiéndole por Telegram, como quien le manda un mensaje a un amigo.',
 		stack: ['Node.js', 'Telegram Bot', 'Langchain', 'Langgraph', 'IA Local'],
 		destacado: true,
 	},
 	{
 		nombre: 'Sistema de Gestión Escolar',
 		descripcion:
-			'Descarga masiva de expedientes de estudiantes para la Universidad Tecnológica de Tecámac, con pruebas de estrés.',
+			'Lo que a la Universidad Tecnológica de Tecámac le llevaba días —bajar los expedientes de sus estudiantes uno por uno— ahora se resuelve en una sola operación, probada para aguantar el día de mayor carga.',
 		stack: ['C#', '.NET', 'Pruebas de estrés'],
 		destacado: true,
 		notaCapturas: 'No se pueden mostrar capturas por derechos de autor.',
@@ -41,55 +41,56 @@ export const proyectos: Proyecto[] = [
 	{
 		nombre: 'Sistema POS - Paletería',
 		descripcion:
-			'Aplicación web con algoritmos de Machine Learning, desarrollada con metodología DevOps.',
+			'Una paletería que ahora cobra, controla lo que le queda y sabe al cerrar cuánto vendió. El sistema aprende de sus propias ventas y le anticipa qué conviene preparar mañana.',
 		stack: ['Laravel', 'Machine Learning', 'DevOps'],
 		slug: 'creamyx',
 		imagenes: [
 			{
 				src: '/proyectos/creamyx/sitio-publico-productos.jpg',
 				alt: 'Catálogo público de Creamyx',
-				descripcion: 'Sitio público: catálogo de productos con filtros por categoría (Todos, Aguas, Paleta).',
+				descripcion: 'La tienda tal como la ve el cliente: todo el producto a la vista y filtros para encontrar rápido lo que se le antoja.',
 			},
 			{
 				src: '/proyectos/creamyx/panel-gestion.jpg',
 				alt: 'Panel de gestión de Creamyx',
-				descripcion: 'Panel de gestión: accesos rápidos a Dashboard, POS/Ventas y Productos, con métricas del día.',
+				descripcion: 'El tablero de quien atiende: cómo va el día y, a un clic, vender, revisar productos o ver los números.',
 			},
 			{
 				src: '/proyectos/creamyx/pos.jpg',
 				alt: 'Punto de venta (POS) de Creamyx',
-				descripcion: 'Punto de venta (POS): selección de productos por categoría para armar el carrito de una venta.',
+				descripcion: 'La pantalla de cobro: se van tocando los productos y la venta queda armada en segundos.',
 			},
 			{
 				src: '/proyectos/creamyx/productos.jpg',
 				alt: 'Catálogo de productos de Creamyx',
-				descripcion: 'Catálogo de productos: listado con precio y stock, y accesos para dar de alta uno nuevo.',
+				descripcion: 'Todo el catálogo con su precio y cuánto queda en existencia; dar de alta algo nuevo toma un momento.',
 			},
 			{
 				src: '/proyectos/creamyx/nuevo-producto.jpg',
 				alt: 'Formulario de nuevo producto de Creamyx',
-				descripcion: 'Alta de producto: formulario con nombre, categoría, tipo de venta, descripción e imagen.',
+				descripcion: 'Agregar un producto es llenar cinco datos: nombre, categoría, cómo se vende, descripción y su foto.',
 			},
 			{
 				src: '/proyectos/creamyx/ventas.jpg',
 				alt: 'Historial de ventas de Creamyx',
-				descripcion: 'Historial de ventas: totales del día y detalle de cada transacción, con exportación a PDF.',
+				descripcion: 'Todas las ventas del día con su detalle, y el corte listo para descargar en PDF.',
 			},
 			{
 				src: '/proyectos/creamyx/dashboard.jpg',
 				alt: 'Dashboard de Creamyx',
-				descripcion: 'Dashboard: resumen general con accesos directos a Productos, Ventas y Reportes.',
+				descripcion: 'Un vistazo general al negocio, con acceso directo a productos, ventas y reportes.',
 			},
 			{
 				src: '/proyectos/creamyx/configuracion-critica.jpg',
 				alt: 'Configuración crítica de Creamyx',
-				descripcion: 'Configuración crítica: ajustes sensibles del sistema y estado general (usuarios, ventas, ingresos).',
+				descripcion: 'Los ajustes delicados del sistema, junto al pulso del negocio: usuarios, ventas e ingresos.',
 			},
 		],
 	},
 	{
 		nombre: 'Sistema de Gestión de Inventario - Taller Mecánico',
-		descripcion: 'Aplicación web para clientes y ventas, desplegada con Docker y Nginx.',
+		descripcion:
+			'Un taller que llevaba sus refacciones en libreta hoy encuentra cualquier pieza en segundos y sabe con exactitud qué le queda, a quién le vendió y cuánto lleva vendido.',
 		stack: ['Laravel', 'Docker', 'Nginx'],
 		slug: 'taller-mecanico',
 		repoUrl: 'https://github.com/Edahi98/LosHermanos_Inventario',
@@ -99,34 +100,34 @@ export const proyectos: Proyecto[] = [
 			{
 				src: '/proyectos/taller-mecanico/home.jpg',
 				alt: 'Página de inicio del inventario Los Hermanos',
-				descripcion: 'Inicio: presentación del sistema y accesos rápidos a Categorías, Marcas y Artículos.',
+				descripcion: 'La entrada del sistema: desde aquí se llega a las refacciones, sus marcas y sus categorías.',
 			},
 			{
 				src: '/proyectos/taller-mecanico/articulos.jpg',
 				alt: 'Listado de artículos del inventario Los Hermanos',
-				descripcion: 'Artículos: listado filtrable por nombre, categoría y marca, con alta de nuevos artículos.',
+				descripcion: 'Todas las refacciones del taller: se buscan por nombre, tipo o marca, y se dan de alta al momento.',
 			},
 			{
 				src: '/proyectos/taller-mecanico/marcas.jpg',
 				alt: 'Listado de marcas del inventario Los Hermanos',
-				descripcion: 'Marcas: catálogo de marcas de refacciones, con filtro y alta de nuevas marcas.',
+				descripcion: 'Las marcas con las que trabaja el taller, para ubicar una pieza por su fabricante.',
 			},
 			{
 				src: '/proyectos/taller-mecanico/categorias.jpg',
 				alt: 'Listado de categorías del inventario Los Hermanos',
-				descripcion: 'Categorías: catálogo de categorías de productos, con filtro y alta de nuevas categorías.',
+				descripcion: 'Las categorías que agrupan las piezas, para que nada se pierda entre cientos de refacciones.',
 			},
 			{
 				src: '/proyectos/taller-mecanico/agregar-categoria.jpg',
 				alt: 'Formulario para agregar categoría en el inventario Los Hermanos',
-				descripcion: 'Alta de categoría: formulario simple para registrar una nueva categoría.',
+				descripcion: 'Crear una categoría nueva: un formulario corto y listo.',
 			},
 		],
 	},
 	{
 		nombre: 'Sistema de Gestión de Control de Cambios',
 		descripcion:
-			'Manejo de versiones de documentos para Gestión de Calidad, con extracción de metadatos asistida por IA local, Machine Learning y heurística para equipos de bajos recursos.',
+			'Un documento de calidad cambia decenas de veces y alguien tiene que capturar sus datos a mano cada vez. Aquí el sistema los lee solo y guarda la historia completa de cada versión, funcionando en las computadoras que la empresa ya tiene.',
 		stack: ['IA Local', 'Machine Learning', 'Heurística'],
 		relacionados: ['Denki Pipeline Designer', 'Tsubasa Engine'],
 		destacado: true,
@@ -134,7 +135,7 @@ export const proyectos: Proyecto[] = [
 	{
 		nombre: 'RedDragon',
 		descripcion:
-			'Plataforma IDP (Intelligent Document Processing): un único endpoint que extrae doc/docx/xls/xlsx/pdf a XML y ejecuta un pipeline contra el motor Tsubasa. Integra a Tsubasa Engine y Denki Pipeline Designer como piezas propias, no como proyectos paralelos.',
+			'Le entregas un documento —Word, Excel o PDF— y te devuelve la información ya ordenada y lista para usar, sin que nadie la capture a mano. Es la casa que reúne a Tsubasa Engine y a Denki Pipeline Designer y los pone a trabajar juntos.',
 		stack: ['Python', 'FastAPI', 'Docker', 'React', 'Vite', 'TailwindCSS'],
 		slug: 'reddragon',
 		repoUrl: 'https://github.com/Edahi98/RedDragon',
@@ -145,14 +146,14 @@ export const proyectos: Proyecto[] = [
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/RedDragon/master/docs/assets/test-environment.png',
 				alt: 'Entorno de pruebas de RedDragon',
-				descripcion: 'Frontend de pruebas (React + Vite + TailwindCSS) para probar el flujo end-to-end sin el canvas visual de Denki.',
+				descripcion: 'Pantalla de pruebas: se sube un documento y se ve, de principio a fin, cómo sale convertido en información ordenada.',
 			},
 		],
 	},
 	{
 		nombre: 'Denki Pipeline Designer',
 		descripcion:
-			'Aplicación de escritorio (Electron) para diseñar visualmente pipelines de datos y Machine Learning sobre Polars, arrastrando nodos y ejecutándolos contra un backend Python local.',
+			'Trabajar con datos sin escribir una línea de código: arrastras piezas a un lienzo, las conectas como un diagrama y ves el resultado al instante. Una aplicación de escritorio para armar solo lo que normalmente le pedirías a un programador.',
 		stack: ['Electron', 'React', 'TypeScript', 'Polars', 'Machine Learning'],
 		slug: 'denki-pipeline-designer',
 		repoUrl: 'https://github.com/Edahi98/DenkiPepelineDesigner',
@@ -163,29 +164,29 @@ export const proyectos: Proyecto[] = [
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen1.png',
 				alt: 'Canvas de diseño de pipelines de Denki',
-				descripcion: 'El canvas: arrastra nodos desde la paleta y conéctalos para armar el pipeline.',
+				descripcion: 'El lienzo: tomas las piezas que necesitas y las vas conectando, como quien dibuja un diagrama en una pizarra.',
 			},
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen2.png',
 				alt: 'Modal de resultado de ejecución de Denki',
-				descripcion: 'Resultado de ejecución: inspecciona el DataFrame/Series resultante, o su equivalente en SQL.',
+				descripcion: 'El resultado al instante: la tabla que produjo tu diagrama, lista para revisarla sin salir de la aplicación.',
 			},
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen3.png',
 				alt: 'Biblioteca de ejemplos de pipelines de Denki',
-				descripcion: 'Biblioteca de ejemplos: pipelines listos para cargar y aprender de ellos.',
+				descripcion: 'Ejemplos ya armados que se abren con un clic, para aprender viendo cómo se hizo.',
 			},
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen4.png',
 				alt: 'Manual de referencia de nodos de Denki',
-				descripcion: 'Manual de nodos: ayuda contextual por categoría, con flujos típicos de un click.',
+				descripcion: 'Una guía dentro de la app que explica, pieza por pieza, para qué sirve cada una y cómo se usa.',
 			},
 		],
 	},
 	{
 		nombre: 'Tsubasa Engine',
 		descripcion:
-			'Motor de ejecución detrás de Denki: compila un grafo de nodos a un AST tipado y lo ejecuta con Polars, con ~177 operaciones sobre Series y un registro canónico en Rust.',
+			'El motor que hace el trabajo pesado detrás de Denki: toma el diagrama que dibujaste y lo convierte en cálculos reales sobre tus datos, con casi 200 operaciones listas y velocidad para tablas enormes.',
 		stack: ['Python', 'Polars', 'Rust', 'scikit-learn', 'Flask'],
 		slug: 'tsubasa-engine',
 		repoUrl: 'https://github.com/Edahi98/TsubasaEngine',
@@ -197,7 +198,7 @@ export const proyectos: Proyecto[] = [
 				src: 'https://raw.githubusercontent.com/Edahi98/TsubasaEngine/main/img/cliente.png',
 				alt: 'Denki Pipeline Designer, cliente visual de Tsubasa Engine',
 				descripcion:
-					'Denki Pipeline Designer: el editor visual cliente que arma el grafo de nodos y se lo manda a Tsubasa vía POST /execute.',
+					'Denki Pipeline Designer, la cara visible del motor: ahí se dibuja el proceso y Tsubasa lo ejecuta por detrás.',
 			},
 		],
 	},
