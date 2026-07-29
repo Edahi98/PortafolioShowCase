@@ -10,24 +10,50 @@ type Props = {
 };
 
 const FIELD_LABELS: Record<string, string> = {
-	name: 'Nombre', category: 'Categoría', language: 'Lenguaje',
-	difficulty: 'Nivel', description: 'Descripción', stars: '★',
+	name: 'Título', genre: 'Género', director: 'Director',
+	year: 'Año', rating: 'Rating', duration: 'Dur. (min)',
+	language: 'Idioma', era: 'Era',
 };
 
-const DIFF_COLOR: Record<string, string> = {
-	Beginner: '#059669', Intermediate: '#d97706', Advanced: '#e11d48',
+const GENRE_COLOR: Record<string, string> = {
+	'Acción':          '#ef4444',
+	'Drama':           '#3b82f6',
+	'Thriller':        '#f97316',
+	'Ciencia ficción': '#06b6d4',
+	'Comedia':         '#eab308',
+	'Animación':       '#ec4899',
+	'Terror':          '#a855f7',
 };
-const CAT_COLOR: Record<string, string> = {
-	Frontend: '#0891b2', Backend: '#16a34a', DevOps: '#ea580c',
-	ML: '#db2777', Database: '#ca8a04',
+
+const ERA_STYLE: Record<string, { bg: string; color: string }> = {
+	'Clásico':  { bg: '#fef3c7', color: '#92400e' },
+	'Moderno':  { bg: '#e0e7ff', color: '#3730a3' },
+	'Reciente': { bg: '#d1fae5', color: '#065f46' },
 };
+
+function ratingBar(value: number) {
+	const color = value >= 85 ? '#16a34a' : value >= 70 ? '#ca8a04' : '#dc2626';
+	return (
+		<div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+			<div style={{ width: 48, height: 5, borderRadius: 4, background: '#e2e8f0', overflow: 'hidden', flexShrink: 0 }}>
+				<div style={{ width: `${value}%`, height: '100%', background: color, borderRadius: 4 }} />
+			</div>
+			<span style={{ fontSize: 11, fontWeight: 600, color }}>{value}</span>
+		</div>
+	);
+}
 
 function Cell({ field, value }: { field: keyof DataItem; value: unknown }) {
-	const s = String(value ?? '—');
-	if (field === 'difficulty') return <span style={{ color: DIFF_COLOR[s] ?? '#64748b', fontWeight: 600 }}>{s}</span>;
-	if (field === 'category') return <span style={{ color: CAT_COLOR[s] ?? '#64748b', fontWeight: 600 }}>{s}</span>;
-	if (field === 'stars') return <span style={{ color: '#ca8a04' }}>{'★'.repeat(Math.min(5, Math.floor(Number(s) / 20)))}</span>;
-	if (field === 'description') return <span style={{ color: '#64748b', fontSize: 11 }}>{s}</span>;
+	if (value === undefined || value === null) return <>—</>;
+	const s = String(value);
+	if (field === 'genre') return <span style={{ color: GENRE_COLOR[s] ?? '#64748b', fontWeight: 700, fontSize: 11 }}>{s}</span>;
+	if (field === 'era') {
+		const st = ERA_STYLE[s] ?? { bg: '#f1f5f9', color: '#475569' };
+		return <span style={{ background: st.bg, color: st.color, borderRadius: 4, padding: '1px 6px', fontSize: 10, fontWeight: 600 }}>{s}</span>;
+	}
+	if (field === 'rating') return <>{ratingBar(Number(s))}</>;
+	if (field === 'duration') return <span style={{ color: '#64748b', fontSize: 11 }}>{s} min</span>;
+	if (field === 'year') return <span style={{ fontFamily: 'monospace', fontSize: 11 }}>{s}</span>;
 	return <>{s}</>;
 }
 
@@ -36,9 +62,9 @@ function DataTable({ items, fields }: { items: Partial<DataItem>[]; fields: (key
 	return (
 		<table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
 			<thead>
-				<tr>
+				<tr style={{ borderBottom: '2px solid #e2e8f0' }}>
 					{fields.map((f) => (
-						<th key={f} style={{ textAlign: 'left', padding: '6px 8px', borderBottom: '2px solid #e2e8f0', color: '#475569', fontWeight: 700, whiteSpace: 'nowrap' }}>
+						<th key={f} style={{ textAlign: 'left', padding: '6px 10px', color: '#475569', fontWeight: 700, whiteSpace: 'nowrap', fontFamily: 'system-ui,sans-serif' }}>
 							{FIELD_LABELS[f] ?? f}
 						</th>
 					))}
@@ -46,9 +72,9 @@ function DataTable({ items, fields }: { items: Partial<DataItem>[]; fields: (key
 			</thead>
 			<tbody>
 				{items.map((item, i) => (
-					<tr key={item.id ?? i} style={{ borderBottom: '1px solid #f1f5f9' }}>
+					<tr key={item.id ?? i} style={{ borderBottom: '1px solid #f1f5f9', background: i % 2 === 0 ? 'white' : '#fafafa' }}>
 						{fields.map((f) => (
-							<td key={f} style={{ padding: '5px 8px', verticalAlign: 'top' }}>
+							<td key={f} style={{ padding: '6px 10px', verticalAlign: 'middle' }}>
 								<Cell field={f} value={item[f]} />
 							</td>
 						))}
@@ -61,39 +87,47 @@ function DataTable({ items, fields }: { items: Partial<DataItem>[]; fields: (key
 
 export const PdfView = forwardRef<HTMLDivElement, Props>(function PdfView({ items, fields, settings, groups }, ref) {
 	const grouped = settings.groupByCategory
-		? Object.keys(groups).reduce<Record<string, Partial<DataItem>[]>>((acc, cat) => {
-				acc[cat] = items.filter((i) => i.category === cat);
+		? Object.keys(groups).reduce<Record<string, Partial<DataItem>[]>>((acc, genre) => {
+				acc[genre] = items.filter((i) => i.genre === genre);
 				return acc;
 		  }, {})
 		: null;
 
 	const subtitle = [
-		settings.query && `búsqueda: "${settings.query}"`,
+		settings.query && `"${settings.query}"`,
 		settings.categoryFilter !== 'All' && settings.categoryFilter,
 		settings.difficultyFilter !== 'All' && settings.difficultyFilter,
 	].filter(Boolean).join(' · ');
 
 	return (
-		<div ref={ref} style={{ background: 'white', borderRadius: 12, padding: '28px 32px', minHeight: 300, fontFamily: 'Georgia, serif', color: '#1e293b' }}>
-			{/* Header */}
-			<div style={{ borderBottom: '2px solid #e2e8f0', paddingBottom: 12, marginBottom: 16 }}>
-				<h1 style={{ fontSize: 18, fontWeight: 700, margin: 0, color: '#0f172a' }}>Denki Pipeline — Resultado</h1>
-				<p style={{ fontSize: 11, color: '#94a3b8', marginTop: 4, fontFamily: 'monospace' }}>
-					{items.length} elemento{items.length !== 1 ? 's' : ''}
-					{subtitle && ` · ${subtitle}`}
-				</p>
+		<div ref={ref} style={{ background: 'white', borderRadius: 12, padding: '28px 32px', minHeight: 300, fontFamily: 'system-ui, sans-serif', color: '#1e293b' }}>
+			<div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', borderBottom: '2px solid #e2e8f0', paddingBottom: 14, marginBottom: 18, gap: 12 }}>
+				<div>
+					<h1 style={{ fontSize: 18, fontWeight: 700, margin: 0, color: '#0f172a' }}>Denki Pipeline — Películas</h1>
+					<p style={{ fontSize: 11, color: '#94a3b8', marginTop: 4, fontFamily: 'monospace' }}>
+						{items.length} resultado{items.length !== 1 ? 's' : ''}
+						{subtitle && <> · filtro: {subtitle}</>}
+					</p>
+				</div>
+				<div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+					{Object.entries(groups).map(([genre, n]) => (
+						<span key={genre} style={{ fontSize: 10, fontWeight: 600, color: GENRE_COLOR[genre] ?? '#64748b', background: `${GENRE_COLOR[genre] ?? '#64748b'}15`, border: `1px solid ${GENRE_COLOR[genre] ?? '#64748b'}30`, borderRadius: 20, padding: '2px 8px' }}>
+							{genre} {n}
+						</span>
+					))}
+				</div>
 			</div>
 
-			{/* Content */}
 			{items.length === 0 ? (
-				<p style={{ textAlign: 'center', color: '#94a3b8', fontStyle: 'italic', padding: '32px 0' }}>
+				<p style={{ textAlign: 'center', color: '#94a3b8', fontStyle: 'italic', padding: '40px 0' }}>
 					Sin resultados para los filtros actuales.
 				</p>
 			) : grouped ? (
-				Object.entries(grouped).map(([cat, rows]) => (
-					<div key={cat} style={{ marginBottom: 20 }}>
-						<h3 style={{ fontSize: 13, fontWeight: 700, color: CAT_COLOR[cat] ?? '#334155', marginBottom: 6 }}>
-							{cat} ({rows.length})
+				Object.entries(grouped).map(([genre, rows]) => rows.length > 0 && (
+					<div key={genre} style={{ marginBottom: 24 }}>
+						<h3 style={{ fontSize: 13, fontWeight: 700, color: GENRE_COLOR[genre] ?? '#334155', marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+							<span style={{ width: 8, height: 8, borderRadius: '50%', background: GENRE_COLOR[genre] ?? '#334155', display: 'inline-block' }} />
+							{genre} <span style={{ fontWeight: 400, color: '#94a3b8', fontSize: 12 }}>({rows.length})</span>
 						</h3>
 						<DataTable items={rows} fields={fields} />
 					</div>

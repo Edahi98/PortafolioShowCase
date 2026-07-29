@@ -1,55 +1,37 @@
 import {
-	Document,
-	Packer,
-	Paragraph,
-	Table,
-	TableRow,
-	TableCell,
-	TextRun,
-	HeadingLevel,
-	WidthType,
-	BorderStyle,
+	Document, Packer, Paragraph, Table, TableRow, TableCell,
+	TextRun, HeadingLevel, WidthType, BorderStyle,
 } from 'docx';
 import type { DataItem } from '../../../../data/denkiDataset';
 
 const FIELD_LABELS: Record<string, string> = {
-	name: 'Nombre',
-	category: 'Categoría',
-	language: 'Lenguaje',
-	difficulty: 'Dificultad',
-	description: 'Descripción',
-	stars: 'Estrellas',
+	name: 'Título', genre: 'Género', director: 'Director',
+	year: 'Año', rating: 'Rating', duration: 'Duración (min)',
+	language: 'Idioma', era: 'Era',
 };
+
+const BORDER = { style: BorderStyle.SINGLE, size: 1, color: 'D1D5DB' };
+const CELL_BORDERS = { top: BORDER, bottom: BORDER, left: BORDER, right: BORDER };
 
 function headerCell(text: string) {
 	return new TableCell({
-		children: [new Paragraph({ children: [new TextRun({ text, bold: true })] })],
-		shading: { fill: '1E2440' },
-		borders: {
-			top: { style: BorderStyle.SINGLE, size: 1 },
-			bottom: { style: BorderStyle.SINGLE, size: 1 },
-			left: { style: BorderStyle.SINGLE, size: 1 },
-			right: { style: BorderStyle.SINGLE, size: 1 },
-		},
+		children: [new Paragraph({ children: [new TextRun({ text, bold: true, color: '334155' })] })],
+		shading: { fill: 'F8FAFC' },
+		borders: CELL_BORDERS,
 	});
 }
 
 function dataCell(text: string) {
 	return new TableCell({
 		children: [new Paragraph({ children: [new TextRun({ text, size: 20 })] })],
-		borders: {
-			top: { style: BorderStyle.SINGLE, size: 1 },
-			bottom: { style: BorderStyle.SINGLE, size: 1 },
-			left: { style: BorderStyle.SINGLE, size: 1 },
-			right: { style: BorderStyle.SINGLE, size: 1 },
-		},
+		borders: CELL_BORDERS,
 	});
 }
 
 export async function downloadDocx(
 	items: Partial<DataItem>[],
 	fields: (keyof DataItem)[],
-	filename = 'denki-resultado.docx',
+	filename = 'denki-peliculas.docx',
 ) {
 	const headerRow = new TableRow({
 		children: fields.map((f) => headerCell(FIELD_LABELS[f] ?? f)),
@@ -59,7 +41,11 @@ export async function downloadDocx(
 	const dataRows = items.map(
 		(item) =>
 			new TableRow({
-				children: fields.map((f) => dataCell(String(item[f] ?? '—'))),
+				children: fields.map((f) => {
+					const v = item[f];
+					const text = f === 'duration' ? `${v} min` : String(v ?? '—');
+					return dataCell(text);
+				}),
 			}),
 	);
 
@@ -67,18 +53,8 @@ export async function downloadDocx(
 		sections: [
 			{
 				children: [
-					new Paragraph({
-						text: 'Denki Pipeline Designer — Resultado Filtrado',
-						heading: HeadingLevel.HEADING_1,
-					}),
-					new Paragraph({
-						children: [
-							new TextRun({
-								text: `${items.length} elemento${items.length !== 1 ? 's' : ''} exportados`,
-								size: 20,
-							}),
-						],
-					}),
+					new Paragraph({ text: 'Denki Pipeline Designer — Resultado', heading: HeadingLevel.HEADING_1 }),
+					new Paragraph({ children: [new TextRun({ text: `${items.length} película${items.length !== 1 ? 's' : ''} exportadas`, size: 20 })] }),
 					new Paragraph({}),
 					new Table({
 						width: { size: 100, type: WidthType.PERCENTAGE },
