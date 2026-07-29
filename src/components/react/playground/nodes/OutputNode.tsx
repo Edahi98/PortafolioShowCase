@@ -12,7 +12,7 @@ export function OutputNode({ data }: NodeProps<OutputData>) {
 		<div className="node-base border-rose-500/50 shadow-rose-500/20" style={{ minWidth: 160 }}>
 			<Handle type="target" position={Position.Left} className="!bg-rose-400 !w-3 !h-3 !border-2 !border-slate-900" />
 			<span className="node-label text-rose-400">Output</span>
-			<p className="text-sm font-bold text-white mt-0.5">PDF / DOCX</p>
+			<p className="text-sm font-bold text-white mt-0.5">DataFrame</p>
 
 			<div className="mt-3 rounded-lg border border-rose-500/20 bg-rose-500/5 px-3 py-2 text-center">
 				<p className="font-mono text-2xl font-bold text-white">{data.count}</p>

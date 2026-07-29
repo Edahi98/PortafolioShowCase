@@ -8,7 +8,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 
 import { usePipeline } from './hooks/usePipeline';
-import { PdfView } from './components/PdfView';
+import { ResultTable } from './components/ResultTable';
 import { SourceNode } from './nodes/SourceNode';
 import { FilterNode } from './nodes/FilterNode';
 import { TransformNode } from './nodes/TransformNode';
@@ -138,27 +138,14 @@ export default function DenkiPlayground() {
 			</div>
 
 			{/* Output section */}
-			<div ref={outputRef} className="flex flex-col gap-3">
-				<div className="flex items-center justify-between">
-					<h3 className="font-mono text-xs uppercase tracking-widest text-rose-400">
-						Vista PDF — {pipelineState.outputItems.length} elementos
-					</h3>
-					<button
-						onClick={handleDownload}
-						className="inline-flex items-center gap-1.5 rounded-full border border-rose-400/50 bg-rose-400/10 px-4 py-1.5 font-mono text-xs text-rose-300 transition hover:bg-rose-400/20"
-					>
-						Descargar DOCX ↓
-					</button>
-				</div>
-				<div className="overflow-auto rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_8px_32px_rgba(0,0,0,0.4)]">
-					<PdfView
-						items={pipelineState.outputItems}
-						fields={pipelineState.transformedFields as (keyof DataItem)[]}
-						settings={settings}
-						groups={pipelineState.groups}
-					/>
-				</div>
-			</div>
+			<ResultTable
+				ref={outputRef}
+				items={pipelineState.outputItems}
+				fields={pipelineState.transformedFields as (keyof DataItem)[]}
+				settings={settings}
+				groups={pipelineState.groups}
+				onDownload={handleDownload}
+			/>
 		</div>
 	);
 }
