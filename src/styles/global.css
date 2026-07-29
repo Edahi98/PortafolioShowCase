@@ -33,40 +33,4 @@ body {
 		backdrop-filter: blur(12px);
 	}
 
-	/* Denki Playground nodes — glassmorphism matching real Denki design */
-	.node-base {
-		background: rgba(15, 23, 42, 0.55);
-		backdrop-filter: blur(14px);
-		-webkit-backdrop-filter: blur(14px);
-		border: 1px solid;
-		border-radius: 14px;
-		padding: 14px 16px;
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-	}
-	.node-label {
-		font-family: ui-monospace, monospace;
-		font-size: 9px;
-		text-transform: uppercase;
-		letter-spacing: 0.12em;
-		font-weight: 600;
-	}
-
-	/* Denki canvas — edge glow, white translucent strokes */
-	.denki-canvas .react-flow__edge-path {
-		stroke: rgba(255, 255, 255, 0.55) !important;
-		stroke-width: 2.5 !important;
-		filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
-	}
-	.denki-canvas .react-flow__edge.selected .react-flow__edge-path {
-		stroke: #ffffff !important;
-		stroke-width: 3.5 !important;
-		filter: drop-shadow(0 0 10px #fff);
-	}
-	.denki-canvas .react-flow__attribution { display: none; }
-
-	/* Custom scrollbar for dark panels */
-	.denki-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
-	.denki-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.15); border-radius: 3px; }
-	.denki-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
-	.denki-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.35); }
 }
