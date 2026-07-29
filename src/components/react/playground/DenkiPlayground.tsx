@@ -1,15 +1,13 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import ReactFlow, {
 	Background,
-	Controls,
+	BackgroundVariant,
 	type Node,
 	type Edge,
-	BackgroundVariant,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import { usePipeline } from './hooks/usePipeline';
-import { SettingsPanel } from './components/SettingsPanel';
 import { PdfView } from './components/PdfView';
 import { SourceNode } from './nodes/SourceNode';
 import { FilterNode } from './nodes/FilterNode';
@@ -18,7 +16,10 @@ import { AggregateNode } from './nodes/AggregateNode';
 import { OutputNode } from './nodes/OutputNode';
 import { downloadDocx } from './utils/docxExport';
 import type { DataItem } from '../../../data/denkiDataset';
+import type { Category, Difficulty } from '../../../data/denkiDataset';
+import type { VisibleFields } from './hooks/usePipeline';
 
+// nodeTypes MUST be defined outside the component to avoid ReactFlow re-mounting nodes
 const nodeTypes = {
 	source: SourceNode,
 	filter: FilterNode,
@@ -27,61 +28,20 @@ const nodeTypes = {
 	output: OutputNode,
 };
 
-const EDGE_STYLE = { stroke: '#4b5563', strokeWidth: 1.5 };
+const EDGES: Edge[] = [
+	{ id: 'e1', source: 'source', target: 'filter', animated: true, style: { stroke: '#6366f1', strokeWidth: 2 } },
+	{ id: 'e2', source: 'filter', target: 'transform', animated: true, style: { stroke: '#6366f1', strokeWidth: 2 } },
+	{ id: 'e3', source: 'transform', target: 'aggregate', animated: true, style: { stroke: '#6366f1', strokeWidth: 2 } },
+	{ id: 'e4', source: 'aggregate', target: 'output', animated: true, style: { stroke: '#6366f1', strokeWidth: 2 } },
+];
 
 export default function DenkiPlayground() {
 	const { settings, pipelineState, update, toggleField } = usePipeline();
+	const outputRef = useRef<HTMLDivElement>(null);
 
-	const nodes = useMemo<Node[]>(
-		() => [
-			{
-				id: 'source',
-				type: 'source',
-				position: { x: 10, y: 80 },
-				data: { count: pipelineState.sourceCount },
-			},
-			{
-				id: 'filter',
-				type: 'filter',
-				position: { x: 185, y: 60 },
-				data: {
-					query: settings.query,
-					category: settings.categoryFilter,
-					difficulty: settings.difficultyFilter,
-					count: pipelineState.filterCount,
-				},
-			},
-			{
-				id: 'transform',
-				type: 'transform',
-				position: { x: 375, y: 70 },
-				data: { fields: pipelineState.transformedFields },
-			},
-			{
-				id: 'aggregate',
-				type: 'aggregate',
-				position: { x: 550, y: 55 },
-				data: { groups: pipelineState.groups },
-			},
-			{
-				id: 'output',
-				type: 'output',
-				position: { x: 730, y: 80 },
-				data: { count: pipelineState.outputItems.length },
-			},
-		],
-		[settings, pipelineState],
-	);
-
-	const edges = useMemo<Edge[]>(
-		() => [
-			{ id: 'e1', source: 'source', target: 'filter', style: EDGE_STYLE, animated: true },
-			{ id: 'e2', source: 'filter', target: 'transform', style: EDGE_STYLE, animated: true },
-			{ id: 'e3', source: 'transform', target: 'aggregate', style: EDGE_STYLE, animated: true },
-			{ id: 'e4', source: 'aggregate', target: 'output', style: EDGE_STYLE, animated: true },
-		],
-		[],
-	);
+	const handleView = useCallback(() => {
+		outputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+	}, []);
 
 	const handleDownload = useCallback(async () => {
 		await downloadDocx(
@@ -90,43 +50,113 @@ export default function DenkiPlayground() {
 		);
 	}, [pipelineState]);
 
+	const handleQueryChange = useCallback((v: string) => update({ query: v }), [update]);
+	const handleCategoryChange = useCallback((v: Category | 'All') => update({ categoryFilter: v }), [update]);
+	const handleDifficultyChange = useCallback((v: Difficulty | 'All') => update({ difficultyFilter: v }), [update]);
+	const handleToggleField = useCallback((f: keyof VisibleFields) => toggleField(f), [toggleField]);
+	const handleToggleGroup = useCallback((v: boolean) => update({ groupByCategory: v }), [update]);
+
+	const nodes = useMemo<Node[]>(
+		() => [
+			{
+				id: 'source',
+				type: 'source',
+				position: { x: 20, y: 60 },
+				data: { count: pipelineState.sourceCount },
+			},
+			{
+				id: 'filter',
+				type: 'filter',
+				position: { x: 230, y: 20 },
+				data: {
+					query: settings.query,
+					categoryFilter: settings.categoryFilter,
+					difficultyFilter: settings.difficultyFilter,
+					count: pipelineState.filterCount,
+					total: pipelineState.sourceCount,
+					onQueryChange: handleQueryChange,
+					onCategoryChange: handleCategoryChange,
+					onDifficultyChange: handleDifficultyChange,
+				},
+			},
+			{
+				id: 'transform',
+				type: 'transform',
+				position: { x: 464, y: 40 },
+				data: {
+					visibleFields: settings.visibleFields,
+					onToggleField: handleToggleField,
+				},
+			},
+			{
+				id: 'aggregate',
+				type: 'aggregate',
+				position: { x: 678, y: 20 },
+				data: {
+					groups: pipelineState.groups,
+					total: pipelineState.filterCount,
+					groupByCategory: settings.groupByCategory,
+					onToggleGroup: handleToggleGroup,
+				},
+			},
+			{
+				id: 'output',
+				type: 'output',
+				position: { x: 896, y: 60 },
+				data: {
+					count: pipelineState.outputItems.length,
+					fields: pipelineState.transformedFields.length,
+					onView: handleView,
+					onDownload: handleDownload,
+				},
+			},
+		],
+		[settings, pipelineState, handleQueryChange, handleCategoryChange, handleDifficultyChange, handleToggleField, handleToggleGroup, handleView, handleDownload],
+	);
+
 	return (
-		<div className="flex flex-col gap-4 text-slate-100">
+		<div className="flex flex-col gap-6">
 			{/* Pipeline canvas */}
-			<div className="rounded-2xl border border-slate-700/60 bg-slate-900/60 overflow-hidden" style={{ height: 220 }}>
+			<div
+				className="rounded-2xl border border-slate-700/60 bg-[#090d1a] overflow-hidden"
+				style={{ height: 380 }}
+			>
 				<ReactFlow
 					nodes={nodes}
-					edges={edges}
+					edges={EDGES}
 					nodeTypes={nodeTypes}
 					fitView
-					fitViewOptions={{ padding: 0.3 }}
-					nodesDraggable={false}
+					fitViewOptions={{ padding: 0.12, minZoom: 0.6, maxZoom: 1 }}
+					minZoom={0.4}
+					maxZoom={1.5}
+					nodesDraggable={true}
 					nodesConnectable={false}
 					elementsSelectable={false}
-					zoomOnScroll={false}
-					panOnScroll={false}
-					panOnDrag={false}
+					deleteKeyCode={null}
 				>
-					<Background variant={BackgroundVariant.Dots} gap={18} size={1} color="#1e2440" />
-					<Controls showInteractive={false} className="!border-slate-700 !bg-slate-800 !shadow-none" />
+					<Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#1e2440" />
 				</ReactFlow>
 			</div>
 
-			{/* Bottom: settings + pdf */}
-			<div className="grid gap-4 lg:grid-cols-[260px_1fr]">
-				{/* Settings */}
-				<div className="rounded-2xl border border-slate-700/60 bg-slate-900/60 p-4">
-					<SettingsPanel settings={settings} onUpdate={update} onToggleField={toggleField} />
+			{/* Output section */}
+			<div ref={outputRef} className="flex flex-col gap-3">
+				<div className="flex items-center justify-between">
+					<h3 className="font-mono text-xs uppercase tracking-widest text-rose-400">
+						Vista PDF — {pipelineState.outputItems.length} elementos
+					</h3>
+					<button
+						onClick={handleDownload}
+						className="inline-flex items-center gap-1.5 rounded-full border border-rose-400/50 bg-rose-400/10 px-4 py-1.5 font-mono text-xs text-rose-300 transition hover:bg-rose-400/20"
+					>
+						Descargar DOCX ↓
+					</button>
 				</div>
-
-				{/* PDF view */}
-				<div className="rounded-2xl border border-slate-700/60 bg-slate-900/60 p-4" style={{ minHeight: 400 }}>
+				<div className="overflow-auto rounded-2xl shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_8px_32px_rgba(0,0,0,0.4)]">
 					<PdfView
 						items={pipelineState.outputItems}
 						fields={pipelineState.transformedFields as (keyof DataItem)[]}
 						settings={settings}
 						groups={pipelineState.groups}
-						onDownload={handleDownload}
 					/>
 				</div>
 			</div>

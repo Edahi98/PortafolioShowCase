@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { DataItem } from '../../../../data/denkiDataset';
 import type { PipelineSettings } from '../hooks/usePipeline';
 
@@ -6,74 +7,38 @@ type Props = {
 	fields: (keyof DataItem)[];
 	settings: PipelineSettings;
 	groups: Record<string, number>;
-	onDownload: () => void;
 };
 
 const FIELD_LABELS: Record<string, string> = {
-	name: 'Nombre',
-	category: 'Categoría',
-	language: 'Lenguaje',
-	difficulty: 'Dificultad',
-	description: 'Descripción',
-	stars: '★',
+	name: 'Nombre', category: 'Categoría', language: 'Lenguaje',
+	difficulty: 'Nivel', description: 'Descripción', stars: '★',
 };
 
-const DIFFICULTY_COLORS: Record<string, string> = {
-	Beginner: 'text-emerald-600',
-	Intermediate: 'text-amber-600',
-	Advanced: 'text-rose-600',
+const DIFF_COLOR: Record<string, string> = {
+	Beginner: '#059669', Intermediate: '#d97706', Advanced: '#e11d48',
+};
+const CAT_COLOR: Record<string, string> = {
+	Frontend: '#0891b2', Backend: '#16a34a', DevOps: '#ea580c',
+	ML: '#db2777', Database: '#ca8a04',
 };
 
-const CATEGORY_COLORS: Record<string, string> = {
-	Frontend: 'text-cyan-700',
-	Backend: 'text-green-700',
-	DevOps: 'text-orange-700',
-	ML: 'text-pink-700',
-	Database: 'text-yellow-700',
-};
-
-function renderCell(field: keyof DataItem, value: unknown) {
-	if (value === undefined) return '—';
-	const s = String(value);
-	if (field === 'difficulty') {
-		return <span className={`font-semibold ${DIFFICULTY_COLORS[s] ?? ''}`}>{s}</span>;
-	}
-	if (field === 'category') {
-		return <span className={`font-semibold ${CATEGORY_COLORS[s] ?? ''}`}>{s}</span>;
-	}
-	if (field === 'description') {
-		return <span className="text-gray-600 text-[11px]">{s}</span>;
-	}
-	return s;
+function Cell({ field, value }: { field: keyof DataItem; value: unknown }) {
+	const s = String(value ?? '—');
+	if (field === 'difficulty') return <span style={{ color: DIFF_COLOR[s] ?? '#64748b', fontWeight: 600 }}>{s}</span>;
+	if (field === 'category') return <span style={{ color: CAT_COLOR[s] ?? '#64748b', fontWeight: 600 }}>{s}</span>;
+	if (field === 'stars') return <span style={{ color: '#ca8a04' }}>{'★'.repeat(Math.min(5, Math.floor(Number(s) / 20)))}</span>;
+	if (field === 'description') return <span style={{ color: '#64748b', fontSize: 11 }}>{s}</span>;
+	return <>{s}</>;
 }
 
-function GroupedView({ items, fields, groups }: Pick<Props, 'items' | 'fields' | 'groups'>) {
-	const grouped = Object.keys(groups).reduce<Record<string, Partial<DataItem>[]>>((acc, cat) => {
-		acc[cat] = items.filter((i) => i.category === cat);
-		return acc;
-	}, {});
-
+function DataTable({ items, fields }: { items: Partial<DataItem>[]; fields: (keyof DataItem)[] }) {
+	if (items.length === 0) return null;
 	return (
-		<>
-			{Object.entries(grouped).map(([cat, rows]) => (
-				<div key={cat} className="mb-4">
-					<h3 className={`text-sm font-bold mb-1 ${CATEGORY_COLORS[cat] ?? 'text-gray-800'}`}>
-						{cat} ({rows.length})
-					</h3>
-					<TableRows items={rows} fields={fields} />
-				</div>
-			))}
-		</>
-	);
-}
-
-function TableRows({ items, fields }: { items: Partial<DataItem>[]; fields: (keyof DataItem)[] }) {
-	return (
-		<table className="w-full border-collapse text-[12px]">
+		<table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
 			<thead>
-				<tr className="border-b border-gray-300 bg-gray-50">
+				<tr>
 					{fields.map((f) => (
-						<th key={f} className="px-2 py-1 text-left font-semibold text-gray-600 whitespace-nowrap">
+						<th key={f} style={{ textAlign: 'left', padding: '6px 8px', borderBottom: '2px solid #e2e8f0', color: '#475569', fontWeight: 700, whiteSpace: 'nowrap' }}>
 							{FIELD_LABELS[f] ?? f}
 						</th>
 					))}
@@ -81,10 +46,10 @@ function TableRows({ items, fields }: { items: Partial<DataItem>[]; fields: (key
 			</thead>
 			<tbody>
 				{items.map((item, i) => (
-					<tr key={item.id ?? i} className="border-b border-gray-100 hover:bg-gray-50">
+					<tr key={item.id ?? i} style={{ borderBottom: '1px solid #f1f5f9' }}>
 						{fields.map((f) => (
-							<td key={f} className="px-2 py-1 align-top">
-								{renderCell(f, item[f])}
+							<td key={f} style={{ padding: '5px 8px', verticalAlign: 'top' }}>
+								<Cell field={f} value={item[f]} />
 							</td>
 						))}
 					</tr>
@@ -94,49 +59,52 @@ function TableRows({ items, fields }: { items: Partial<DataItem>[]; fields: (key
 	);
 }
 
-export function PdfView({ items, fields, settings, groups, onDownload }: Props) {
+export const PdfView = forwardRef<HTMLDivElement, Props>(function PdfView({ items, fields, settings, groups }, ref) {
+	const grouped = settings.groupByCategory
+		? Object.keys(groups).reduce<Record<string, Partial<DataItem>[]>>((acc, cat) => {
+				acc[cat] = items.filter((i) => i.category === cat);
+				return acc;
+		  }, {})
+		: null;
+
+	const subtitle = [
+		settings.query && `búsqueda: "${settings.query}"`,
+		settings.categoryFilter !== 'All' && settings.categoryFilter,
+		settings.difficultyFilter !== 'All' && settings.difficultyFilter,
+	].filter(Boolean).join(' · ');
+
 	return (
-		<div className="flex flex-col gap-3 h-full">
-			{/* Toolbar */}
-			<div className="flex items-center justify-between">
-				<span className="font-mono text-[10px] uppercase tracking-widest text-rose-400">Vista PDF</span>
-				<button
-					onClick={onDownload}
-					className="rounded-full border border-rose-400/50 bg-rose-400/10 px-3 py-1 font-mono text-[10px] text-rose-300 transition hover:bg-rose-400/20"
-				>
-					Descargar DOCX ↓
-				</button>
+		<div ref={ref} style={{ background: 'white', borderRadius: 12, padding: '28px 32px', minHeight: 300, fontFamily: 'Georgia, serif', color: '#1e293b' }}>
+			{/* Header */}
+			<div style={{ borderBottom: '2px solid #e2e8f0', paddingBottom: 12, marginBottom: 16 }}>
+				<h1 style={{ fontSize: 18, fontWeight: 700, margin: 0, color: '#0f172a' }}>Denki Pipeline — Resultado</h1>
+				<p style={{ fontSize: 11, color: '#94a3b8', marginTop: 4, fontFamily: 'monospace' }}>
+					{items.length} elemento{items.length !== 1 ? 's' : ''}
+					{subtitle && ` · ${subtitle}`}
+				</p>
 			</div>
 
-			{/* Paper */}
-			<div className="flex-1 overflow-auto rounded-xl bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_4px_24px_rgba(0,0,0,0.12)]">
-				<div className="p-6 min-h-full">
-					{/* Header */}
-					<div className="mb-5 border-b border-gray-200 pb-3">
-						<h1 className="text-lg font-bold text-gray-800">Denki Pipeline — Resultado</h1>
-						<p className="text-[11px] text-gray-500 mt-0.5">
-							{items.length} elemento{items.length !== 1 ? 's' : ''}
-							{settings.query ? ` · búsqueda: "${settings.query}"` : ''}
-							{settings.categoryFilter !== 'All' ? ` · ${settings.categoryFilter}` : ''}
-							{settings.difficultyFilter !== 'All' ? ` · ${settings.difficultyFilter}` : ''}
-						</p>
+			{/* Content */}
+			{items.length === 0 ? (
+				<p style={{ textAlign: 'center', color: '#94a3b8', fontStyle: 'italic', padding: '32px 0' }}>
+					Sin resultados para los filtros actuales.
+				</p>
+			) : grouped ? (
+				Object.entries(grouped).map(([cat, rows]) => (
+					<div key={cat} style={{ marginBottom: 20 }}>
+						<h3 style={{ fontSize: 13, fontWeight: 700, color: CAT_COLOR[cat] ?? '#334155', marginBottom: 6 }}>
+							{cat} ({rows.length})
+						</h3>
+						<DataTable items={rows} fields={fields} />
 					</div>
+				))
+			) : (
+				<DataTable items={items} fields={fields} />
+			)}
 
-					{/* Content */}
-					{items.length === 0 ? (
-						<p className="text-center text-sm text-gray-400 py-8">Sin resultados para los filtros actuales.</p>
-					) : settings.groupByCategory ? (
-						<GroupedView items={items} fields={fields} groups={groups} />
-					) : (
-						<TableRows items={items} fields={fields} />
-					)}
-
-					{/* Footer */}
-					<p className="mt-6 text-[10px] text-gray-400 text-right border-t border-gray-100 pt-2">
-						Generado por Denki Pipeline Designer · Dataset: DOCX
-					</p>
-				</div>
-			</div>
+			<p style={{ marginTop: 24, fontSize: 10, color: '#cbd5e1', textAlign: 'right', borderTop: '1px solid #f1f5f9', paddingTop: 8, fontFamily: 'monospace' }}>
+				Generado por Denki Pipeline Designer · dataset: denki-sample.docx
+			</p>
 		</div>
 	);
-}
+});
