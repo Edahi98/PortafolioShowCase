@@ -1,20 +1,22 @@
 import { useMemo, useState } from 'react';
 import MiniSearch from 'minisearch';
-import { DATASET, type DataItem, type Category, type Difficulty } from '../../../../data/denkiDataset';
+import { DATASET, type DataItem, type Genre, type Era } from '../../../../data/denkiDataset';
 
 export type VisibleFields = {
 	name: boolean;
-	category: boolean;
+	genre: boolean;
+	director: boolean;
+	year: boolean;
+	rating: boolean;
+	duration: boolean;
 	language: boolean;
-	difficulty: boolean;
-	description: boolean;
-	stars: boolean;
+	era: boolean;
 };
 
 export type PipelineSettings = {
 	query: string;
-	categoryFilter: Category | 'All';
-	difficultyFilter: Difficulty | 'All';
+	categoryFilter: Genre | 'All';
+	difficultyFilter: Era | 'All';
 	visibleFields: VisibleFields;
 	groupByCategory: boolean;
 };
@@ -33,19 +35,21 @@ export const DEFAULT_SETTINGS: PipelineSettings = {
 	difficultyFilter: 'All',
 	visibleFields: {
 		name: true,
-		category: true,
+		genre: true,
+		director: true,
+		year: true,
+		rating: true,
+		duration: false,
 		language: true,
-		difficulty: true,
-		description: false,
-		stars: true,
+		era: false,
 	},
 	groupByCategory: false,
 };
 
 const miniSearch = new MiniSearch<DataItem>({
-	fields: ['name', 'description', 'language'],
+	fields: ['name', 'director', 'language'],
 	storeFields: ['id'],
-	searchOptions: { prefix: true, fuzzy: 0.2 },
+	searchOptions: { prefix: true, fuzzy: 0.25 },
 });
 miniSearch.addAll(DATASET);
 
@@ -57,10 +61,10 @@ function applyFilter(settings: PipelineSettings): DataItem[] {
 		results = results.filter((item) => hitIds.has(item.id));
 	}
 	if (settings.categoryFilter !== 'All') {
-		results = results.filter((item) => item.category === settings.categoryFilter);
+		results = results.filter((item) => item.genre === settings.categoryFilter);
 	}
 	if (settings.difficultyFilter !== 'All') {
-		results = results.filter((item) => item.difficulty === settings.difficultyFilter);
+		results = results.filter((item) => item.era === settings.difficultyFilter);
 	}
 	return results;
 }
@@ -76,7 +80,7 @@ function applyTransform(items: DataItem[], fields: VisibleFields): Partial<DataI
 
 function buildGroups(items: DataItem[]): Record<string, number> {
 	return items.reduce<Record<string, number>>((acc, item) => {
-		acc[item.category] = (acc[item.category] ?? 0) + 1;
+		acc[item.genre] = (acc[item.genre] ?? 0) + 1;
 		return acc;
 	}, {});
 }
