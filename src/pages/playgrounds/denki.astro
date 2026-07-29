@@ -1,0 +1,54 @@
+---
+import '../../styles/global.css';
+import Navbar from '../../components/Navbar.astro';
+import DenkiPlayground from '../../components/react/playground/DenkiPlayground';
+---
+<html lang="es" class="scroll-smooth">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Playground · Denki Pipeline Designer</title>
+		<meta
+			name="description"
+			content="Playground interactivo del Denki Pipeline Designer: configura filtros en un pipeline visual de 5 nodos y visualiza el resultado en tiempo real."
+		/>
+	</head>
+	<body class="min-h-screen text-slate-200 antialiased">
+		<Navbar />
+		<main class="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-16 sm:px-8">
+			<!-- Header -->
+			<div class="flex flex-col gap-3">
+				<a
+					href="/proyectos/denki-pipeline-designer"
+					class="w-fit font-mono text-xs tracking-widest text-primary uppercase transition hover:text-secondary"
+				>
+					&larr; Volver al proyecto
+				</a>
+				<h1 class="text-2xl font-bold sm:text-4xl">
+					<span class="text-gradient">Playground · Denki Pipeline</span>
+				</h1>
+				<p class="text-sm text-slate-400 max-w-2xl">
+					Configura los nodos del pipeline y observa cómo los datos fluyen desde el dataset DOCX hasta
+					el documento filtrado. Usa MiniSearch para buscar, ajusta los filtros y descarga el resultado
+					como DOCX.
+				</p>
+			</div>
+
+			<!-- Legend -->
+			<div class="flex flex-wrap gap-3">
+				{[
+					{ color: 'bg-cyan-400/20 border-cyan-400/40 text-cyan-300', label: 'Source — lee el dataset' },
+					{ color: 'bg-purple-400/20 border-purple-400/40 text-purple-300', label: 'Filter — MiniSearch' },
+					{ color: 'bg-indigo-400/20 border-indigo-400/40 text-indigo-300', label: 'Transform — columnas' },
+					{ color: 'bg-emerald-400/20 border-emerald-400/40 text-emerald-300', label: 'Aggregate — grupos' },
+					{ color: 'bg-rose-400/20 border-rose-400/40 text-rose-300', label: 'Output — PDF / DOCX' },
+				].map(({ color, label }) => (
+					<span class={`rounded-full border px-3 py-1 font-mono text-[10px] ${color}`}>{label}</span>
+				))}
+			</div>
+
+			<!-- React island -->
+			<DenkiPlayground client:visible />
+		</main>
+	</body>
+</html>
