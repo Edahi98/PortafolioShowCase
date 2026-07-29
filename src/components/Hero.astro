@@ -1,5 +1,5 @@
 ---
-import { Crown } from '@lucide/astro';
+import { Crown, FileText } from '@lucide/astro';
 import DockerScene from './DockerScene.astro';
 ---
 <section id="inicio" class="grid scroll-mt-24 items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
@@ -27,6 +27,13 @@ import DockerScene from './DockerScene.astro';
 				class="rounded-full border border-border px-5 py-2 text-sm font-semibold text-slate-200 transition hover:border-primary hover:text-primary"
 			>
 				github.com/Edahi98
+			</a>
+			<a
+				href="/cv"
+				class="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2 text-sm font-semibold text-slate-200 transition hover:border-primary hover:text-primary"
+			>
+				<FileText class="h-4 w-4" aria-hidden="true" />
+				Ver CV
 			</a>
 		</div>
 		<a
