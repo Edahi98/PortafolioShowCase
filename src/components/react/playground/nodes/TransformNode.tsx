@@ -22,7 +22,7 @@ export function TransformNode({ data }: NodeProps<TransformData>) {
 
 	return (
 		<div className="node-base border-indigo-500/50 shadow-indigo-500/20" style={{ minWidth: 180 }}>
-			<Handle type="target" position={Position.Left} className="!bg-indigo-400 !w-3 !h-3 !border-2 !border-slate-900" />
+			<Handle type="target" position={Position.Left} style={{ width: 11, height: 11, background: '#8a8a8a', border: '2px solid #1e293b', borderRadius: '50%' }} />
 			<span className="node-label text-indigo-400">Transform</span>
 			<p className="text-sm font-bold text-white mt-0.5">Select Fields</p>
 			<p className="font-mono text-[10px] text-slate-500 mb-3">{activeCount} de {FIELDS.length} columnas</p>
@@ -51,7 +51,7 @@ export function TransformNode({ data }: NodeProps<TransformData>) {
 				))}
 			</div>
 
-			<Handle type="source" position={Position.Right} className="!bg-indigo-400 !w-3 !h-3 !border-2 !border-slate-900" />
+			<Handle type="source" position={Position.Right} style={{ width: 11, height: 11, background: '#229AA4', border: '2px solid #1e293b', borderRadius: '50%' }} />
 		</div>
 	);
 }

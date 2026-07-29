@@ -40,7 +40,7 @@ export function SourceNode({ data }: NodeProps<SourceData>) {
 			</div>
 
 			<p className="mt-2 font-mono text-[9px] text-slate-600">denki-sample.docx</p>
-			<Handle type="source" position={Position.Right} className="!bg-cyan-400 !w-3 !h-3 !border-2 !border-slate-900" />
+			<Handle type="source" position={Position.Right} style={{ width: 11, height: 11, background: '#229AA4', border: '2px solid #1e293b', borderRadius: '50%' }} />
 		</div>
 	);
 }

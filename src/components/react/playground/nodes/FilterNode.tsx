@@ -17,7 +17,7 @@ export function FilterNode({ data }: NodeProps<FilterData>) {
 
 	return (
 		<div className="node-base border-purple-500/50 shadow-purple-500/20" style={{ minWidth: 200 }}>
-			<Handle type="target" position={Position.Left} className="!bg-purple-400 !w-3 !h-3 !border-2 !border-slate-900" />
+			<Handle type="target" position={Position.Left} style={{ width: 11, height: 11, background: '#8a8a8a', border: '2px solid #1e293b', borderRadius: '50%' }} />
 			<span className="node-label text-purple-400">Filter</span>
 			<p className="text-sm font-bold text-white mt-0.5">MiniSearch</p>
 
@@ -72,7 +72,7 @@ export function FilterNode({ data }: NodeProps<FilterData>) {
 				</div>
 			</div>
 
-			<Handle type="source" position={Position.Right} className="!bg-purple-400 !w-3 !h-3 !border-2 !border-slate-900" />
+			<Handle type="source" position={Position.Right} style={{ width: 11, height: 11, background: '#229AA4', border: '2px solid #1e293b', borderRadius: '50%' }} />
 		</div>
 	);
 }

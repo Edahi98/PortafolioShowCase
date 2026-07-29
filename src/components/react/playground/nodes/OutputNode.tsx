@@ -10,7 +10,7 @@ type OutputData = {
 export function OutputNode({ data }: NodeProps<OutputData>) {
 	return (
 		<div className="node-base border-rose-500/50 shadow-rose-500/20" style={{ minWidth: 160 }}>
-			<Handle type="target" position={Position.Left} className="!bg-rose-400 !w-3 !h-3 !border-2 !border-slate-900" />
+			<Handle type="target" position={Position.Left} style={{ width: 11, height: 11, background: '#8a8a8a', border: '2px solid #1e293b', borderRadius: '50%' }} />
 			<span className="node-label text-rose-400">Output</span>
 			<p className="text-sm font-bold text-white mt-0.5">DataFrame</p>
 
