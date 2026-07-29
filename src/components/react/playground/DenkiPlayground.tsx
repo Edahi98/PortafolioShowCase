@@ -15,8 +15,7 @@ import { TransformNode } from './nodes/TransformNode';
 import { AggregateNode } from './nodes/AggregateNode';
 import { OutputNode } from './nodes/OutputNode';
 import { downloadDocx } from './utils/docxExport';
-import type { DataItem } from '../../../data/denkiDataset';
-import type { Category, Difficulty } from '../../../data/denkiDataset';
+import type { DataItem, Genre, Era } from '../../../data/denkiDataset';
 import type { VisibleFields } from './hooks/usePipeline';
 
 // nodeTypes MUST be defined outside the component to avoid ReactFlow re-mounting nodes
@@ -51,8 +50,8 @@ export default function DenkiPlayground() {
 	}, [pipelineState]);
 
 	const handleQueryChange = useCallback((v: string) => update({ query: v }), [update]);
-	const handleCategoryChange = useCallback((v: Category | 'All') => update({ categoryFilter: v }), [update]);
-	const handleDifficultyChange = useCallback((v: Difficulty | 'All') => update({ difficultyFilter: v }), [update]);
+	const handleCategoryChange = useCallback((v: Genre | 'All') => update({ categoryFilter: v }), [update]);
+	const handleDifficultyChange = useCallback((v: Era | 'All') => update({ difficultyFilter: v }), [update]);
 	const handleToggleField = useCallback((f: keyof VisibleFields) => toggleField(f), [toggleField]);
 	const handleToggleGroup = useCallback((v: boolean) => update({ groupByCategory: v }), [update]);
 
