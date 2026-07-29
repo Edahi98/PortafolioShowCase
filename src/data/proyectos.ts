@@ -20,6 +20,8 @@ export type Proyecto = {
 	contiene?: string[];
 	/** Nombre del proyecto contenedor que lo integra; si está presente, no se renderiza como tarjeta propia. */
 	anidadoEn?: string;
+	/** URL del playground interactivo del proyecto. */
+	playgroundUrl?: string;
 };
 
 export const proyectos: Proyecto[] = [
@@ -160,6 +162,7 @@ export const proyectos: Proyecto[] = [
 		relacionados: ['Sistema de Gestión de Control de Cambios', 'Tsubasa Engine', 'RedDragon'],
 		destacado: true,
 		anidadoEn: 'RedDragon',
+		playgroundUrl: '/playgrounds/denki',
 		imagenes: [
 			{
 				src: 'https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen1.png',

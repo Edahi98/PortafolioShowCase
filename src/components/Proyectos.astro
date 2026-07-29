@@ -1,5 +1,5 @@
 ---
-import { Boxes, Crown, FileText } from '@lucide/astro';
+import { Boxes, Crown, FileText, FlaskConical } from '@lucide/astro';
 import { proyectos, type Proyecto } from '../data/proyectos';
 
 const visibles = proyectos.filter((p) => !p.anidadoEn);
@@ -7,7 +7,7 @@ const destacados = visibles.filter((p) => p.destacado);
 const resto = visibles.filter((p) => !p.destacado);
 
 function badgeCount(p: Proyecto) {
-	return [p.repoUrl, p.dockerHubUrl, p.documentacionUrl].filter(Boolean).length;
+	return [p.repoUrl, p.dockerHubUrl, p.documentacionUrl, p.playgroundUrl].filter(Boolean).length;
 }
 ---
 <section id="proyectos" class="flex scroll-mt-24 flex-col gap-10">
@@ -53,7 +53,7 @@ function badgeCount(p: Proyecto) {
 												<div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/85 to-surface/50" />
 											</div>
 										)}
-										{(proyecto.repoUrl || proyecto.dockerHubUrl || proyecto.documentacionUrl) && (
+										{(proyecto.repoUrl || proyecto.dockerHubUrl || proyecto.documentacionUrl || proyecto.playgroundUrl) && (
 											<div class="pointer-events-none absolute top-4 right-4 z-10 flex gap-2">
 												{proyecto.repoUrl && (
 													<a
@@ -98,6 +98,15 @@ function badgeCount(p: Proyecto) {
 														class="pointer-events-auto flex h-8 w-8 items-center justify-center rounded-full border border-emerald-400/60 bg-emerald-400/20 text-emerald-300 shadow-[0_0_12px_-2px] shadow-emerald-400/50 backdrop-blur transition hover:bg-emerald-400/30"
 													>
 														<FileText class="h-4 w-4" aria-hidden="true" />
+													</a>
+												)}
+												{proyecto.playgroundUrl && (
+													<a
+														href={proyecto.playgroundUrl}
+														aria-label="Abrir playground"
+														class="pointer-events-auto flex h-8 w-8 items-center justify-center rounded-full border border-cyan-400/60 bg-cyan-400/20 text-cyan-300 shadow-[0_0_12px_-2px] shadow-cyan-400/50 backdrop-blur transition hover:bg-cyan-400/30"
+													>
+														<FlaskConical class="h-4 w-4" aria-hidden="true" />
 													</a>
 												)}
 											</div>
@@ -172,6 +181,15 @@ function badgeCount(p: Proyecto) {
 																			</div>
 																			<p class="mt-1 text-xs text-slate-400">{sub.descripcion}</p>
 																			<p class="mt-2 font-mono text-xs text-secondary">Ver proyecto &rarr;</p>
+																{sub.playgroundUrl && (
+																	<a
+																		href={sub.playgroundUrl}
+																		class="pointer-events-auto mt-1 inline-flex items-center gap-1 font-mono text-[10px] text-cyan-400 transition hover:text-cyan-300"
+																	>
+																		<FlaskConical class="h-3 w-3" aria-hidden="true" />
+																		Playground &rarr;
+																	</a>
+																)}
 																		</div>
 																	</div>
 																)

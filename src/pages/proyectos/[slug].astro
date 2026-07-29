@@ -1,6 +1,6 @@
 ---
 import '../../styles/global.css';
-import { Boxes, Crown, FileText } from '@lucide/astro';
+import { Boxes, Crown, FileText, FlaskConical } from '@lucide/astro';
 import Navbar from '../../components/Navbar.astro';
 import { proyectos } from '../../data/proyectos';
 
@@ -100,6 +100,15 @@ const contenidos = (proyecto.contiene ?? [])
 						>
 							<FileText class="h-3.5 w-3.5" aria-hidden="true" />
 							Documentación
+						</a>
+					)}
+					{proyecto.playgroundUrl && (
+						<a
+							href={proyecto.playgroundUrl}
+							class="ml-1 inline-flex items-center gap-1.5 rounded-full border border-cyan-400/60 bg-cyan-400/15 px-3 py-1 font-mono text-xs font-semibold text-cyan-300 shadow-[0_0_12px_-2px] shadow-cyan-400/50 transition hover:bg-cyan-400/25"
+						>
+							<FlaskConical class="h-3.5 w-3.5" aria-hidden="true" />
+							Playground
 						</a>
 					)}
 				</div>
