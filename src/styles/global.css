@@ -33,19 +33,4 @@ body {
 		backdrop-filter: blur(12px);
 	}
 
-	/* Denki Playground nodes */
-	.node-base {
-		background-color: #0f1629;
-		border: 1px solid;
-		border-radius: 14px;
-		padding: 14px 16px;
-		box-shadow: 0 0 24px -4px;
-	}
-	.node-label {
-		font-family: ui-monospace, monospace;
-		font-size: 9px;
-		text-transform: uppercase;
-		letter-spacing: 0.12em;
-		font-weight: 600;
-	}
 }
