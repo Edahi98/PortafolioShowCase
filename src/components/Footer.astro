@@ -1,19 +1,14 @@
 ---
 ---
-<footer class="mt-8 w-full">
-	<div
-		class="w-full px-6 py-12 sm:px-8"
-		style="background: linear-gradient(135deg, color-mix(in oklab, #22d3ee 30%, transparent), color-mix(in oklab, #6366f1 40%, transparent), color-mix(in oklab, #a855f7 30%, transparent))"
-	>
-		<div class="mx-auto max-w-5xl">
-			<div class="w-full overflow-hidden rounded-2xl shadow-[0_8px_48px_-8px_rgba(0,0,0,0.6)]" style="background:#1e1e2e">
-				<div class="flex items-center gap-2 px-4 py-3" style="background:#181825">
-					<span class="h-3 w-3 rounded-full" style="background:#f38ba8"></span>
-					<span class="h-3 w-3 rounded-full" style="background:#f9e2af"></span>
-					<span class="h-3 w-3 rounded-full" style="background:#a6e3a1"></span>
-					<span class="ml-3 font-mono text-xs" style="color:#585b70">tsubasa_engine.py</span>
-				</div>
-				<pre class="overflow-x-auto px-8 py-6 font-mono text-sm leading-relaxed" style="color:#cdd6f4"><span style="color:#cba6f7">async def</span> <span style="color:#89b4fa">inferir</span><span style="color:#cdd6f4">(documento: </span><span style="color:#89b4fa">bytes</span><span style="color:#cdd6f4">) -> </span><span style="color:#89b4fa">DatosEstructurados</span><span style="color:#cdd6f4">:</span>
+<footer class="mt-8 w-full" style="background:#1e1e2e">
+	<div class="flex items-center gap-2 px-6 py-3" style="background:#181825">
+		<span class="h-3 w-3 rounded-full" style="background:#f38ba8"></span>
+		<span class="h-3 w-3 rounded-full" style="background:#f9e2af"></span>
+		<span class="h-3 w-3 rounded-full" style="background:#a6e3a1"></span>
+		<span class="ml-3 font-mono text-xs" style="color:#585b70">tsubasa_engine.py</span>
+	</div>
+	<div class="mx-auto max-w-5xl px-6 py-10 sm:px-8">
+		<pre class="overflow-x-auto font-mono text-sm leading-relaxed" style="color:#cdd6f4"><span style="color:#cba6f7">async def</span> <span style="color:#89b4fa">inferir</span><span style="color:#cdd6f4">(documento: </span><span style="color:#89b4fa">bytes</span><span style="color:#cdd6f4">) -> </span><span style="color:#89b4fa">DatosEstructurados</span><span style="color:#cdd6f4">:</span>
     texto  <span style="color:#cdd6f4">=</span> <span style="color:#cba6f7">await</span> ocr.<span style="color:#89b4fa">extraer</span><span style="color:#cdd6f4">(documento)</span>
     campos <span style="color:#cdd6f4">=</span> modelo.<span style="color:#89b4fa">predecir</span><span style="color:#cdd6f4">(texto)</span>
     <span style="color:#cba6f7">return</span> pipeline.<span style="color:#89b4fa">ejecutar</span><span style="color:#cdd6f4">(campos)</span>
@@ -27,10 +22,6 @@
         <span style="color:#cba6f7">return await</span> asyncio.<span style="color:#89b4fa">gather</span><span style="color:#cdd6f4">(</span>
             <span style="color:#cdd6f4">*[</span><span style="color:#89b4fa">inferir</span><span style="color:#cdd6f4">(d)</span> <span style="color:#cba6f7">for</span> d <span style="color:#cba6f7">in</span> docs<span style="color:#cdd6f4">]</span>
         <span style="color:#cdd6f4">)</span></pre>
-			</div>
-		</div>
-	</div>
-	<div class="border-t border-border py-5 text-center">
-		<p class="font-mono text-xs text-slate-600">&copy; {new Date().getFullYear()} · Edahi Yaxquin Avila Garcia</p>
+		<p class="mt-8 font-mono text-xs" style="color:#45475a">&copy; {new Date().getFullYear()} · Edahi Yaxquin Avila Garcia</p>
 	</div>
 </footer>
