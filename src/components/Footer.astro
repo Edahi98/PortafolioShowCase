@@ -11,16 +11,22 @@
 					<span class="h-3 w-3 rounded-full" style="background:#f38ba8"></span>
 					<span class="h-3 w-3 rounded-full" style="background:#f9e2af"></span>
 					<span class="h-3 w-3 rounded-full" style="background:#a6e3a1"></span>
-					<span class="ml-3 font-mono text-xs" style="color:#585b70">edahi.ts</span>
+					<span class="ml-3 font-mono text-xs" style="color:#585b70">tsubasa_engine.py</span>
 				</div>
-				<pre class="overflow-x-auto px-8 py-6 font-mono text-sm leading-relaxed" style="color:#cdd6f4"><span style="color:#cba6f7">const</span> <span style="color:#cdd6f4">edahi = {</span>
-  nombre<span style="color:#cdd6f4">:      </span><span style="color:#a6e3a1">'Edahi Yaxquin Avila Garcia'</span><span style="color:#cdd6f4">,</span>
-  rol<span style="color:#cdd6f4">:         </span><span style="color:#a6e3a1">'Desarrollador de Software'</span><span style="color:#cdd6f4">,</span>
-  pasion<span style="color:#cdd6f4">:      </span><span style="color:#a6e3a1">'Convertir desafíos imposibles en soluciones reales'</span><span style="color:#cdd6f4">,</span>
-  stack<span style="color:#cdd6f4">:       [</span><span style="color:#a6e3a1">'Python'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'TypeScript'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'Laravel'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'Docker'</span><span style="color:#cdd6f4">],</span>
-  enfoque<span style="color:#cdd6f4">:     [</span><span style="color:#a6e3a1">'IA Local'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'Machine Learning'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'DevOps'</span><span style="color:#cdd6f4">],</span>
-  disponible<span style="color:#cdd6f4">: </span><span style="color:#fab387">true</span><span style="color:#cdd6f4">,</span>
-<span style="color:#cdd6f4">} </span><span style="color:#cba6f7">satisfies</span> <span style="color:#89b4fa">Desarrollador</span><span style="color:#cdd6f4">;</span></pre>
+				<pre class="overflow-x-auto px-8 py-6 font-mono text-sm leading-relaxed" style="color:#cdd6f4"><span style="color:#cba6f7">async def</span> <span style="color:#89b4fa">inferir</span><span style="color:#cdd6f4">(documento: </span><span style="color:#89b4fa">bytes</span><span style="color:#cdd6f4">) -> </span><span style="color:#89b4fa">DatosEstructurados</span><span style="color:#cdd6f4">:</span>
+    texto  <span style="color:#cdd6f4">=</span> <span style="color:#cba6f7">await</span> ocr.<span style="color:#89b4fa">extraer</span><span style="color:#cdd6f4">(documento)</span>
+    campos <span style="color:#cdd6f4">=</span> modelo.<span style="color:#89b4fa">predecir</span><span style="color:#cdd6f4">(texto)</span>
+    <span style="color:#cba6f7">return</span> pipeline.<span style="color:#89b4fa">ejecutar</span><span style="color:#cdd6f4">(campos)</span>
+
+<span style="color:#cba6f7">async def</span> <span style="color:#89b4fa">procesar_lote</span><span style="color:#cdd6f4">(</span>
+    docs<span style="color:#cdd6f4">: </span><span style="color:#89b4fa">list</span><span style="color:#cdd6f4">[</span><span style="color:#89b4fa">bytes</span><span style="color:#cdd6f4">],</span>
+    concurrencia<span style="color:#cdd6f4">: </span><span style="color:#89b4fa">int</span> <span style="color:#cdd6f4">= </span><span style="color:#fab387">8</span><span style="color:#cdd6f4">,</span>
+<span style="color:#cdd6f4">) -> </span><span style="color:#89b4fa">list</span><span style="color:#cdd6f4">[</span><span style="color:#89b4fa">DatosEstructurados</span><span style="color:#cdd6f4">]:</span>
+    sem <span style="color:#cdd6f4">=</span> asyncio.<span style="color:#89b4fa">Semaphore</span><span style="color:#cdd6f4">(concurrencia)</span>
+    <span style="color:#cba6f7">async with</span> sem<span style="color:#cdd6f4">:</span>
+        <span style="color:#cba6f7">return await</span> asyncio.<span style="color:#89b4fa">gather</span><span style="color:#cdd6f4">(</span>
+            <span style="color:#cdd6f4">*[</span><span style="color:#89b4fa">inferir</span><span style="color:#cdd6f4">(d)</span> <span style="color:#cba6f7">for</span> d <span style="color:#cba6f7">in</span> docs<span style="color:#cdd6f4">]</span>
+        <span style="color:#cdd6f4">)</span></pre>
 			</div>
 		</div>
 	</div>
