@@ -1,27 +1,17 @@
 ---
 ---
-<footer class="mt-8 w-full" style="background:#1e1e2e">
-	<div class="flex items-center gap-2 px-6 py-3" style="background:#181825">
-		<span class="h-3 w-3 rounded-full" style="background:#f38ba8"></span>
-		<span class="h-3 w-3 rounded-full" style="background:#f9e2af"></span>
-		<span class="h-3 w-3 rounded-full" style="background:#a6e3a1"></span>
-		<span class="ml-3 font-mono text-xs" style="color:#585b70">tsubasa_engine.py</span>
-	</div>
-	<div class="mx-auto max-w-5xl px-6 py-10 sm:px-8">
+<footer class="w-full" style="background: linear-gradient(to bottom, #05060f, #1e1e2e 85%)">
+	<div class="mx-auto max-w-5xl px-6 pb-8 pt-24 sm:px-8">
+		<div class="flex items-center gap-2 pb-4">
+			<span class="h-3 w-3 rounded-full" style="background:#f38ba8"></span>
+			<span class="h-3 w-3 rounded-full" style="background:#f9e2af"></span>
+			<span class="h-3 w-3 rounded-full" style="background:#a6e3a1"></span>
+			<span class="ml-2 font-mono text-xs" style="color:#45475a">tsubasa_engine.py</span>
+		</div>
 		<pre class="overflow-x-auto font-mono text-sm leading-relaxed" style="color:#cdd6f4"><span style="color:#cba6f7">async def</span> <span style="color:#89b4fa">inferir</span><span style="color:#cdd6f4">(documento: </span><span style="color:#89b4fa">bytes</span><span style="color:#cdd6f4">) -> </span><span style="color:#89b4fa">DatosEstructurados</span><span style="color:#cdd6f4">:</span>
     texto  <span style="color:#cdd6f4">=</span> <span style="color:#cba6f7">await</span> ocr.<span style="color:#89b4fa">extraer</span><span style="color:#cdd6f4">(documento)</span>
     campos <span style="color:#cdd6f4">=</span> modelo.<span style="color:#89b4fa">predecir</span><span style="color:#cdd6f4">(texto)</span>
-    <span style="color:#cba6f7">return</span> pipeline.<span style="color:#89b4fa">ejecutar</span><span style="color:#cdd6f4">(campos)</span>
-
-<span style="color:#cba6f7">async def</span> <span style="color:#89b4fa">procesar_lote</span><span style="color:#cdd6f4">(</span>
-    docs<span style="color:#cdd6f4">: </span><span style="color:#89b4fa">list</span><span style="color:#cdd6f4">[</span><span style="color:#89b4fa">bytes</span><span style="color:#cdd6f4">],</span>
-    concurrencia<span style="color:#cdd6f4">: </span><span style="color:#89b4fa">int</span> <span style="color:#cdd6f4">= </span><span style="color:#fab387">8</span><span style="color:#cdd6f4">,</span>
-<span style="color:#cdd6f4">) -> </span><span style="color:#89b4fa">list</span><span style="color:#cdd6f4">[</span><span style="color:#89b4fa">DatosEstructurados</span><span style="color:#cdd6f4">]:</span>
-    sem <span style="color:#cdd6f4">=</span> asyncio.<span style="color:#89b4fa">Semaphore</span><span style="color:#cdd6f4">(concurrencia)</span>
-    <span style="color:#cba6f7">async with</span> sem<span style="color:#cdd6f4">:</span>
-        <span style="color:#cba6f7">return await</span> asyncio.<span style="color:#89b4fa">gather</span><span style="color:#cdd6f4">(</span>
-            <span style="color:#cdd6f4">*[</span><span style="color:#89b4fa">inferir</span><span style="color:#cdd6f4">(d)</span> <span style="color:#cba6f7">for</span> d <span style="color:#cba6f7">in</span> docs<span style="color:#cdd6f4">]</span>
-        <span style="color:#cdd6f4">)</span></pre>
+    <span style="color:#cba6f7">return</span> pipeline.<span style="color:#89b4fa">ejecutar</span><span style="color:#cdd6f4">(campos)</span></pre>
 		<p class="mt-8 font-mono text-xs" style="color:#45475a">&copy; {new Date().getFullYear()} · Edahi Yaxquin Avila Garcia</p>
 	</div>
 </footer>
