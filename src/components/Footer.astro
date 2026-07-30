@@ -1,31 +1,30 @@
 ---
 ---
-<footer class="border-t border-border mt-8 py-16 flex flex-col items-center gap-8 px-6 sm:px-8">
+<footer class="mt-8 w-full">
 	<div
-		class="w-full max-w-xl overflow-hidden rounded-2xl shadow-[0_0_48px_-8px] shadow-primary/20"
-		style="background:#1e1e2e"
+		class="w-full px-6 py-12 sm:px-8"
+		style="background: linear-gradient(135deg, color-mix(in oklab, #22d3ee 30%, transparent), color-mix(in oklab, #6366f1 40%, transparent), color-mix(in oklab, #a855f7 30%, transparent))"
 	>
-		<!-- Window chrome -->
-		<div class="flex items-center gap-2 px-4 py-3" style="background:#181825">
-			<span class="h-3 w-3 rounded-full" style="background:#f38ba8"></span>
-			<span class="h-3 w-3 rounded-full" style="background:#f9e2af"></span>
-			<span class="h-3 w-3 rounded-full" style="background:#a6e3a1"></span>
-			<span class="ml-3 font-mono text-xs" style="color:#585b70">[slug].astro</span>
+		<div class="mx-auto max-w-5xl">
+			<div class="w-full overflow-hidden rounded-2xl shadow-[0_8px_48px_-8px_rgba(0,0,0,0.6)]" style="background:#1e1e2e">
+				<div class="flex items-center gap-2 px-4 py-3" style="background:#181825">
+					<span class="h-3 w-3 rounded-full" style="background:#f38ba8"></span>
+					<span class="h-3 w-3 rounded-full" style="background:#f9e2af"></span>
+					<span class="h-3 w-3 rounded-full" style="background:#a6e3a1"></span>
+					<span class="ml-3 font-mono text-xs" style="color:#585b70">edahi.ts</span>
+				</div>
+				<pre class="overflow-x-auto px-8 py-6 font-mono text-sm leading-relaxed" style="color:#cdd6f4"><span style="color:#cba6f7">const</span> <span style="color:#cdd6f4">edahi = {</span>
+  nombre<span style="color:#cdd6f4">:      </span><span style="color:#a6e3a1">'Edahi Yaxquin Avila Garcia'</span><span style="color:#cdd6f4">,</span>
+  rol<span style="color:#cdd6f4">:         </span><span style="color:#a6e3a1">'Desarrollador de Software'</span><span style="color:#cdd6f4">,</span>
+  pasion<span style="color:#cdd6f4">:      </span><span style="color:#a6e3a1">'Convertir desafíos imposibles en soluciones reales'</span><span style="color:#cdd6f4">,</span>
+  stack<span style="color:#cdd6f4">:       [</span><span style="color:#a6e3a1">'Python'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'TypeScript'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'Laravel'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'Docker'</span><span style="color:#cdd6f4">],</span>
+  enfoque<span style="color:#cdd6f4">:     [</span><span style="color:#a6e3a1">'IA Local'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'Machine Learning'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'DevOps'</span><span style="color:#cdd6f4">],</span>
+  disponible<span style="color:#cdd6f4">: </span><span style="color:#fab387">true</span><span style="color:#cdd6f4">,</span>
+<span style="color:#cdd6f4">} </span><span style="color:#cba6f7">satisfies</span> <span style="color:#89b4fa">Desarrollador</span><span style="color:#cdd6f4">;</span></pre>
+			</div>
 		</div>
-		<!-- Code -->
-		<pre class="overflow-x-auto px-6 py-5 font-mono text-sm leading-relaxed" style="color:#cdd6f4"><span style="color:#6c7086">// genera una ruta estática por cada proyecto con slug</span>
-<span style="color:#cba6f7">export function</span> <span style="color:#89b4fa">getStaticPaths</span><span style="color:#cdd6f4">() {</span>
-  <span style="color:#cba6f7">return</span> proyectos
-    .<span style="color:#89b4fa">filter</span><span style="color:#cdd6f4">((p) =></span> p.<span style="color:#cdd6f4">slug)</span>
-    .<span style="color:#89b4fa">map</span><span style="color:#cdd6f4">((p) => ({</span>
-      params<span style="color:#cdd6f4">: {</span> slug<span style="color:#cdd6f4">: p.slug },</span>
-      props<span style="color:#cdd6f4">:  {</span> proyecto<span style="color:#cdd6f4">: p },</span>
-    <span style="color:#cdd6f4">}));</span>
-<span style="color:#cdd6f4">}</span>
-
-<span style="color:#cba6f7">const</span> <span style="color:#cdd6f4">{</span> proyecto <span style="color:#cdd6f4">} =</span> <span style="color:#89b4fa">Astro</span><span style="color:#cdd6f4">.props;</span></pre>
 	</div>
-	<p class="font-mono text-xs text-slate-600">
-		&copy; {new Date().getFullYear()} · Edahi Yaxquin Avila Garcia
-	</p>
+	<div class="border-t border-border py-5 text-center">
+		<p class="font-mono text-xs text-slate-600">&copy; {new Date().getFullYear()} · Edahi Yaxquin Avila Garcia</p>
+	</div>
 </footer>
