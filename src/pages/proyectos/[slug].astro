@@ -43,10 +43,10 @@ const contenidos = (proyecto.contiene ?? [])
 				<h1 class="flex items-center gap-3 text-2xl font-bold sm:text-4xl">
 					<span class="text-gradient">{proyecto.nombre}</span>
 					{contenidos.length > 0 ? (
-						<Boxes class="h-6 w-6 shrink-0 text-red-400 sm:h-8 sm:w-8" aria-label="Proyecto contenedor" />
+						<Boxes class="h-6 w-6 shrink-0 text-secondary sm:h-8 sm:w-8" aria-label="Proyecto contenedor" />
 					) : (
 						proyecto.destacado && (
-							<Crown class="h-6 w-6 shrink-0 text-amber-400 sm:h-8 sm:w-8" aria-label="Proyecto destacado" />
+							<Crown class="h-6 w-6 shrink-0 text-primary sm:h-8 sm:w-8" aria-label="Proyecto destacado" />
 						)
 					)}
 				</h1>
@@ -124,19 +124,19 @@ const contenidos = (proyecto.contiene ?? [])
 
 			{
 				contenidos.length > 0 && (
-					<div class="flex flex-col gap-3 border-t border-red-500/30 pt-8">
-						<h2 class="flex items-center gap-2 font-mono text-sm tracking-widest text-red-400 uppercase">
+					<div class="flex flex-col gap-3 border-t border-secondary/30 pt-8">
+						<h2 class="flex items-center gap-2 font-mono text-sm tracking-widest text-secondary uppercase">
 							<Boxes class="h-4 w-4" aria-hidden="true" />
 							Integra &amp; encierra
 						</h2>
 						<div class="grid gap-3 sm:grid-cols-2">
 							{contenidos.map((sub) => (
-								<div class="rounded-xl border border-red-500/30 bg-red-500/5 p-4 backdrop-blur transition hover:border-red-400/60">
+								<div class="rounded-xl border border-secondary/30 bg-secondary/5 p-4 backdrop-blur transition hover:border-secondary/60">
 									<div class="flex items-center justify-between gap-2">
 										<div class="flex items-center gap-1.5">
 											<p class="text-sm font-semibold text-slate-100">{sub.nombre}</p>
 											{sub.destacado && (
-												<Crown class="h-3.5 w-3.5 shrink-0 text-amber-400" aria-label="Proyecto destacado" />
+												<Crown class="h-3.5 w-3.5 shrink-0 text-primary" aria-label="Proyecto destacado" />
 											)}
 										</div>
 										{sub.repoUrl && (

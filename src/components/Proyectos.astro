@@ -18,7 +18,7 @@ function badgeCount(p: Proyecto) {
 				grupo.length > 0 && (
 					<div class="flex flex-col gap-6">
 						{index === 0 ? (
-							<h3 class="flex items-center gap-2 font-mono text-xs tracking-widest text-amber-400 uppercase">
+							<h3 class="flex items-center gap-2 font-mono text-xs tracking-widest text-primary uppercase">
 								<Crown class="h-4 w-4" aria-hidden="true" />
 								Proyectos destacados
 							</h3>
@@ -33,8 +33,8 @@ function badgeCount(p: Proyecto) {
 										class:list={[
 											'glass-card group relative flex flex-col gap-3 overflow-hidden rounded-2xl p-6 transition hover:border-primary/60',
 											proyecto.contiene && proyecto.contiene.length > 0
-												? 'border-red-500/50 shadow-[0_0_24px_-6px] shadow-red-500/40'
-												: proyecto.destacado && 'border-amber-400/50 shadow-[0_0_24px_-6px] shadow-amber-400/30',
+												? 'border-secondary/50 shadow-[0_0_24px_-6px] shadow-secondary/40'
+												: proyecto.destacado && 'border-primary/50 shadow-[0_0_24px_-6px] shadow-primary/30',
 											proyecto.contiene && proyecto.contiene.length > 0 && 'sm:col-span-2',
 										]}
 									>
@@ -113,10 +113,10 @@ function badgeCount(p: Proyecto) {
 											<div class="flex items-start gap-2">
 												<h3 class="text-lg font-semibold text-slate-100">{proyecto.nombre}</h3>
 												{proyecto.contiene && proyecto.contiene.length > 0 ? (
-													<Boxes class="h-5 w-5 shrink-0 text-red-400" aria-label="Proyecto contenedor" />
+													<Boxes class="h-5 w-5 shrink-0 text-secondary" aria-label="Proyecto contenedor" />
 												) : (
 													proyecto.destacado && (
-														<Crown class="h-5 w-5 shrink-0 text-amber-400" aria-label="Proyecto destacado" />
+														<Crown class="h-5 w-5 shrink-0 text-primary" aria-label="Proyecto destacado" />
 													)
 												)}
 											</div>
@@ -130,8 +130,8 @@ function badgeCount(p: Proyecto) {
 											</div>
 											<p class="font-mono text-xs text-secondary">Ver proyecto &rarr;</p>
 											{proyecto.contiene && proyecto.contiene.length > 0 && (
-												<div class="pointer-events-auto mt-1 flex flex-col gap-2 border-t border-red-500/30 pt-4">
-													<span class="flex items-center gap-1.5 font-mono text-xs tracking-widest text-red-400 uppercase">
+												<div class="pointer-events-auto mt-1 flex flex-col gap-2 border-t border-secondary/30 pt-4">
+													<span class="flex items-center gap-1.5 font-mono text-xs tracking-widest text-secondary uppercase">
 														<Boxes class="h-3.5 w-3.5" aria-hidden="true" />
 														Integra &amp; encierra
 													</span>
@@ -140,7 +140,7 @@ function badgeCount(p: Proyecto) {
 															const sub = proyectos.find((p) => p.nombre === nombreSub);
 															return (
 																sub && (
-																	<div class="relative z-20 flex-1 rounded-xl border border-red-500/30 bg-red-500/5 p-3 backdrop-blur transition hover:border-red-400/60">
+																	<div class="relative z-20 flex-1 rounded-xl border border-secondary/30 bg-secondary/5 p-3 backdrop-blur transition hover:border-secondary/60">
 																		<a
 																			href={`/proyectos/${sub.slug}`}
 																			aria-label={`Ver proyecto: ${sub.nombre}`}
@@ -167,7 +167,7 @@ function badgeCount(p: Proyecto) {
 																			<div class="flex items-center gap-1.5">
 																				<p class="text-sm font-semibold text-slate-100">{sub.nombre}</p>
 																				{sub.destacado && (
-																					<Crown class="h-3.5 w-3.5 shrink-0 text-amber-400" aria-label="Proyecto destacado" />
+																					<Crown class="h-3.5 w-3.5 shrink-0 text-primary" aria-label="Proyecto destacado" />
 																				)}
 																			</div>
 																			<p class="mt-1 text-xs text-slate-400">{sub.descripcion}</p>
@@ -186,13 +186,13 @@ function badgeCount(p: Proyecto) {
 									<article
 										class:list={[
 											'glass-card flex flex-col gap-3 rounded-2xl p-6 transition hover:border-primary/60',
-											proyecto.destacado && 'border-amber-400/50 shadow-[0_0_24px_-6px] shadow-amber-400/30',
+											proyecto.destacado && 'border-primary/50 shadow-[0_0_24px_-6px] shadow-primary/30',
 										]}
 									>
 										<div class="flex items-start gap-2">
 											<h3 class="text-lg font-semibold text-slate-100">{proyecto.nombre}</h3>
 											{proyecto.destacado && (
-												<Crown class="h-5 w-5 shrink-0 text-amber-400" aria-label="Proyecto destacado" />
+												<Crown class="h-5 w-5 shrink-0 text-primary" aria-label="Proyecto destacado" />
 											)}
 										</div>
 										<p class="text-sm text-slate-400">{proyecto.descripcion}</p>
