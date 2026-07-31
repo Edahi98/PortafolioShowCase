@@ -1,8 +1,30 @@
 ---
 import { Crown, FileText } from '@lucide/astro';
 import DockerScene from './DockerScene.astro';
+
+const commits = [
+	{ type: 'feat',     scope: 'tsubasa',   msg: 'add 190+ data operations',         color: '#22d3ee', delay: '0s',    top: '8%',  left: '60%' },
+	{ type: 'fix',      scope: 'pipeline',  msg: 'resolve memory leak on large sets', color: '#f38ba8', delay: '1.4s',  top: '22%', left: '72%' },
+	{ type: 'feat',     scope: 'reddragon', msg: 'integrate OCR extraction',          color: '#a855f7', delay: '0.7s',  top: '55%', left: '58%' },
+	{ type: 'chore',    scope: 'docker',    msg: 'optimize nginx config',             color: '#89b4fa', delay: '2.1s',  top: '70%', left: '75%' },
+	{ type: 'perf',     scope: 'polars',    msg: 'parallel processing pipeline',      color: '#a6e3a1', delay: '3.2s',  top: '38%', left: '65%' },
+	{ type: 'refactor', scope: 'ml',        msg: 'improve prediction accuracy',       color: '#fab387', delay: '1.8s',  top: '85%', left: '62%' },
+];
 ---
-<section id="inicio" class="grid scroll-mt-24 items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
+<section id="inicio" class="relative grid scroll-mt-24 items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
+
+	<!-- Commits flotantes decorativos (solo visibles en lg+) -->
+	{commits.map((c) => (
+		<span
+			class="commit-float pointer-events-none absolute hidden select-none font-mono text-xs lg:block"
+			style={`top:${c.top}; left:${c.left}; animation-delay:${c.delay}; color:${c.color}; opacity:0.35;`}
+		>
+			<span style={`color:${c.color}`}>{c.type}</span>
+			<span style="color:#585b70">({c.scope}):</span>
+			<span style="color:#cdd6f4"> {c.msg}</span>
+		</span>
+	))}
+
 	<div class="flex flex-col gap-6">
 		<p class="font-mono text-sm tracking-widest text-primary uppercase">Portafolio</p>
 		<h1 class="text-4xl font-bold sm:text-6xl">
@@ -54,3 +76,13 @@ import DockerScene from './DockerScene.astro';
 	</div>
 	<DockerScene />
 </section>
+
+<style>
+	@keyframes float {
+		0%, 100% { transform: translateY(0px); }
+		50%       { transform: translateY(-10px); }
+	}
+	.commit-float {
+		animation: float 6s ease-in-out infinite;
+	}
+</style>
