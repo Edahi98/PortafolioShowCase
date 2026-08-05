@@ -36,52 +36,43 @@ El sitio es **SSG puro** (Static Site Generation): Astro genera todas las págin
 
 Para la sección de Proyectos se usa el patrón de **islas de Astro** (`client:visible`): el resto del DOM es HTML estático, y solo el componente `ProyectosIsla` se hidrata en el cliente cuando entra al viewport.
 
-```
-┌─────────────────────────────────────────────────┐
-│                 index.astro (SSG)               │
-│                                                 │
-│  ┌──────────┐  ┌──────────┐  ┌──────────────┐  │
-│  │  Navbar  │  │   Hero   │  │   SobreMi    │  │  ← HTML estático, 0 JS
-│  │  .astro  │  │  .astro  │  │   .astro     │  │
-│  └──────────┘  └──────────┘  └──────────────┘  │
-│                                                 │
-│  ┌──────────────────────────────────────────┐   │
-│  │         Proyectos.astro (wrapper)        │   │
-│  │                                          │   │
-│  │  ╔════════════════════════════════════╗  │   │
-│  │  ║  ProyectosIsla  (isla React)       ║  │   │  ← hidratada con client:visible
-│  │  ║                                    ║  │   │
-│  │  ║  useEffect → axios.get(GitHub)     ║  │   │
-│  │  ║       ↓                            ║  │   │
-│  │  ║  public/data/proyectos.json        ║  │   │
-│  │  ║       ↓                            ║  │   │
-│  │  ║  render tarjetas                   ║  │   │
-│  │  ╚════════════════════════════════════╝  │   │
-│  └──────────────────────────────────────────┘   │
-│                                                 │
-│  ┌──────────┐  ┌──────────┐  ┌──────────────┐  │
-│  │ Formacion│  │Habilidades│  │   Footer     │  │  ← HTML estático, 0 JS
-│  │  .astro  │  │  .astro  │  │   .astro     │  │
-│  └──────────┘  └──────────┘  └──────────────┘  │
-└─────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph SSG["index.astro — SSG (HTML estático)"]
+        Navbar["Navbar.astro\n— HTML estático, 0 JS"]
+        Hero["Hero.astro\n— HTML estático, 0 JS"]
+        SobreMi["SobreMi.astro\n— HTML estático, 0 JS"]
+        subgraph Wrapper["Proyectos.astro (wrapper)"]
+            Isla["⚛️ ProyectosIsla.tsx\nclient:visible\nuseEffect → axios.get → proyectos.json → render tarjetas"]
+        end
+        Formacion["Formacion.astro\n— HTML estático, 0 JS"]
+        Habilidades["Habilidades.astro\n— HTML estático, 0 JS"]
+        Footer["Footer.astro\n— HTML estático, 0 JS"]
+    end
+
+    Navbar --> Hero --> SobreMi --> Wrapper --> Formacion --> Habilidades --> Footer
 ```
 
 ### Flujo de datos de proyectos
 
-```
-public/data/proyectos.json          ← fuente de verdad única
-        │
-        ├── BUILD TIME (Astro SSG)
-        │       src/data/proyectos.ts  →  re-exporta con tipos
-        │               │
-        │               └──  src/pages/proyectos/[slug].astro
-        │                       getStaticPaths() → genera /proyectos/creamyx,
-        │                                          /proyectos/reddragon, etc.
-        │
-        └── RUNTIME (isla React)
-                axios.get(raw.githubusercontent.com/.../proyectos.json)
-                        │
-                        └──  ProyectosIsla.tsx → renderiza tarjetas
+```mermaid
+flowchart TD
+    JSON["📄 public/data/proyectos.json\nfuente de verdad única"]
+
+    JSON --> BT & RT
+
+    subgraph BT["BUILD TIME — Astro SSG"]
+        TS["src/data/proyectos.ts\nre-exporta con tipos"]
+        Slug["src/pages/proyectos/[slug].astro\ngetStaticPaths()"]
+        Pages["páginas estáticas generadas\n/proyectos/creamyx\n/proyectos/reddragon\n…"]
+        TS --> Slug --> Pages
+    end
+
+    subgraph RT["RUNTIME — isla React"]
+        Axios["axios.get(raw.githubusercontent.com)"]
+        Isla["ProyectosIsla.tsx\nrenderiza tarjetas"]
+        Axios --> Isla
+    end
 ```
 
 > Para actualizar el catálogo basta con editar `public/data/proyectos.json` y hacer push a `main`; el sitio se redeploya automáticamente en Vercel.
