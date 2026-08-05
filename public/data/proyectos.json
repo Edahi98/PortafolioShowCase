@@ -1,0 +1,80 @@
+[
+  {
+    "nombre": "Sistema de Gestión de Inventario de Casa",
+    "descripcion": "Saber qué hay en casa sin abrir un solo cajón. Todo lo que entra y sale queda registrado, y se consulta o se actualiza escribiéndole por Telegram, como quien le manda un mensaje a un amigo.",
+    "stack": ["Node.js", "Telegram Bot", "Langchain", "Langgraph", "IA Local"],
+    "destacado": true
+  },
+  {
+    "nombre": "Sistema de Gestión Escolar",
+    "descripcion": "Lo que a la Universidad Tecnológica de Tecámac le llevaba días —bajar los expedientes de sus estudiantes uno por uno— ahora se resuelve en una sola operación, probada para aguantar el día de mayor carga.",
+    "stack": ["C#", ".NET", "Pruebas de estrés"],
+    "destacado": true,
+    "notaCapturas": "No se pueden mostrar capturas por derechos de autor."
+  },
+  {
+    "nombre": "Sistema POS - Paletería",
+    "descripcion": "Una paletería que ahora cobra, controla lo que le queda y sabe al cerrar cuánto vendió. El sistema aprende de sus propias ventas y le anticipa qué conviene preparar mañana.",
+    "stack": ["Laravel", "Machine Learning", "DevOps"],
+    "slug": "creamyx",
+    "imagenes": [
+      { "src": "/proyectos/creamyx/sitio-publico-productos.jpg", "alt": "Catálogo público de Creamyx", "descripcion": "La tienda tal como la ve el cliente: todo el producto a la vista y filtros para encontrar rápido lo que se le antoja." },
+      { "src": "/proyectos/creamyx/panel-gestion.jpg", "alt": "Panel de gestión de Creamyx", "descripcion": "El tablero de quien atiende: cómo va el día y, a un clic, vender, revisar productos o ver los números." },
+      { "src": "/proyectos/creamyx/pos.jpg", "alt": "Punto de venta (POS) de Creamyx", "descripcion": "La pantalla de cobro: se van tocando los productos y la venta queda armada en segundos." },
+      { "src": "/proyectos/creamyx/productos.jpg", "alt": "Catálogo de productos de Creamyx", "descripcion": "Todo el catálogo con su precio y cuánto queda en existencia; dar de alta algo nuevo toma un momento." },
+      { "src": "/proyectos/creamyx/nuevo-producto.jpg", "alt": "Formulario de nuevo producto de Creamyx", "descripcion": "Agregar un producto es llenar cinco datos: nombre, categoría, cómo se vende, descripción y su foto." },
+      { "src": "/proyectos/creamyx/ventas.jpg", "alt": "Historial de ventas de Creamyx", "descripcion": "Todas las ventas del día con su detalle, y el corte listo para descargar en PDF." },
+      { "src": "/proyectos/creamyx/dashboard.jpg", "alt": "Dashboard de Creamyx", "descripcion": "Un vistazo general al negocio, con acceso directo a productos, ventas y reportes." },
+      { "src": "/proyectos/creamyx/configuracion-critica.jpg", "alt": "Configuración crítica de Creamyx", "descripcion": "Los ajustes delicados del sistema, junto al pulso del negocio: usuarios, ventas e ingresos." }
+    ]
+  },
+  {
+    "nombre": "Sistema de Gestión de Control de Cambios",
+    "descripcion": "Un documento de calidad cambia decenas de veces y alguien tiene que capturar sus datos a mano cada vez. Aquí el sistema los lee solo y guarda la historia completa de cada versión, funcionando en las computadoras que la empresa ya tiene.",
+    "stack": ["IA Local", "Machine Learning", "Heurística"],
+    "relacionados": ["Denki Pipeline Designer", "Tsubasa Engine"],
+    "destacado": true
+  },
+  {
+    "nombre": "RedDragon",
+    "descripcion": "Le entregas un documento —Word, Excel o PDF— y te devuelve la información ya ordenada y lista para usar, sin que nadie la capture a mano. Es la casa que reúne a Tsubasa Engine y a Denki Pipeline Designer y los pone a trabajar juntos.",
+    "stack": ["Python", "FastAPI", "Docker", "React", "Vite", "TailwindCSS"],
+    "slug": "reddragon",
+    "repoUrl": "https://github.com/Edahi98/RedDragon",
+    "destacado": true,
+    "contiene": ["Tsubasa Engine", "Denki Pipeline Designer"],
+    "relacionados": ["Sistema de Gestión de Control de Cambios"],
+    "imagenes": [
+      { "src": "https://raw.githubusercontent.com/Edahi98/RedDragon/master/docs/assets/test-environment.png", "alt": "Entorno de pruebas de RedDragon", "descripcion": "Pantalla de pruebas: se sube un documento y se ve, de principio a fin, cómo sale convertido en información ordenada." }
+    ]
+  },
+  {
+    "nombre": "Denki Pipeline Designer",
+    "descripcion": "Trabajar con datos sin escribir una línea de código: arrastras piezas a un lienzo, las conectas como un diagrama y ves el resultado al instante. Una aplicación de escritorio para armar solo lo que normalmente le pedirías a un programador.",
+    "stack": ["Electron", "React", "TypeScript", "Polars", "Machine Learning"],
+    "slug": "denki-pipeline-designer",
+    "repoUrl": "https://github.com/Edahi98/DenkiPepelineDesigner",
+    "relacionados": ["Sistema de Gestión de Control de Cambios", "Tsubasa Engine", "RedDragon"],
+    "destacado": true,
+    "anidadoEn": "RedDragon",
+    "imagenes": [
+      { "src": "https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen1.png", "alt": "Canvas de diseño de pipelines de Denki", "descripcion": "El lienzo: tomas las piezas que necesitas y las vas conectando, como quien dibuja un diagrama en una pizarra." },
+      { "src": "https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen2.png", "alt": "Modal de resultado de ejecución de Denki", "descripcion": "El resultado al instante: la tabla que produjo tu diagrama, lista para revisarla sin salir de la aplicación." },
+      { "src": "https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen3.png", "alt": "Biblioteca de ejemplos de pipelines de Denki", "descripcion": "Ejemplos ya armados que se abren con un clic, para aprender viendo cómo se hizo." },
+      { "src": "https://raw.githubusercontent.com/Edahi98/DenkiPepelineDesigner/master/img/imagen4.png", "alt": "Manual de referencia de nodos de Denki", "descripcion": "Una guía dentro de la app que explica, pieza por pieza, para qué sirve cada una y cómo se usa." }
+    ]
+  },
+  {
+    "nombre": "Tsubasa Engine",
+    "descripcion": "El motor que hace el trabajo pesado detrás de Denki: toma el diagrama que dibujaste y lo convierte en cálculos reales sobre tus datos, con casi 200 operaciones listas y velocidad para tablas enormes.",
+    "stack": ["Python", "Polars", "Rust", "scikit-learn", "Flask"],
+    "slug": "tsubasa-engine",
+    "repoUrl": "https://github.com/Edahi98/TsubasaEngine",
+    "relacionados": ["Sistema de Gestión de Control de Cambios", "Denki Pipeline Designer", "RedDragon"],
+    "destacado": true,
+    "anidadoEn": "RedDragon",
+    "imagenes": [
+      { "src": "https://raw.githubusercontent.com/Edahi98/TsubasaEngine/main/img/cliente.png", "alt": "Denki Pipeline Designer, cliente visual de Tsubasa Engine", "descripcion": "Denki Pipeline Designer, la cara visible del motor: ahí se dibuja el proceso y Tsubasa lo ejecuta por detrás." }
+    ]
+  }
+]
