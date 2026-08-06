@@ -2,38 +2,14 @@
 import LanguageGrid from './atoms/LanguageGrid.astro';
 import ToolGrid from './atoms/ToolGrid.astro';
 import SoftSkillList from './atoms/SoftSkillList.astro';
+import PortafolioStackGrid from './atoms/PortafolioStackGrid.astro';
 ---
 <section id="habilidades" class="grid scroll-mt-24 gap-12 sm:grid-cols-3">
 	<div class="flex flex-col gap-4">
 		<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Lenguajes</h2>
 		<LanguageGrid />
 		<h3 class="mt-2 text-sm font-mono tracking-widest text-secondary uppercase">Stack de este portafolio</h3>
-		<div class="overflow-x-auto rounded-xl border border-border">
-			<table class="w-full font-mono text-xs">
-				<thead>
-					<tr class="border-b border-border bg-surface">
-						<th class="px-4 py-2 text-left text-primary">Tecnología</th>
-						<th class="px-4 py-2 text-left text-slate-400">Rol</th>
-					</tr>
-				</thead>
-				<tbody>
-					{[
-						{ tech: 'Astro 5',        rol: 'Framework SSG principal' },
-						{ tech: 'TypeScript',     rol: 'Tipado estricto' },
-						{ tech: 'Tailwind CSS v4',rol: 'Estilos (sin config file)' },
-						{ tech: 'React 19',       rol: 'Isla interactiva de proyectos' },
-						{ tech: 'axios',          rol: 'Fetch del catálogo desde GitHub' },
-						{ tech: 'Three.js',       rol: 'Escenas 3D (hero / sobre mí)' },
-						{ tech: 'anime.js',       rol: 'Animaciones de la red neuronal' },
-					].map((row, i) => (
-						<tr class:list={['border-b border-border last:border-0', i % 2 === 0 ? 'bg-surface/40' : '']}>
-							<td class="px-4 py-2 text-slate-100">{row.tech}</td>
-							<td class="px-4 py-2 text-slate-400">{row.rol}</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
-		</div>
+		<PortafolioStackGrid />
 	</div>
 	<div class="flex flex-col gap-4">
 		<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Herramientas</h2>
