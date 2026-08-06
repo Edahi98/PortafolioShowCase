@@ -4,11 +4,11 @@ import DockerScene from './DockerScene.astro';
 
 const commits = [
 	{ type: 'feat',     scope: 'tsubasa',   msg: 'add 190+ data operations',         color: '#22d3ee', delay: '0s',    top: '8%',  left: '60%' },
-	{ type: 'fix',      scope: 'pipeline',  msg: 'resolve memory leak on large sets', color: '#f38ba8', delay: '1.4s',  top: '22%', left: '72%' },
-	{ type: 'feat',     scope: 'reddragon', msg: 'integrate OCR extraction',          color: '#a855f7', delay: '0.7s',  top: '55%', left: '58%' },
-	{ type: 'chore',    scope: 'docker',    msg: 'optimize nginx config',             color: '#89b4fa', delay: '2.1s',  top: '70%', left: '75%' },
-	{ type: 'perf',     scope: 'polars',    msg: 'parallel processing pipeline',      color: '#a6e3a1', delay: '3.2s',  top: '38%', left: '65%' },
-	{ type: 'refactor', scope: 'ml',        msg: 'improve prediction accuracy',       color: '#fab387', delay: '1.8s',  top: '85%', left: '62%' },
+	{ type: 'fix',      scope: 'pipeline',  msg: 'resolve memory leak on large sets', color: '#f43f5e', delay: '1.4s',  top: '22%', left: '72%' },
+	{ type: 'feat',     scope: 'reddragon', msg: 'integrate OCR extraction',          color: '#facc15', delay: '0.7s',  top: '55%', left: '58%' },
+	{ type: 'chore',    scope: 'docker',    msg: 'optimize nginx config',             color: '#22d3ee', delay: '2.1s',  top: '70%', left: '75%' },
+	{ type: 'perf',     scope: 'polars',    msg: 'parallel processing pipeline',      color: '#facc15', delay: '3.2s',  top: '38%', left: '65%' },
+	{ type: 'refactor', scope: 'ml',        msg: 'improve prediction accuracy',       color: '#f43f5e', delay: '1.8s',  top: '85%', left: '62%' },
 ];
 ---
 <section id="inicio" class="relative grid scroll-mt-24 items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
@@ -28,7 +28,7 @@ const commits = [
 	<div class="flex flex-col gap-6">
 		<p class="font-mono text-sm tracking-widest text-primary uppercase">Portafolio</p>
 		<h1 class="text-4xl font-bold sm:text-6xl">
-			<span class="text-gradient">Edahi Yaxquin Avila Garcia</span>
+			<span class="text-primary">Edahi Yaxquin Avila Garcia</span>
 		</h1>
 		<p class="max-w-2xl text-lg text-slate-400">
 			Me apasiona enfrentar desafíos que parecen imposibles y convertirlos en soluciones reales.
@@ -38,7 +38,7 @@ const commits = [
 		<div class="flex flex-wrap gap-4 pt-2">
 			<a
 				href="mailto:garciaedahi3822@gmail.com"
-				class="rounded-full bg-gradient-to-r from-primary to-secondary px-5 py-2 text-sm font-semibold text-slate-950 transition hover:opacity-90"
+				class="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:opacity-90"
 			>
 				Contactar
 			</a>
@@ -52,7 +52,7 @@ const commits = [
 			</a>
 			<a
 				href="/cv"
-				class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-secondary px-5 py-2 text-sm font-semibold text-white shadow-[0_0_20px_-4px] shadow-accent/60 transition hover:opacity-90"
+				class="inline-flex items-center gap-2 rounded-full bg-secondary px-5 py-2 text-sm font-semibold text-white transition hover:opacity-90"
 			>
 				<FileText class="h-4 w-4" aria-hidden="true" />
 				Ver CV

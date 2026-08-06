@@ -23,15 +23,15 @@
 
 		scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
-		const keyLight = new THREE.DirectionalLight(0x22d3ee, 1);
+		const keyLight = new THREE.DirectionalLight(0x22d3ee, 1.6);
 		keyLight.position.set(4, 5, 4);
 		scene.add(keyLight);
 
-		const rimLight = new THREE.DirectionalLight(0xa855f7, 0.8);
+		const rimLight = new THREE.DirectionalLight(0xfacc15, 1.2);
 		rimLight.position.set(-4, -3, -3);
 		scene.add(rimLight);
 
-		const palette = [0x22d3ee, 0x6366f1, 0xa855f7];
+		const palette = [0x22d3ee, 0xfacc15, 0xf43f5e];
 		const network = new THREE.Group();
 
 		// Layered neural network: input, two hidden layers, output.
@@ -85,9 +85,9 @@
 		const lineGeometry = new THREE.BufferGeometry();
 		lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
 		const lineMaterial = new THREE.LineBasicMaterial({
-			color: 0x6366f1,
+			color: 0x22d3ee,
 			transparent: true,
-			opacity: 0.18,
+			opacity: 0.22,
 		});
 		network.add(new THREE.LineSegments(lineGeometry, lineMaterial));
 
