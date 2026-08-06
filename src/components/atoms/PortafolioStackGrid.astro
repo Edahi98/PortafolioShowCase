@@ -1,17 +1,16 @@
 ---
-// axios y anime.js no tienen icono en skillicons ni simpleicons con buena legibilidad;
-// se usan sus logos desde simpleicons.
-const stack = [
-	{ nombre: 'Astro',       icono: 'astro',       fuente: 'skillicons' },
-	{ nombre: 'TypeScript',  icono: 'ts',           fuente: 'skillicons' },
-	{ nombre: 'Tailwind',    icono: 'tailwind',     fuente: 'skillicons' },
-	{ nombre: 'React',       icono: 'react',        fuente: 'skillicons' },
-	{ nombre: 'Three.js',    icono: 'threejs',      fuente: 'skillicons' },
-	{ nombre: 'axios',       icono: 'axios',        fuente: 'simpleicons' },
-	{ nombre: 'anime.js',    icono: 'animejs',      fuente: 'simpleicons' },
+type StackItem = { nombre: string; icono: string; fuente: 'skillicons' | 'simpleicons' };
+
+const stack: StackItem[] = [
+	{ nombre: 'Astro',      icono: 'astro',    fuente: 'skillicons' },
+	{ nombre: 'TypeScript', icono: 'ts',       fuente: 'skillicons' },
+	{ nombre: 'Tailwind',   icono: 'tailwind', fuente: 'skillicons' },
+	{ nombre: 'React',      icono: 'react',    fuente: 'skillicons' },
+	{ nombre: 'Three.js',   icono: 'threejs',  fuente: 'skillicons' },
+	{ nombre: 'axios',      icono: 'axios',    fuente: 'simpleicons' },
 ];
 
-function iconoUrl(item: (typeof stack)[number]) {
+function iconoUrl(item: StackItem) {
 	return item.fuente === 'simpleicons'
 		? `https://cdn.simpleicons.org/${item.icono}/e2e8f0`
 		: `https://skillicons.dev/icons?i=${item.icono}`;
