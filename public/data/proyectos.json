@@ -29,6 +29,22 @@
     ]
   },
   {
+    "nombre": "Sistema de Gestión de Inventario - Taller Mecánico",
+    "descripcion": "Un taller que llevaba sus refacciones en libreta hoy encuentra cualquier pieza en segundos y sabe con exactitud qué le queda, a quién le vendió y cuánto lleva vendido.",
+    "stack": ["Laravel", "Docker", "Nginx"],
+    "slug": "taller-mecanico",
+    "repoUrl": "https://github.com/Edahi98/LosHermanos_Inventario",
+    "dockerHubUrl": "https://hub.docker.com/r/edahisnacke/los-hermanos-web",
+    "documentacionUrl": "/proyectos/taller-mecanico/documentacion.pdf",
+    "imagenes": [
+      { "src": "/proyectos/taller-mecanico/home.jpg", "alt": "Página de inicio del inventario Los Hermanos", "descripcion": "La entrada del sistema: desde aquí se llega a las refacciones, sus marcas y sus categorías." },
+      { "src": "/proyectos/taller-mecanico/articulos.jpg", "alt": "Listado de artículos del inventario Los Hermanos", "descripcion": "Todas las refacciones del taller: se buscan por nombre, tipo o marca, y se dan de alta al momento." },
+      { "src": "/proyectos/taller-mecanico/marcas.jpg", "alt": "Listado de marcas del inventario Los Hermanos", "descripcion": "Las marcas con las que trabaja el taller, para ubicar una pieza por su fabricante." },
+      { "src": "/proyectos/taller-mecanico/categorias.jpg", "alt": "Listado de categorías del inventario Los Hermanos", "descripcion": "Las categorías que agrupan las piezas, para que nada se pierda entre cientos de refacciones." },
+      { "src": "/proyectos/taller-mecanico/agregar-categoria.jpg", "alt": "Formulario para agregar categoría en el inventario Los Hermanos", "descripcion": "Crear una categoría nueva: un formulario corto y listo." }
+    ]
+  },
+  {
     "nombre": "Sistema de Gestión de Control de Cambios",
     "descripcion": "Un documento de calidad cambia decenas de veces y alguien tiene que capturar sus datos a mano cada vez. Aquí el sistema los lee solo y guarda la historia completa de cada versión, funcionando en las computadoras que la empresa ya tiene.",
     "stack": ["IA Local", "Machine Learning", "Heurística"],
