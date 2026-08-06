@@ -20,5 +20,26 @@
     modo<span style="color:#cdd6f4">:      [</span><span style="color:#a6e3a1">'SSG'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'CSR'</span><span style="color:#cdd6f4">], </span><span style="color:#6c7086">// Static Site Generation + Client-Side Rendering</span>
   <span style="color:#cdd6f4">};</span>
 <span style="color:#cdd6f4">}</span></pre>
+		<div class="mt-6 flex items-center gap-2" style="color:#6c7086">
+			<img
+				src="https://rustacean.net/assets/rustacean-flat-happy.svg"
+				alt="Ferris, el cangrejo de Rust"
+				width="32"
+				height="32"
+				class="ferris h-8 w-8"
+			/>
+			<span class="font-mono text-xs">// también me gusta Rust</span>
+		</div>
 	</div>
 </footer>
+
+<style>
+	@keyframes wiggle {
+		0%, 100% { transform: rotate(-10deg); }
+		50%       { transform: rotate(10deg); }
+	}
+	.ferris {
+		animation: wiggle 1.4s ease-in-out infinite;
+		transform-origin: bottom center;
+	}
+</style>
