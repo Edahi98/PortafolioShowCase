@@ -1,0 +1,36 @@
+---
+// axios y anime.js no tienen icono en skillicons ni simpleicons con buena legibilidad;
+// se usan sus logos desde simpleicons.
+const stack = [
+	{ nombre: 'Astro',       icono: 'astro',       fuente: 'skillicons' },
+	{ nombre: 'TypeScript',  icono: 'ts',           fuente: 'skillicons' },
+	{ nombre: 'Tailwind',    icono: 'tailwind',     fuente: 'skillicons' },
+	{ nombre: 'React',       icono: 'react',        fuente: 'skillicons' },
+	{ nombre: 'Three.js',    icono: 'threejs',      fuente: 'skillicons' },
+	{ nombre: 'axios',       icono: 'axios',        fuente: 'simpleicons' },
+	{ nombre: 'anime.js',    icono: 'animejs',      fuente: 'simpleicons' },
+];
+
+function iconoUrl(item: (typeof stack)[number]) {
+	return item.fuente === 'simpleicons'
+		? `https://cdn.simpleicons.org/${item.icono}/e2e8f0`
+		: `https://skillicons.dev/icons?i=${item.icono}`;
+}
+---
+<div class="grid grid-cols-3 gap-3">
+	{
+		stack.map((item) => (
+			<div class="glass-card flex flex-col items-center gap-2 rounded-2xl p-4 transition hover:border-primary/60">
+				<img
+					src={iconoUrl(item)}
+					alt={item.nombre}
+					width="40"
+					height="40"
+					loading="lazy"
+					class="h-10 w-10"
+				/>
+				<span class="font-mono text-xs text-slate-300">{item.nombre}</span>
+			</div>
+		))
+	}
+</div>
