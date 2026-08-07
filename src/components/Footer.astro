@@ -9,17 +9,17 @@
 			<span class="h-3 w-3 rounded-full" style="background:#f38ba8"></span>
 			<span class="h-3 w-3 rounded-full" style="background:#f9e2af"></span>
 			<span class="h-3 w-3 rounded-full" style="background:#a6e3a1"></span>
-			<span class="ml-2 font-mono text-xs" style="color:#45475a">portafolio.ts</span>
+			<span class="ml-2 font-mono text-xs" style="color:#45475a">portafolio.rs</span>
 		</div>
-		<pre class="overflow-x-auto font-mono text-sm leading-relaxed" style="color:#cdd6f4"><span style="color:#cba6f7">function</span> <span style="color:#89b4fa">portafolio</span><span style="color:#cdd6f4">() {</span>
-  <span style="color:#cba6f7">return</span> <span style="color:#cdd6f4">{</span>
-    autor<span style="color:#cdd6f4">:      </span><span style="color:#a6e3a1">'Edahi Yaxquin Avila Garcia'</span><span style="color:#cdd6f4">,</span>
-    copyright<span style="color:#cdd6f4">: </span><span style="color:#fab387">{new Date().getFullYear()}</span><span style="color:#cdd6f4">,</span>
-    framework<span style="color:#cdd6f4">: </span><span style="color:#a6e3a1">'Astro'</span><span style="color:#cdd6f4">,</span>
-    estilos<span style="color:#cdd6f4">:   </span><span style="color:#a6e3a1">'TailwindCSS'</span><span style="color:#cdd6f4">,</span>
-    modo<span style="color:#cdd6f4">:      [</span><span style="color:#a6e3a1">'SSG'</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">'CSR'</span><span style="color:#cdd6f4">], </span><span style="color:#6c7086">// Static Site Generation + Client-Side Rendering</span>
-  <span style="color:#cdd6f4">};</span>
-<span style="color:#cdd6f4">}</span></pre>
+		<pre class="overflow-x-auto font-mono text-sm leading-relaxed" style="color:#cdd6f4"><span style="color:#cba6f7">fn</span> <span style="color:#89b4fa">portafolio</span><span style="color:#cdd6f4">() -> </span><span style="color:#89b4fa">serde_json</span><span style="color:#cdd6f4">::</span><span style="color:#89b4fa">Value</span><span style="color:#cdd6f4"> &#123;</span>
+  <span style="color:#89b4fa">serde_json</span><span style="color:#cdd6f4">::</span><span style="color:#cba6f7">json!</span><span style="color:#cdd6f4">(&#123;</span>
+    <span style="color:#a6e3a1">"autor"</span><span style="color:#cdd6f4">:     </span><span style="color:#a6e3a1">"Edahi Yaxquin Avila Garcia"</span><span style="color:#cdd6f4">,</span>
+    <span style="color:#a6e3a1">"copyright"</span><span style="color:#cdd6f4">: </span><span style="color:#fab387">{new Date().getFullYear()}</span><span style="color:#cdd6f4">,</span>
+    <span style="color:#a6e3a1">"framework"</span><span style="color:#cdd6f4">: </span><span style="color:#a6e3a1">"Astro"</span><span style="color:#cdd6f4">,</span>
+    <span style="color:#a6e3a1">"estilos"</span><span style="color:#cdd6f4">:   </span><span style="color:#a6e3a1">"TailwindCSS"</span><span style="color:#cdd6f4">,</span>
+    <span style="color:#a6e3a1">"modo"</span><span style="color:#cdd6f4">:      [</span><span style="color:#a6e3a1">"SSG"</span><span style="color:#cdd6f4">, </span><span style="color:#a6e3a1">"CSR"</span><span style="color:#cdd6f4">]</span>
+  <span style="color:#cdd6f4">&#125;)</span>
+<span style="color:#cdd6f4">&#125;</span></pre>
 		<div class="mt-8 flex items-center gap-4">
 			<img
 				src="https://rustacean.net/assets/rustacean-flat-happy.svg"
