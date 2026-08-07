@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-	--color-bg:       var(--color-purple-950);
-	--color-surface:  var(--color-purple-900);
-	--color-surface-2: var(--color-purple-800);
-	--color-primary:  var(--color-yellow-400);
+	--color-bg:        #0b0d2a;
+	--color-surface:   #141630;
+	--color-surface-2: #1e2040;
+	--color-primary:   var(--color-yellow-400);
 	--color-secondary: var(--color-rose-500);
-	--color-accent:   var(--color-cyan-400);
-	--color-border:   var(--color-purple-800);
+	--color-accent:    var(--color-cyan-400);
+	--color-border:    #252848;
 }
 
 body {
