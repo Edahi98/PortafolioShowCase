@@ -6,20 +6,40 @@ interface Props {
 }
 const { src = '/videos/trailer.mp4' } = Astro.props;
 ---
-<div class="trailer-wrap relative hidden h-[440px] overflow-hidden lg:block">
-	<video
-		id="trailer-video"
-		src={src}
-		autoplay
-		muted
-		loop
-		playsinline
-		class="h-full w-full object-cover"
-	></video>
-	<UnmuteButton videoId="trailer-video" />
+<div class="relative hidden lg:flex lg:flex-col lg:gap-0">
+	<div class="title-wrap relative overflow-hidden">
+		<img
+			src="/videos/game-title.png"
+			alt="Pasar es Pasar — La última oportunidad para pasar"
+			class="w-full object-contain"
+		/>
+	</div>
+	<div class="trailer-wrap relative h-[380px] overflow-hidden">
+		<video
+			id="trailer-video"
+			src={src}
+			autoplay
+			muted
+			loop
+			playsinline
+			class="h-full w-full object-cover"
+		></video>
+		<UnmuteButton videoId="trailer-video" />
+	</div>
 </div>
 
 <style>
+	.title-wrap {
+		mask-image:
+			linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%),
+			linear-gradient(to bottom, transparent 0%, black 20%, black 70%, transparent 100%);
+		mask-composite: intersect;
+		-webkit-mask-image:
+			linear-gradient(to right, transparent 0%, black 20%, black 80%, transparent 100%),
+			linear-gradient(to bottom, transparent 0%, black 20%, black 70%, transparent 100%);
+		-webkit-mask-composite: source-in;
+		opacity: 0.85;
+	}
 	.trailer-wrap {
 		mask-image:
 			linear-gradient(to right, transparent 0%, black 18%, black 70%, transparent 100%),
