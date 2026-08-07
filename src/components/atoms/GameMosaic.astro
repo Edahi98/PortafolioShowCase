@@ -1,0 +1,32 @@
+---
+const images = [
+	{ src: '/videos/game-over.png',   alt: 'Game Over — Pasar es Pasar', class: 'col-span-2' },
+	{ src: '/videos/villain-art.png', alt: 'Arte del villano',            class: '' },
+	{ src: '/videos/group.png',       alt: 'Personajes del juego',        class: '' },
+];
+---
+<div class="mosaic grid h-full w-full grid-cols-2 grid-rows-2 gap-1">
+	{images.map((img) => (
+		<div class={`overflow-hidden ${img.class}`}>
+			<img
+				src={img.src}
+				alt={img.alt}
+				class="h-full w-full object-cover"
+			/>
+		</div>
+	))}
+</div>
+
+<style>
+	.mosaic {
+		mask-image:
+			linear-gradient(to right, transparent 0%, black 18%, black 70%, transparent 100%),
+			linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%);
+		mask-composite: intersect;
+		-webkit-mask-image:
+			linear-gradient(to right, transparent 0%, black 18%, black 70%, transparent 100%),
+			linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%);
+		-webkit-mask-composite: source-in;
+		opacity: 0.7;
+	}
+</style>
