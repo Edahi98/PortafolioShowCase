@@ -1,11 +1,5 @@
 ---
-import UnmuteButton from './atoms/UnmuteButton.astro';
-import GameArt from './atoms/GameArt.astro';
-
-interface Props {
-	src?: string;
-}
-const { src = '/videos/trailer.mp4' } = Astro.props;
+import GameMosaic from './atoms/GameMosaic.astro';
 ---
 <div class="relative hidden lg:flex lg:flex-col lg:gap-0">
 	<div class="title-wrap relative overflow-hidden">
@@ -15,20 +9,8 @@ const { src = '/videos/trailer.mp4' } = Astro.props;
 			class="w-full object-contain"
 		/>
 	</div>
-	<div class="relative h-[380px] overflow-hidden">
-		<div class="trailer-wrap absolute inset-0">
-			<video
-				id="trailer-video"
-				src={src}
-				autoplay
-				muted
-				loop
-				playsinline
-				class="h-full w-full object-cover"
-			></video>
-		</div>
-		<GameArt src="/videos/game-art.png" />
-		<UnmuteButton videoId="trailer-video" />
+	<div class="h-[380px]">
+		<GameMosaic />
 	</div>
 </div>
 
@@ -43,16 +25,5 @@ const { src = '/videos/trailer.mp4' } = Astro.props;
 			linear-gradient(to bottom, transparent 0%, black 20%, black 70%, transparent 100%);
 		-webkit-mask-composite: source-in;
 		opacity: 0.85;
-	}
-	.trailer-wrap {
-		mask-image:
-			linear-gradient(to right, transparent 0%, black 18%, black 70%, transparent 100%),
-			linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%);
-		mask-composite: intersect;
-		-webkit-mask-image:
-			linear-gradient(to right, transparent 0%, black 18%, black 70%, transparent 100%),
-			linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%);
-		-webkit-mask-composite: source-in;
-		opacity: 0.55;
 	}
 </style>
