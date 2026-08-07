@@ -7,7 +7,7 @@ interface Props {
 }
 const { src = '/videos/trailer.mp4' } = Astro.props;
 ---
-<div class="relative hidden lg:flex lg:flex-col lg:gap-0">
+<div class="relative flex flex-col gap-0">
 	<div class="title-wrap relative overflow-hidden">
 		<img
 			src="/videos/game-title.png"
@@ -15,19 +15,10 @@ const { src = '/videos/trailer.mp4' } = Astro.props;
 			class="w-full object-contain"
 		/>
 	</div>
-	<div class="relative h-[380px]">
-		<!-- Video oculto: solo reproduce audio -->
-		<video
-			id="trailer-video"
-			src={src}
-			autoplay
-			muted
-			loop
-			playsinline
-			class="pointer-events-none absolute h-0 w-0 opacity-0"
-		></video>
+	<div class="relative h-[240px] sm:h-[320px] lg:h-[380px]">
 		<GameMosaic />
-		<UnmuteButton videoId="trailer-video" />
+		<audio id="trailer-audio" src="/videos/trailer.mp3" loop></audio>
+		<UnmuteButton videoId="trailer-audio" />
 	</div>
 </div>
 

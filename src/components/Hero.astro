@@ -1,7 +1,6 @@
 ---
 import { Crown, FileText } from '@lucide/astro';
 import TrailerScene from './TrailerScene.astro';
-import GameArt from './atoms/GameArt.astro';
 
 const commits = [
 	{ type: 'feat',     scope: 'tsubasa',   msg: 'add 190+ data operations',         color: '#22d3ee', delay: '0s',    top: '8%',  left: '60%' },
@@ -13,8 +12,6 @@ const commits = [
 ];
 ---
 <section id="inicio" class="relative grid scroll-mt-24 items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
-
-	<GameArt src="/videos/game-art.png" class="absolute -bottom-4 left-40 hidden lg:block" />
 
 	<!-- Commits flotantes decorativos (solo visibles en lg+) -->
 	{commits.map((c) => (

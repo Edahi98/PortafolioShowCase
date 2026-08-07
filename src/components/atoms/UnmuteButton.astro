@@ -20,15 +20,21 @@ const { videoId } = Astro.props;
 
 <script>
 	document.querySelectorAll<HTMLButtonElement>('.unmute-btn').forEach((btn) => {
-		const video = document.getElementById(btn.dataset.videoId!) as HTMLVideoElement | null;
+		const media = document.getElementById(btn.dataset.videoId!) as HTMLMediaElement | null;
 		const iconMuted = btn.querySelector('[data-icon="muted"]');
 		const iconSound = btn.querySelector('[data-icon="sound"]');
 
 		btn.addEventListener('click', () => {
-			if (!video) return;
-			video.muted = !video.muted;
-			iconMuted?.classList.toggle('hidden', !video.muted);
-			iconSound?.classList.toggle('hidden', video.muted);
+			if (!media) return;
+			if (media.paused) {
+				media.play();
+				iconMuted?.classList.add('hidden');
+				iconSound?.classList.remove('hidden');
+			} else {
+				media.pause();
+				iconMuted?.classList.remove('hidden');
+				iconSound?.classList.add('hidden');
+			}
 		});
 	});
 </script>
