@@ -23,15 +23,15 @@
 		const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
 		scene.add(ambientLight);
 
-		const keyLight = new THREE.DirectionalLight(0x22d3ee, 1.2);
+		const keyLight = new THREE.DirectionalLight(0x22d3ee, 1.6);
 		keyLight.position.set(5, 6, 4);
 		scene.add(keyLight);
 
-		const rimLight = new THREE.DirectionalLight(0xa855f7, 0.9);
+		const rimLight = new THREE.DirectionalLight(0xfacc15, 1.2);
 		rimLight.position.set(-5, -2, -4);
 		scene.add(rimLight);
 
-		const palette = [0x22d3ee, 0xa855f7, 0x6366f1];
+		const palette = [0x22d3ee, 0xfacc15, 0xf43f5e];
 
 		// Docker-style shipping containers: wide, low boxes with corrugated ridge lines.
 		function createContainer(width: number, height: number, depth: number, color: number) {
@@ -43,7 +43,7 @@
 				metalness: 0.35,
 				roughness: 0.4,
 				transparent: true,
-				opacity: 0.28,
+				opacity: 0.55,
 			});
 			const box = new THREE.Mesh(geometry, material);
 			group.add(box);
