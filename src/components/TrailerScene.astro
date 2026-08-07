@@ -1,0 +1,30 @@
+---
+interface Props {
+	src?: string;
+}
+const { src = '/videos/trailer.mp4' } = Astro.props;
+---
+<div class="trailer-wrap relative hidden h-[440px] overflow-hidden lg:block">
+	<video
+		src={src}
+		autoplay
+		muted
+		loop
+		playsinline
+		class="h-full w-full object-cover"
+	></video>
+</div>
+
+<style>
+	.trailer-wrap {
+		mask-image:
+			linear-gradient(to right, transparent 0%, black 18%, black 70%, transparent 100%),
+			linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%);
+		mask-composite: intersect;
+		-webkit-mask-image:
+			linear-gradient(to right, transparent 0%, black 18%, black 70%, transparent 100%),
+			linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%);
+		-webkit-mask-composite: source-in;
+		opacity: 0.55;
+	}
+</style>
