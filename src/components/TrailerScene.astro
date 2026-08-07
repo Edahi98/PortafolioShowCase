@@ -1,5 +1,11 @@
 ---
 import GameMosaic from './atoms/GameMosaic.astro';
+import UnmuteButton from './atoms/UnmuteButton.astro';
+
+interface Props {
+	src?: string;
+}
+const { src = '/videos/trailer.mp4' } = Astro.props;
 ---
 <div class="relative hidden lg:flex lg:flex-col lg:gap-0">
 	<div class="title-wrap relative overflow-hidden">
@@ -9,8 +15,19 @@ import GameMosaic from './atoms/GameMosaic.astro';
 			class="w-full object-contain"
 		/>
 	</div>
-	<div class="h-[380px]">
+	<div class="relative h-[380px]">
+		<!-- Video oculto: solo reproduce audio -->
+		<video
+			id="trailer-video"
+			src={src}
+			autoplay
+			muted
+			loop
+			playsinline
+			class="pointer-events-none absolute h-0 w-0 opacity-0"
+		></video>
 		<GameMosaic />
+		<UnmuteButton videoId="trailer-video" />
 	</div>
 </div>
 
