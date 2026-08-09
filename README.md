@@ -4,138 +4,116 @@ Portafolio personal de Edahi Yaxquin Avila Garcia, construido con [Astro](https:
 
 🔗 **Demo en vivo:** [portafolioshowcase.vercel.app](https://portafolioshowcase.vercel.app)
 
-## Capturas
-
-| Hero | Móvil |
-| :--: | :--: |
-| ![Hero con escena 3D de contenedores](./docs/screenshots/hero.png) | ![Vista móvil](./docs/screenshots/mobile.png) |
-
-| Sección de Proyectos |
-| :--: |
-| ![Sección de Proyectos](./docs/screenshots/proyectos.png) |
-
-<details>
-<summary>Ver página completa</summary>
-
-![Home completo](./docs/screenshots/home-full.png)
-
-</details>
-
 ## Stack
 
-- **Astro 5** (TypeScript en modo `strict`)
-- **Tailwind CSS v4** vía `@tailwindcss/vite`
-- **React 19** — únicamente para islas interactivas (ver sección de arquitectura)
-- **Three.js** para las escenas 3D del hero (contenedores estilo Docker) y de la sección "Sobre mí" (red neuronal)
-- **anime.js** para las animaciones de la red neuronal
-- **axios** para el fetch del catálogo de proyectos desde GitHub
+- **Astro 5** (TypeScript en modo `strict`) — sin ningún framework de UI, todo es Astro puro sin islas ni hidratación client-side
+- **Tailwind CSS v4** vía `@tailwindcss/vite` — tema definido con `@theme` en `global.css`, sin `tailwind.config`
+- **Three.js** para la escena 3D de la red neuronal (`NeuralNetworkScene.astro`)
+- **anime.js v4** para animaciones de partículas y pulsos en la red neuronal
+- **@lucide/astro** para íconos SVG dentro de componentes `.astro`
 
-## Arquitectura de islas (Astro + React)
+## Tema visual
 
-El sitio es **SSG puro** (Static Site Generation): Astro genera todas las páginas en HTML estático en tiempo de build. No hay servidor en runtime.
+Paleta oscura azul-morada definida en `src/styles/global.css`:
 
-Para la sección de Proyectos se usa el patrón de **islas de Astro** (`client:visible`): el resto del DOM es HTML estático, y solo el componente `ProyectosIsla` se hidrata en el cliente cuando entra al viewport.
+| Token | Valor | Uso |
+| :--- | :--- | :--- |
+| `--color-bg` | `#161950` | Fondo de página |
+| `--color-primary` | `yellow-400` | Acento principal, botones, texto destacado |
+| `--color-secondary` | `rose-500` | Headings de sección, botón Ver CV |
+| `--color-accent` | `cyan-400` | Acento terciario |
+| `--color-surface` | `#1e215e` | Fondo de tarjetas |
+| `--color-border` | `#323678` | Bordes |
+
+Clases utilitarias: `.glass-card` (tarjeta semitransparente con backdrop-blur), `.text-gradient` (degradado amarillo → rosa).
+
+## Arquitectura
+
+El sitio es **SSG puro** — Astro genera todo en HTML estático en build time. No hay servidor en runtime ni hidratación client-side.
 
 ```mermaid
 graph TD
-    subgraph SSG["index.astro — SSG (HTML estático)"]
-        Navbar["Navbar.astro\n— HTML estático, 0 JS"]
-        Hero["Hero.astro\n— HTML estático, 0 JS"]
-        SobreMi["SobreMi.astro\n— HTML estático, 0 JS"]
-        subgraph Wrapper["Proyectos.astro (wrapper)"]
-            Isla["⚛️ ProyectosIsla.tsx\nclient:visible\nuseEffect → axios.get → proyectos.json → render tarjetas"]
-        end
-        Formacion["Formacion.astro\n— HTML estático, 0 JS"]
-        Habilidades["Habilidades.astro\n— HTML estático, 0 JS"]
-        Footer["Footer.astro\n— HTML estático, 0 JS"]
-    end
-
-    Navbar --> Hero --> SobreMi --> Wrapper --> Formacion --> Habilidades --> Footer
-```
-
-### Flujo de datos de proyectos
-
-```mermaid
-flowchart TD
-    JSON["📄 public/data/proyectos.json\nfuente de verdad única"]
-
-    JSON --> BT & RT
-
-    subgraph BT["BUILD TIME — Astro SSG"]
-        TS["src/data/proyectos.ts\nre-exporta con tipos"]
-        Slug["src/pages/proyectos/[slug].astro\ngetStaticPaths()"]
-        Pages["páginas estáticas generadas\n/proyectos/creamyx\n/proyectos/reddragon\n…"]
-        TS --> Slug --> Pages
-    end
-
-    subgraph RT["RUNTIME — isla React"]
-        Axios["axios.get(raw.githubusercontent.com)"]
-        Isla["ProyectosIsla.tsx\nrenderiza tarjetas"]
-        Axios --> Isla
+    subgraph Home["index.astro — SSG"]
+        Navbar --> Hero
+        Hero --> SobreMi
+        SobreMi --> Proyectos
+        Proyectos --> Formacion
+        Formacion --> Habilidades
+        Habilidades --> Footer
     end
 ```
 
-> Para actualizar el catálogo basta con editar `public/data/proyectos.json` y hacer push a `main`; el sitio se redeploya automáticamente en Vercel.
+### Hero
 
-Ver [docs/proyectos-json-schema.md](./docs/proyectos-json-schema.md) para el esquema completo del JSON.
+El hero muestra el nombre, descripción y botones a la izquierda, y a la derecha un **TrailerScene** compuesto por:
 
-### Directiva `client:visible`
-
-`<ProyectosIsla client:visible />` le indica a Astro que:
-
-1. En el build, el componente se pre-renderiza a HTML estático (skeleton vacío).
-2. En el cliente, el JS de React se descarga e hidrata **solo cuando el elemento entra al viewport** (Intersection Observer), no al cargar la página.
-
-Esto mantiene el Time to Interactive bajo: el JS de React y axios solo se ejecuta si el usuario llega a ver la sección.
+- `game-title.png` con máscara de desvanecimiento
+- `GameMosaic` — mosaico 2×2 de capturas del juego "Pasar es Pasar"
+- `<audio>` oculto con el audio del trailer + `UnmuteButton` para reproducirlo
+- Badge de 2.° lugar en el Concurso de Videojuegos UTTecámac (enlaza a `/#reconocimientos`)
 
 ## Estructura del proyecto
 
 ```text
 src/
 ├── components/
-│   ├── atoms/                   # piezas pequeñas reutilizables
-│   │   ├── LanguageGrid.astro
-│   │   ├── ToolGrid.astro
-│   │   └── SoftSkillList.astro
-│   ├── ProyectosIsla.tsx        # isla React (única excepción a Astro puro)
+│   ├── atoms/                    # piezas pequeñas reutilizables
+│   │   ├── CertCard.astro        # tarjeta linkeable (certificados, cursos, reconocimientos)
+│   │   ├── FormacionCard.astro   # tarjeta estática (formación académica)
+│   │   ├── GameArt.astro         # imagen decorativa con máscara
+│   │   ├── GameMosaic.astro      # mosaico 2×2 de capturas del juego
+│   │   ├── LanguageGrid.astro    # grid de lenguajes con skillicons.dev
+│   │   ├── SoftSkillList.astro   # lista de habilidades blandas con colores
+│   │   ├── ToolGrid.astro        # grid de herramientas con skillicons.dev
+│   │   └── UnmuteButton.astro    # botón play/pause para el audio del trailer
+│   ├── TrailerScene.astro        # escena hero: título + mosaico + audio
+│   ├── NeuralNetworkScene.astro  # red neuronal Three.js + anime.js
+│   ├── DockerScene.astro         # escena 3D de contenedores (sin uso activo)
 │   ├── Navbar.astro
 │   ├── Hero.astro
 │   ├── SobreMi.astro
-│   ├── Proyectos.astro          # wrapper que monta la isla
-│   ├── Formacion.astro
+│   ├── Proyectos.astro
+│   ├── Formacion.astro           # orquestador: importa datos y atoms
 │   ├── Habilidades.astro
-│   ├── Footer.astro
-│   ├── DockerScene.astro
-│   └── NeuralNetworkScene.astro
+│   └── Footer.astro              # bloque Rust/serde_json con Ferris
 ├── data/
-│   └── proyectos.ts             # tipos + re-exporta public/data/proyectos.json
+│   ├── formacion.ts              # formación, certificaciones, cursos, reconocimientos
+│   └── proyectos.ts              # tipos + proyectos con slug e imágenes
 ├── pages/
-│   ├── index.astro              # compone las secciones del Home
+│   ├── index.astro               # compone las secciones del Home
 │   ├── cv.astro
 │   ├── certificado-solana.astro
+│   ├── curso-webscraping.astro
+│   ├── reconocimiento-videojuegos.astro
 │   └── proyectos/
-│       └── [slug].astro         # página dinámica por proyecto
+│       └── [slug].astro          # página dinámica por proyecto
 └── styles/
-    └── global.css               # tema (paleta, tarjetas glass, texto en degradado)
+    └── global.css                # tema (paleta, glass-card, text-gradient)
 
 public/
-└── data/
-    └── proyectos.json           # fuente de verdad del catálogo
-
-docs/
-├── proyectos-json-schema.md     # esquema del JSON de proyectos
-└── screenshots/
+├── certificados/                 # PDFs de certificados
+├── reconocimientos/              # imágenes de reconocimientos
+├── proyectos/                    # capturas por slug de proyecto
+└── videos/                       # assets del trailer (MP3, PNGs)
 ```
 
-Ver [CLAUDE.md](./CLAUDE.md) para el detalle del sistema de diseño.
+Ver [CLAUDE.md](./CLAUDE.md) para el detalle completo del sistema de diseño y convenciones del proyecto.
+
+## Secciones
+
+| Sección | Descripción |
+| :--- | :--- |
+| **Hero** | Nombre, descripción, botones de contacto y trailer del juego "Pasar es Pasar" |
+| **Sobre mí** | Texto breve + red neuronal animada con Three.js |
+| **Proyectos** | Galería de proyectos destacados con páginas de showcase |
+| **Formación** | Educación, certificaciones (Solana WEB3), cursos (Web Scraping), reconocimientos |
+| **Habilidades** | Lenguajes, herramientas y habilidades blandas |
 
 ## Comandos
 
-Todos los comandos se ejecutan desde la raíz del proyecto:
-
-| Comando           | Acción                                          |
-| :----------------- | :----------------------------------------------- |
-| `npm install`       | Instala las dependencias                          |
-| `npm run dev`       | Levanta el servidor de desarrollo en `localhost:4321` |
-| `npm run build`     | Compila el sitio para producción en `./dist/`     |
-| `npm run preview`   | Previsualiza el build de producción localmente    |
+| Comando | Acción |
+| :--- | :--- |
+| `npm install` | Instala las dependencias |
+| `npm run dev` | Servidor de desarrollo en `localhost:4321` |
+| `npm run build` | Compila el sitio para producción en `./dist/` |
+| `npm run preview` | Previsualiza el build de producción localmente |
