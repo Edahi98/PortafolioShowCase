@@ -53,7 +53,7 @@ export default function ProyectosIsla() {
 							{index === 0 ? (
 								<h3 className="flex items-center gap-2 font-mono text-xs tracking-widest text-primary uppercase">
 									<Crown className="h-4 w-4" aria-hidden="true" />
-									Proyectos destacados
+									Proyectos principales
 								</h3>
 							) : (
 								<h3 className="font-mono text-xs tracking-widest text-secondary uppercase">
