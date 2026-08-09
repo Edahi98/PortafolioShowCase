@@ -1,60 +1,36 @@
 ---
-const formacion = [
-	{
-		titulo: 'Ingeniería en Desarrollo y Gestión de Software',
-		institucion: 'Universidad Tecnológica de Tecámac',
-		periodo: '2025 - 2026',
-	},
-];
-
-const certificaciones = [
-	{
-		titulo: 'Bootcamp Solana Blockchain (WEB3)',
-		institucion: 'WayLearn Latinoamérica',
-		periodo: 'Febrero 2026 - Marzo 2026',
-		href: '/certificado-solana',
-	},
-];
+import FormacionCard from './atoms/FormacionCard.astro';
+import CertCard from './atoms/CertCard.astro';
+import { formacion, certificaciones, cursos, reconocimientos } from '../data/formacion';
 ---
 <section id="formacion" class="grid scroll-mt-24 gap-12 sm:grid-cols-2">
+
 	<div class="flex flex-col gap-6">
-		<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Formación</h2>
+		<h2 class="font-mono text-sm tracking-widest text-secondary uppercase">Formación</h2>
 		<div class="flex flex-col gap-4">
-			{
-				formacion.map((item) => (
-					<div class="glass-card rounded-2xl p-6">
-						<h3 class="font-semibold text-slate-100">{item.titulo}</h3>
-						<p class="text-sm text-slate-400">{item.institucion}</p>
-						<p class="font-mono text-xs text-primary">{item.periodo}</p>
-					</div>
-				))
-			}
+			{formacion.map((item) => <FormacionCard {...item} />)}
 		</div>
 	</div>
+
 	<div class="flex flex-col gap-6">
-		<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Certificaciones</h2>
+		<h2 class="font-mono text-sm tracking-widest text-secondary uppercase">Certificaciones</h2>
 		<div class="flex flex-col gap-4">
-			{
-				certificaciones.map((item) =>
-					item.href ? (
-						<a
-							href={item.href}
-							class="glass-card rounded-2xl p-6 transition hover:border-primary/60"
-						>
-							<h3 class="font-semibold text-slate-100">{item.titulo}</h3>
-							<p class="text-sm text-slate-400">{item.institucion}</p>
-							<p class="font-mono text-xs text-primary">{item.periodo}</p>
-							<p class="mt-2 font-mono text-xs text-secondary">Ver certificado &rarr;</p>
-						</a>
-					) : (
-						<div class="glass-card rounded-2xl p-6">
-							<h3 class="font-semibold text-slate-100">{item.titulo}</h3>
-							<p class="text-sm text-slate-400">{item.institucion}</p>
-							<p class="font-mono text-xs text-primary">{item.periodo}</p>
-						</div>
-					)
-				)
-			}
+			{certificaciones.map((item) => <CertCard {...item} />)}
 		</div>
 	</div>
+
+	<div id="cursos" class="flex flex-col gap-6 scroll-mt-24 sm:col-span-2">
+		<h2 class="font-mono text-sm tracking-widest text-secondary uppercase">Cursos</h2>
+		<div class="flex flex-col gap-4 sm:flex-row">
+			{cursos.map((item) => <CertCard {...item} />)}
+		</div>
+	</div>
+
+	<div id="reconocimientos" class="flex flex-col gap-6 scroll-mt-24 sm:col-span-2">
+		<h2 class="font-mono text-sm tracking-widest text-secondary uppercase">Reconocimientos</h2>
+		<div class="flex flex-col gap-4 sm:flex-row">
+			{reconocimientos.map((item) => <CertCard {...item} />)}
+		</div>
+	</div>
+
 </section>

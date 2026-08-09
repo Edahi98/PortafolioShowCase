@@ -1,0 +1,21 @@
+---
+interface Props {
+	titulo: string;
+	institucion: string;
+	periodo: string;
+	duracion?: string;
+	proyecto?: string;
+	href: string;
+	label: string;
+}
+const { titulo, institucion, periodo, duracion, proyecto, href, label } = Astro.props;
+---
+<a href={href} class="glass-card rounded-2xl p-6 transition hover:border-primary/60">
+	<h3 class="font-semibold text-slate-100">{titulo}</h3>
+	<p class="text-sm text-slate-400">{institucion}</p>
+	<p class="font-mono text-xs text-primary">
+		{periodo}{duracion && ` · ${duracion}`}
+	</p>
+	{proyecto && <p class="mt-1 font-mono text-xs text-slate-500">Proyecto: {proyecto}</p>}
+	<p class="mt-2 font-mono text-xs text-secondary">{label} &rarr;</p>
+</a>

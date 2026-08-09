@@ -1,0 +1,13 @@
+---
+interface Props {
+	titulo: string;
+	institucion: string;
+	periodo: string;
+}
+const { titulo, institucion, periodo } = Astro.props;
+---
+<div class="glass-card rounded-2xl p-6">
+	<h3 class="font-semibold text-slate-100">{titulo}</h3>
+	<p class="text-sm text-slate-400">{institucion}</p>
+	<p class="font-mono text-xs text-primary">{periodo}</p>
+</div>
