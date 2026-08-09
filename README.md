@@ -6,11 +6,12 @@ Portafolio personal de Edahi Yaxquin Avila Garcia, construido con [Astro](https:
 
 ## Stack
 
-- **Astro 5** (TypeScript en modo `strict`) — sin ningún framework de UI, todo es Astro puro sin islas ni hidratación client-side
+- **Astro 5** (TypeScript en modo `strict`) — SSG puro; la única isla client-side es `ProyectosIsla`
+- **React 19** vía `@astrojs/react` — isla `ProyectosIsla.tsx` montada con `client:visible`, carga proyectos desde `public/data/proyectos.json` vía `axios`
 - **Tailwind CSS v4** vía `@tailwindcss/vite` — tema definido con `@theme` en `global.css`, sin `tailwind.config`
 - **Three.js** para la escena 3D de la red neuronal (`NeuralNetworkScene.astro`)
 - **anime.js v4** para animaciones de partículas y pulsos en la red neuronal
-- **@lucide/astro** para íconos SVG dentro de componentes `.astro`
+- **@lucide/astro** para íconos SVG dentro de componentes `.astro`; `lucide-react` en `ProyectosIsla.tsx`
 
 ## Tema visual
 

@@ -4,11 +4,13 @@ Portafolio personal de Edahi Yaxquin Avila Garcia, construido con Astro + Tailwi
 
 ## Stack
 
-- Astro 5 (TypeScript strict), sin ningún framework de UI (no React/Vue/Svelte) — todo el sitio es Astro puro, sin islas ni hidratación client-side.
+- Astro 5 (TypeScript strict) — SSG puro; la única isla client-side es `ProyectosIsla`.
+- **React 19** vía `@astrojs/react` — usado exclusivamente en `src/components/ProyectosIsla.tsx`, montado con `client:visible` desde `Proyectos.astro`. Usa `useState`/`useEffect` + `axios` para cargar `public/data/proyectos.json` en runtime. Íconos con `lucide-react`.
+- **axios** — solo en `ProyectosIsla.tsx` para el fetch de proyectos.
 - Tailwind CSS v4 vía `@tailwindcss/vite` (sin `tailwind.config`; el theme se define con `@theme` en `src/styles/global.css`).
-- Three.js para gráficos 3D (`src/components/DockerScene.astro`, `src/components/NeuralNetworkScene.astro`), cargado con `<script>` client-side dentro del componente Astro (sin framework de reactividad).
+- Three.js para gráficos 3D (`NeuralNetworkScene.astro`), cargado con `<script>` client-side dentro del componente Astro.
 - anime.js v4 (`animate` de `'animejs'`) para animar propiedades de objetos Three.js (posición de partículas, `emissiveIntensity`) en `NeuralNetworkScene.astro`.
-- `@lucide/astro` (paquete oficial de Lucide para Astro) para íconos SVG puntuales dentro de componentes `.astro`, p. ej. `Crown` en `Proyectos.astro` para destacar un proyecto.
+- `@lucide/astro` para íconos SVG en componentes `.astro` (p. ej. `Medal` en `TrailerScene.astro`). En el componente React se usa `lucide-react` en su lugar.
 
 ## Tema visual: oscuro azul-morado elegante
 
@@ -33,6 +35,8 @@ Al agregar nuevas secciones o páginas, reutilizar estas clases/variables en lug
 ## Contenido
 
 `src/pages/index.astro` solo compone las secciones del Home; cada sección vive como componente en `src/components/`: `Navbar`, `Hero`, `SobreMi`, `Proyectos`, `Formacion`, `Habilidades`, `Footer`. Las escenas especiales son `TrailerScene.astro` (título del juego + `GameMosaic` + audio + badge de reconocimiento) y `NeuralNetworkScene.astro` (Three.js + anime.js). `DockerScene.astro` existe en el repo pero no está en uso activo.
+
+`Proyectos.astro` monta `<ProyectosIsla client:visible />` — la única isla React del sitio. `ProyectosIsla.tsx` carga los datos desde `public/data/proyectos.json` vía `axios` y renderiza las tarjetas en el cliente.
 
 Las piezas pequeñas y reutilizables van en `src/components/atoms/`: `LanguageGrid`, `ToolGrid` (grids de íconos de [skillicons.dev](https://skillicons.dev)), `SoftSkillList` (habilidades blandas), `CertCard` (tarjeta linkeable — certificados, cursos, reconocimientos), `FormacionCard` (tarjeta estática — formación académica), `GameArt`, `GameMosaic`, `UnmuteButton`. Todas son componentes Astro estáticos (sin JS ni frameworks de UI).
 
