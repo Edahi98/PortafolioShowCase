@@ -6,10 +6,12 @@ export type ProyectoImagen = {
 	descripcion: string;
 };
 
+export type StackItem = { nombre: string; badge: string };
+
 export type Proyecto = {
 	nombre: string;
 	descripcion: string;
-	stack: string[];
+	stack: StackItem[];
 	slug?: string;
 	imagenes?: ProyectoImagen[];
 	repoUrl?: string;
