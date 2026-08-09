@@ -10,29 +10,43 @@ Portafolio personal de Edahi Yaxquin Avila Garcia, construido con Astro + Tailwi
 - anime.js v4 (`animate` de `'animejs'`) para animar propiedades de objetos Three.js (posición de partículas, `emissiveIntensity`) en `NeuralNetworkScene.astro`.
 - `@lucide/astro` (paquete oficial de Lucide para Astro) para íconos SVG puntuales dentro de componentes `.astro`, p. ej. `Crown` en `Proyectos.astro` para destacar un proyecto.
 
-## Tema visual: degradado elegante, esencia tech
+## Tema visual: oscuro azul-morado elegante
 
-- **Fondo**: `--color-bg` (#05060f) casi negro, con degradados radiales sutiles de `--color-primary`/`--color-secondary`/`--color-accent` aplicados en `body` (glow difuso, no ruidoso).
+- **Fondo**: `--color-bg` (`#161950`) azul-morado oscuro. Sin degradados radiales en `body`; el glow está implícito en las tarjetas glass y la red neuronal.
 - **Paleta** (definida en `src/styles/global.css` bajo `@theme`):
-  - `--color-primary` `#22d3ee` (cyan)
-  - `--color-secondary` `#a855f7` (púrpura)
-  - `--color-accent` `#6366f1` (índigo)
-  - `--color-surface` / `--color-surface-2`: superficies oscuras para tarjetas
-  - `--color-border` `#1e2440`: bordes sutiles
-- **Texto con degradado**: clase utilitaria `.text-gradient` (cyan → púrpura) para títulos destacados.
-- **Tarjetas "glass"**: clase `.glass-card` — fondo semitransparente + `backdrop-filter: blur` + borde sutil. Usar para cualquier bloque de contenido (proyectos, formación, etc.).
+  - `--color-bg` `#161950` — fondo de página
+  - `--color-surface` `#1e215e` — fondo de tarjetas
+  - `--color-surface-2` `#272b6c` — superficie secundaria (footer, variantes)
+  - `--color-primary` `yellow-400` — acento principal, botones, texto destacado
+  - `--color-secondary` `rose-500` — headings de sección, botón Ver CV
+  - `--color-accent` `cyan-400` — acento terciario
+  - `--color-border` `#323678` — bordes sutiles
+- **Texto con degradado**: clase utilitaria `.text-gradient` (amarillo → rosa) para títulos destacados.
+- **Tarjetas "glass"**: clase `.glass-card` — `color-mix(in oklab, surface 70%, transparent)` + `backdrop-filter: blur(12px)` + borde `--color-border`. Usar para cualquier bloque de contenido.
 - **Tipografía tech**: `font-mono` para etiquetas, kickers y badges (uppercase, tracking-widest), sans-serif regular para el resto del contenido.
 - **Interacción**: hover sutil (`hover:border-primary/60`, `hover:opacity-90`), sin animaciones agresivas.
+- **Footer**: fondo diferenciado con `linear-gradient(to bottom, transparent → surface-2)` para separarlo visualmente de la página.
+- **NeuralNetworkScene**: nodos en paleta `[0xa855f7, 0xfacc15, 0xf43f5e]` (púrpura/amarillo/rosa), `setClearColor(0x161950, 1)` para coincidir con `--color-bg`.
 
 Al agregar nuevas secciones o páginas, reutilizar estas clases/variables en lugar de introducir colores o efectos nuevos, para mantener consistencia visual.
 
 ## Contenido
 
-`src/pages/index.astro` solo compone las secciones del Home; cada sección vive como componente en `src/components/`: `Hero`, `SobreMi`, `Proyectos`, `Formacion`, `Habilidades`, `Contacto` (más `Navbar`, `DockerScene` y `NeuralNetworkScene`). Las piezas pequeñas y reutilizables dentro de una sección van en `src/components/atoms/` (p. ej. `LanguageGrid` y `ToolGrid`, los grids de lenguajes/herramientas con íconos de [skillicons.dev](https://skillicons.dev); `SoftSkillList`, la lista de habilidades blandas). Las tres son tarjetas estáticas de Astro (sin JS ni frameworks de UI). `SoftSkillList` asigna a cada habilidad un color distinto (definido inline por tarjeta como clases literales de Tailwind, p. ej. `border-rose-400/40` / `bg-rose-400/10` / `text-rose-300`) fuera de la paleta cyan/púrpura/índigo del tema, para diferenciarlas visualmente sin salirse del tono oscuro general; las clases deben escribirse completas (no construidas dinámicamente con template strings) para que el escáner de Tailwind las detecte. El contenido proviene del CV de Canva "Edahi CV". Si el CV se actualiza, reflejar los cambios en el componente correspondiente.
+`src/pages/index.astro` solo compone las secciones del Home; cada sección vive como componente en `src/components/`: `Navbar`, `Hero`, `SobreMi`, `Proyectos`, `Formacion`, `Habilidades`, `Footer`. Las escenas especiales son `TrailerScene.astro` (título del juego + `GameMosaic` + audio + badge de reconocimiento) y `NeuralNetworkScene.astro` (Three.js + anime.js). `DockerScene.astro` existe en el repo pero no está en uso activo.
 
-## Certificados
+Las piezas pequeñas y reutilizables van en `src/components/atoms/`: `LanguageGrid`, `ToolGrid` (grids de íconos de [skillicons.dev](https://skillicons.dev)), `SoftSkillList` (habilidades blandas), `CertCard` (tarjeta linkeable — certificados, cursos, reconocimientos), `FormacionCard` (tarjeta estática — formación académica), `GameArt`, `GameMosaic`, `UnmuteButton`. Todas son componentes Astro estáticos (sin JS ni frameworks de UI).
 
-Los certificados (PDF) viven en `public/certificados/` y se muestran en una página dedicada (p. ej. `src/pages/certificado-solana.astro`) con el PDF embebido en un `<iframe>`, siguiendo el mismo layout con `Navbar` y las clases del tema. El punto de entrada es la tarjeta correspondiente en `Formacion.astro` (propiedad `href` en el objeto de `certificaciones`), que se renderiza como `<a>` en vez de `<div>` cuando existe.
+`SoftSkillList` asigna a cada habilidad un color distinto (clases literales de Tailwind, p. ej. `border-rose-400/40` / `bg-rose-400/10` / `text-rose-300`) fuera de la paleta del tema, para diferenciarlas visualmente sin salirse del tono oscuro. Las clases deben escribirse completas (no con template strings dinámicos) para que el escáner de Tailwind las detecte.
+
+Los datos de `Formacion.astro` viven en `src/data/formacion.ts` (interfaces `FormacionItem` y `CertItem`, arreglos `formacion`, `certificaciones`, `cursos`, `reconocimientos`). El contenido proviene del CV de Canva "Edahi CV". Si el CV se actualiza, reflejar los cambios en el archivo de datos correspondiente.
+
+## Certificados y reconocimientos
+
+Los certificados (PDF) viven en `public/certificados/` y se muestran en una página dedicada (p. ej. `src/pages/certificado-solana.astro`, `src/pages/curso-webscraping.astro`) con el PDF embebido en un `<iframe h-[80vh]>`, usando el mismo layout con `Navbar` y las clases del tema.
+
+Los reconocimientos (imagen PNG) viven en `public/reconocimientos/` y se muestran en una página dedicada (p. ej. `src/pages/reconocimiento-videojuegos.astro`) con `<img>` dentro de una `glass-card`. Si la imagen está en orientación vertical (retrato) pero el documento original es horizontal, rotarla -90° con PIL antes de guardarla.
+
+El punto de entrada de cada ítem es su `CertCard` en `Formacion.astro` (propiedad `href` en `src/data/formacion.ts`). El layout de todas estas páginas sigue el mismo patrón: `Navbar` + título + contenido + enlace de retorno al home.
 
 ## Showcase de proyectos
 
