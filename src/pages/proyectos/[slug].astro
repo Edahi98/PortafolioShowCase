@@ -111,14 +111,19 @@ const gruposOrdenados = tieneGrupos
 			</div>
 
 			{proyecto.videoUrl && (
-				<div class="glass-card overflow-hidden rounded-2xl">
+				<figure class="glass-card overflow-hidden rounded-2xl">
 					<video
 						src={proyecto.videoUrl}
 						controls
 						playsinline
 						class="w-full"
 					/>
-				</div>
+					{proyecto.videoDescripcion && (
+						<figcaption class="border-t border-border px-6 py-4 text-sm text-slate-400">
+							{proyecto.videoDescripcion}
+						</figcaption>
+					)}
+				</figure>
 			)}
 
 			{

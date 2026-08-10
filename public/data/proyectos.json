@@ -18,6 +18,7 @@
       "https://hub.docker.com/r/edahisnacke/inventario-agente"
     ],
     "videoUrl": "/proyectos/inventario-casa/demo.mp4",
+    "videoDescripcion": "Demo de la aplicación web: navegación por el dashboard, registro y gestión de artículos del hogar.",
     "manualUrl": "/proyectos/inventario-casa/Manual-de-Usuario-Inventario.pdf",
     "destacado": true,
     "imagenes": [

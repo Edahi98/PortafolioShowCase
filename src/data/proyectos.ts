@@ -22,6 +22,7 @@ export type Proyecto = {
 	manualUrl?: string;
 	liveUrl?: string;
 	videoUrl?: string;
+	videoDescripcion?: string;
 	destacado?: boolean;
 	notaCapturas?: string;
 	relacionados?: string[];
