@@ -4,6 +4,7 @@ export type ProyectoImagen = {
 	src: string;
 	alt: string;
 	descripcion: string;
+	grupo?: string;
 };
 
 export type StackItem = { nombre: string; badge: string };

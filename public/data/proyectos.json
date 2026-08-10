@@ -10,16 +10,23 @@
       { "nombre": "IA Local",     "badge": "https://img.shields.io/badge/-IA_Local-7C3AED?style=for-the-badge" }
     ],
     "slug": "inventario-casa",
+    "documentacionUrl": "/proyectos/inventario-casa/Manual-de-Usuario-Inventario.pdf",
     "destacado": true,
     "imagenes": [
-      { "src": "/proyectos/inventario-casa/01-inicio.jpg",                   "alt": "Página de inicio del Inventario del Hogar",          "descripcion": "La landing del sistema: presentación, acceso al dashboard y exploración de funciones." },
-      { "src": "/proyectos/inventario-casa/03-categorias.jpg",               "alt": "Vista de categorías",                                 "descripcion": "Las categorías del inventario. Desde aquí se accede a los artículos de cada una o se crean nuevas." },
-      { "src": "/proyectos/inventario-casa/05-nueva-categoria-completo.jpg", "alt": "Formulario de nueva categoría completado",            "descripcion": "Alta de categoría con nombre, descripción e imagen de portada lista para guardar." },
-      { "src": "/proyectos/inventario-casa/06-articulos-de-categoria.jpg",   "alt": "Artículos de la categoría Herramientas",             "descripcion": "Los artículos dentro de una categoría: nombre, cantidad en stock e imagen de referencia." },
-      { "src": "/proyectos/inventario-casa/08-nuevo-articulo-completo.jpg",  "alt": "Formulario de nuevo artículo completado",             "descripcion": "Alta de artículo con nombre, descripción, cantidad y foto, listo para registrarse." },
-      { "src": "/proyectos/inventario-casa/09-detalle-articulo-notas.jpg",   "alt": "Detalle de artículo con notas",                      "descripcion": "Vista de detalle: ficha del artículo y sección de notas para registrar observaciones o pendientes." },
-      { "src": "/proyectos/inventario-casa/10-busqueda.jpg",                 "alt": "Búsqueda inteligente de artículos",                  "descripcion": "Búsqueda en tiempo real por nombre o descripción: encuentra cualquier artículo al instante." },
-      { "src": "/proyectos/inventario-casa/11-gestion-usuarios.jpg",         "alt": "Gestión de usuarios",                                "descripcion": "Panel de administración de usuarios con control de acceso al sistema." }
+      { "src": "/proyectos/inventario-casa/01-inicio.jpg",                   "alt": "Página de inicio del Inventario del Hogar",          "descripcion": "La landing del sistema: presentación, acceso al dashboard y exploración de funciones.",                     "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/02-login.jpg",                    "alt": "Pantalla de inicio de sesión",                       "descripcion": "Acceso al sistema con usuario y contraseña; rutas protegidas para que solo entren los autorizados.",          "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/03-categorias.jpg",               "alt": "Vista de categorías",                                "descripcion": "Las categorías del inventario. Desde aquí se accede a los artículos de cada una o se crean nuevas.",          "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/04-nueva-categoria-vacio.jpg",    "alt": "Formulario de nueva categoría vacío",                "descripcion": "Formulario en blanco para dar de alta una categoría: nombre, descripción e imagen de portada.",                "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/05-nueva-categoria-completo.jpg", "alt": "Formulario de nueva categoría completado",           "descripcion": "Alta de categoría con nombre, descripción e imagen de portada lista para guardar.",                          "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/06-articulos-de-categoria.jpg",   "alt": "Artículos de la categoría Herramientas",            "descripcion": "Los artículos dentro de una categoría: nombre, cantidad en stock e imagen de referencia.",                   "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/07-nuevo-articulo-vacio.jpg",     "alt": "Formulario de nuevo artículo vacío",                "descripcion": "Formulario en blanco para registrar un artículo: nombre, descripción, cantidad y foto.",                      "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/08-nuevo-articulo-completo.jpg",  "alt": "Formulario de nuevo artículo completado",            "descripcion": "Alta de artículo con todos los datos y foto, listo para registrarse.",                                       "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/09-detalle-articulo-notas.jpg",   "alt": "Detalle de artículo con notas",                     "descripcion": "Vista de detalle: ficha del artículo y sección de notas para registrar observaciones o pendientes.",          "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/10-busqueda.jpg",                 "alt": "Búsqueda inteligente de artículos",                 "descripcion": "Búsqueda en tiempo real por nombre o descripción: encuentra cualquier artículo al instante.",                  "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/11-gestion-usuarios.jpg",         "alt": "Gestión de usuarios",                               "descripcion": "Panel de administración de usuarios con control de acceso al sistema.",                                       "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/12-logout-ruta-protegida.jpg",    "alt": "Cierre de sesión y protección de rutas",            "descripcion": "Al cerrar sesión, cualquier ruta del dashboard queda bloqueada y redirige al login automáticamente.",           "grupo": "web" },
+      { "src": "/proyectos/inventario-casa/13-bot-telegram-consulta-articulo.jpg", "alt": "Consulta de artículo por Telegram",           "descripcion": "El bot recibe el mensaje y busca el artículo en el inventario sin abrir el navegador.",                       "grupo": "bot" },
+      { "src": "/proyectos/inventario-casa/14-bot-telegram-respuesta-texto.jpg",   "alt": "Respuesta del bot con datos del artículo",    "descripcion": "El bot responde con el nombre, cantidad en stock y descripción del artículo consultado.",                    "grupo": "bot" }
     ]
   },
   {
