@@ -18,6 +18,8 @@ export type Proyecto = {
 	repoUrl?: string;
 	dockerHubUrl?: string;
 	documentacionUrl?: string;
+	manualUrl?: string;
+	liveUrl?: string;
 	destacado?: boolean;
 	notaCapturas?: string;
 	relacionados?: string[];

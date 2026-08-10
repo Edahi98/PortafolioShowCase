@@ -10,7 +10,9 @@
       { "nombre": "IA Local",     "badge": "https://img.shields.io/badge/-IA_Local-7C3AED?style=for-the-badge" }
     ],
     "slug": "inventario-casa",
-    "documentacionUrl": "/proyectos/inventario-casa/Manual-de-Usuario-Inventario.pdf",
+    "repoUrl": "https://github.com/Edahi98/InventarioArticulosCasa",
+    "liveUrl": "https://frontend-seven-smoky-63.vercel.app/",
+    "manualUrl": "/proyectos/inventario-casa/Manual-de-Usuario-Inventario.pdf",
     "destacado": true,
     "imagenes": [
       { "src": "/proyectos/inventario-casa/01-inicio.jpg",                   "alt": "Página de inicio del Inventario del Hogar",          "descripcion": "La landing del sistema: presentación, acceso al dashboard y exploración de funciones.",                     "grupo": "web" },

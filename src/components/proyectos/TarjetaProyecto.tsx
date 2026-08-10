@@ -1,9 +1,10 @@
-import { Crown, Boxes, FileText } from 'lucide-react';
+import { Crown, Boxes, FileText, BookOpen, ExternalLink } from 'lucide-react';
 import type { Proyecto } from '../../data/proyectos';
 import { StackBadge } from './StackBadge';
+import { IconBadge } from './IconBadge';
 
 function badgeCount(p: Proyecto) {
-	return [p.repoUrl, p.dockerHubUrl, p.documentacionUrl].filter(Boolean).length;
+	return [p.repoUrl, p.dockerHubUrl, p.documentacionUrl, p.manualUrl, p.liveUrl].filter(Boolean).length;
 }
 
 export function TarjetaProyecto({ proyecto, todos }: { proyecto: Proyecto; todos: Proyecto[] }) {
@@ -20,6 +21,8 @@ export function TarjetaProyecto({ proyecto, todos }: { proyecto: Proyecto; todos
 	]
 		.filter(Boolean)
 		.join(' ');
+
+	const tieneIconos = proyecto.repoUrl || proyecto.dockerHubUrl || proyecto.documentacionUrl || proyecto.manualUrl || proyecto.liveUrl;
 
 	return (
 		<div className={cardClasses}>
@@ -38,40 +41,32 @@ export function TarjetaProyecto({ proyecto, todos }: { proyecto: Proyecto; todos
 				</div>
 			)}
 
-			{(proyecto.repoUrl || proyecto.dockerHubUrl || proyecto.documentacionUrl) && (
+			{tieneIconos && (
 				<div className="pointer-events-none absolute top-4 right-4 z-10 flex gap-2">
 					{proyecto.repoUrl && (
-						<a
-							href={proyecto.repoUrl}
-							target="_blank"
-							rel="noreferrer"
-							aria-label="Ver repositorio en GitHub"
-							className="pointer-events-auto rounded-full bg-surface/80 p-1.5 backdrop-blur transition hover:opacity-80"
-						>
+						<IconBadge href={proyecto.repoUrl} label="Ver repositorio en GitHub">
 							<img src="https://skillicons.dev/icons?i=github" alt="GitHub" width={20} height={20} className="h-5 w-5" />
-						</a>
+						</IconBadge>
 					)}
 					{proyecto.dockerHubUrl && (
-						<a
-							href={proyecto.dockerHubUrl}
-							target="_blank"
-							rel="noreferrer"
-							aria-label="Ver imagen en Docker Hub"
-							className="pointer-events-auto rounded-full bg-surface/80 p-1.5 backdrop-blur transition hover:opacity-80"
-						>
+						<IconBadge href={proyecto.dockerHubUrl} label="Ver imagen en Docker Hub">
 							<img src="https://skillicons.dev/icons?i=docker" alt="Docker Hub" width={20} height={20} className="h-5 w-5" />
-						</a>
+						</IconBadge>
 					)}
 					{proyecto.documentacionUrl && (
-						<a
-							href={proyecto.documentacionUrl}
-							target="_blank"
-							rel="noreferrer"
-							aria-label="Ver documentación"
-							className="pointer-events-auto flex h-8 w-8 items-center justify-center rounded-full border border-emerald-400/60 bg-emerald-400/20 text-emerald-300 shadow-[0_0_12px_-2px] shadow-emerald-400/50 backdrop-blur transition hover:bg-emerald-400/30"
-						>
+						<IconBadge href={proyecto.documentacionUrl} label="Ver documentación" variant="emerald">
 							<FileText className="h-4 w-4" aria-hidden="true" />
-						</a>
+						</IconBadge>
+					)}
+					{proyecto.manualUrl && (
+						<IconBadge href={proyecto.manualUrl} label="Ver manual de usuario" variant="cyan">
+							<BookOpen className="h-4 w-4" aria-hidden="true" />
+						</IconBadge>
+					)}
+					{proyecto.liveUrl && (
+						<IconBadge href={proyecto.liveUrl} label="Ver sitio en vivo" variant="yellow">
+							<ExternalLink className="h-4 w-4" aria-hidden="true" />
+						</IconBadge>
 					)}
 				</div>
 			)}

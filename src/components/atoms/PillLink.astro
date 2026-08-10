@@ -1,0 +1,22 @@
+---
+interface Props {
+	href: string;
+	variant?: 'emerald' | 'cyan' | 'primary';
+}
+
+const { href, variant = 'primary' } = Astro.props;
+
+const VARIANTS = {
+	emerald: 'border-emerald-400/60 bg-emerald-400/15 text-emerald-300 shadow-emerald-400/50 hover:bg-emerald-400/25',
+	cyan:    'border-cyan-400/60 bg-cyan-400/15 text-cyan-300 shadow-cyan-400/50 hover:bg-cyan-400/25',
+	primary: 'border-primary/60 bg-primary/15 text-primary shadow-primary/40 hover:bg-primary/25',
+};
+---
+<a
+	href={href}
+	target="_blank"
+	rel="noreferrer"
+	class={`ml-1 inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-xs font-semibold shadow-[0_0_12px_-2px] transition ${VARIANTS[variant]}`}
+>
+	<slot />
+</a>
