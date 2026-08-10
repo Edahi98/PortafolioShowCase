@@ -12,6 +12,10 @@
     "slug": "inventario-casa",
     "repoUrl": "https://github.com/Edahi98/InventarioArticulosCasa",
     "liveUrl": "https://frontend-seven-smoky-63.vercel.app/",
+    "dockerHubUrls": [
+      "https://hub.docker.com/r/edahisnacke/inventario-bot",
+      "https://hub.docker.com/r/edahisnacke/inventario-agente"
+    ],
     "manualUrl": "/proyectos/inventario-casa/Manual-de-Usuario-Inventario.pdf",
     "destacado": true,
     "imagenes": [

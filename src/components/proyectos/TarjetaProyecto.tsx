@@ -4,7 +4,14 @@ import { StackBadge } from './StackBadge';
 import { IconBadge } from './IconBadge';
 
 function badgeCount(p: Proyecto) {
-	return [p.repoUrl, p.dockerHubUrl, p.documentacionUrl, p.manualUrl, p.liveUrl].filter(Boolean).length;
+	return [
+		p.repoUrl,
+		p.documentacionUrl,
+		p.manualUrl,
+		p.liveUrl,
+		...(p.dockerHubUrl ? [p.dockerHubUrl] : []),
+		...(p.dockerHubUrls ?? []),
+	].filter(Boolean).length;
 }
 
 export function TarjetaProyecto({ proyecto, todos }: { proyecto: Proyecto; todos: Proyecto[] }) {
@@ -22,7 +29,7 @@ export function TarjetaProyecto({ proyecto, todos }: { proyecto: Proyecto; todos
 		.filter(Boolean)
 		.join(' ');
 
-	const tieneIconos = proyecto.repoUrl || proyecto.dockerHubUrl || proyecto.documentacionUrl || proyecto.manualUrl || proyecto.liveUrl;
+	const tieneIconos = proyecto.repoUrl || proyecto.dockerHubUrl || (proyecto.dockerHubUrls?.length ?? 0) > 0 || proyecto.documentacionUrl || proyecto.manualUrl || proyecto.liveUrl;
 
 	return (
 		<div className={cardClasses}>
@@ -53,6 +60,14 @@ export function TarjetaProyecto({ proyecto, todos }: { proyecto: Proyecto; todos
 							<img src="https://skillicons.dev/icons?i=docker" alt="Docker Hub" width={20} height={20} className="h-5 w-5" />
 						</IconBadge>
 					)}
+					{(proyecto.dockerHubUrls ?? []).map((url) => {
+						const name = url.split('/').pop() ?? 'Docker Hub';
+						return (
+							<IconBadge key={url} href={url} label={`Ver imagen: ${name}`}>
+								<img src="https://skillicons.dev/icons?i=docker" alt={name} width={20} height={20} className="h-5 w-5" />
+							</IconBadge>
+						);
+					})}
 					{proyecto.documentacionUrl && (
 						<IconBadge href={proyecto.documentacionUrl} label="Ver documentación" variant="emerald">
 							<FileText className="h-4 w-4" aria-hidden="true" />

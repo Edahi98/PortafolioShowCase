@@ -17,6 +17,7 @@ export type Proyecto = {
 	imagenes?: ProyectoImagen[];
 	repoUrl?: string;
 	dockerHubUrl?: string;
+	dockerHubUrls?: string[];
 	documentacionUrl?: string;
 	manualUrl?: string;
 	liveUrl?: string;

@@ -3,6 +3,7 @@ import '../../styles/global.css';
 import { Boxes, Crown, FileText, Globe, Bot, BookOpen, ExternalLink } from '@lucide/astro';
 import Navbar from '../../components/Navbar.astro';
 import PillLink from '../../components/atoms/PillLink.astro';
+import IconLink from '../../components/atoms/IconLink.astro';
 import { proyectos } from '../../data/proyectos';
 import type { ProyectoImagen } from '../../data/proyectos';
 
@@ -71,39 +72,23 @@ const gruposOrdenados = tieneGrupos
 						<img src={tech.badge} alt={tech.nombre} class="h-6" />
 					))}
 					{proyecto.repoUrl && (
-						<a
-							href={proyecto.repoUrl}
-							target="_blank"
-							rel="noreferrer"
-							aria-label="Ver repositorio en GitHub"
-							class="ml-1 transition hover:opacity-80"
-						>
-							<img
-								src="https://skillicons.dev/icons?i=github"
-								alt="Repositorio en GitHub"
-								width={28}
-								height={28}
-								class="h-7 w-7"
-							/>
-						</a>
+						<IconLink href={proyecto.repoUrl} label="Ver repositorio en GitHub">
+							<img src="https://skillicons.dev/icons?i=github" alt="Repositorio en GitHub" width={28} height={28} class="h-7 w-7" />
+						</IconLink>
 					)}
 					{proyecto.dockerHubUrl && (
-						<a
-							href={proyecto.dockerHubUrl}
-							target="_blank"
-							rel="noreferrer"
-							aria-label="Ver imagen en Docker Hub"
-							class="transition hover:opacity-80"
-						>
-							<img
-								src="https://skillicons.dev/icons?i=docker"
-								alt="Imagen en Docker Hub"
-								width={28}
-								height={28}
-								class="h-7 w-7"
-							/>
-						</a>
+						<IconLink href={proyecto.dockerHubUrl} label="Ver imagen en Docker Hub">
+							<img src="https://skillicons.dev/icons?i=docker" alt="Imagen en Docker Hub" width={28} height={28} class="h-7 w-7" />
+						</IconLink>
 					)}
+					{(proyecto.dockerHubUrls ?? []).map((url: string) => {
+						const name = url.split('/').pop() ?? 'Docker Hub';
+						return (
+							<IconLink href={url} label={`Ver imagen: ${name}`}>
+								<img src="https://skillicons.dev/icons?i=docker" alt={name} width={28} height={28} class="h-7 w-7" title={name} />
+							</IconLink>
+						);
+					})}
 					{proyecto.documentacionUrl && (
 						<PillLink href={proyecto.documentacionUrl} variant="emerald">
 							<FileText class="h-3.5 w-3.5" aria-hidden="true" />
