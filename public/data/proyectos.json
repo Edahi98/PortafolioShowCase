@@ -38,7 +38,7 @@
   },
   {
     "nombre": "Sistema de Gestión Escolar",
-    "descripcion": "Lo que a la Universidad Tecnológica de Tecámac le llevaba días —bajar los expedientes de sus estudiantes uno por uno— ahora se resuelve en una sola operación, probada para aguantar el día de mayor carga.",
+    "descripcion": "Descarga masiva de expedientes para la Universidad Tecnológica de Tecámac: en lugar de bajar los archivos de cada estudiante uno por uno durante días, una sola operación los obtiene todos. El sistema fue sometido a pruebas de estrés para garantizar que aguanta el día de mayor carga del ciclo escolar.",
     "stack": [
       { "nombre": "C#",                "badge": "https://img.shields.io/badge/-C%23-239120?style=for-the-badge&logo=csharp&logoColor=white" },
       { "nombre": ".NET",              "badge": "https://img.shields.io/badge/-.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" },
