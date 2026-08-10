@@ -36,14 +36,15 @@ Al agregar nuevas secciones o páginas, reutilizar estas clases/variables en lug
 
 `src/pages/index.astro` solo compone las secciones del Home; cada sección vive como componente en `src/components/`: `Navbar`, `Hero`, `SobreMi`, `Proyectos`, `Formacion`, `Habilidades`, `Footer`. Las escenas especiales son `TrailerScene.astro` (título del juego + `GameMosaic` + audio + badge de reconocimiento) y `NeuralNetworkScene.astro` (Three.js + anime.js). `DockerScene.astro` existe en el repo pero no está en uso activo.
 
-`Proyectos.astro` monta `<ProyectosIsla client:visible />` — la única isla React del sitio. `ProyectosIsla.tsx` es el orquestador: carga `public/data/proyectos.json` vía `axios` desde GitHub raw, agrupa en destacados/resto y renderiza la grilla. Los componentes React de proyectos siguen atomic design en `src/components/proyectos/`:
+`Proyectos.astro` monta `<ProyectosIsla client:visible />` — la única isla React del sitio. `ProyectosIsla.tsx` es el orquestador: carga `public/data/proyectos.json` vía `axios` desde GitHub raw, agrupa en "Proyectos principales" / "Otros proyectos" y renderiza la grilla. Los componentes React de proyectos siguen atomic design en `src/components/proyectos/`:
 - `StackBadge.tsx` — átomo: imagen `<img>` del badge de shields.io para una tecnología
-- `TarjetaProyecto.tsx` — molécula: tarjeta con link overlay, hover de imagen, badges de repo/Docker/docs y sección "Integra & encierra" para contenedores
+- `IconBadge.tsx` — átomo: botón circular con variantes de color (`plain`, `emerald`, `cyan`, `yellow`) para los íconos de esquina de la tarjeta (GitHub, Docker, Docs, Manual, Live)
+- `TarjetaProyecto.tsx` — molécula: tarjeta con link overlay, hover de imagen, `IconBadge`s de repo/Docker/docs/manual/live y sección "Integra & encierra" para contenedores
 - `ArticuloProyecto.tsx` — molécula: tarjeta estática (sin link) para proyectos sin `slug`
 
 El campo `stack` en `public/data/proyectos.json` es `{ nombre: string; badge: string }[]` — cada tecnología lleva su propia URL de badge de shields.io (`style=for-the-badge`). Al agregar una tecnología nueva, añadir su entrada directamente en el JSON. El JSON se puede editar directamente en GitHub para actualizar proyectos sin redeploy; el componente lo carga en runtime desde GitHub raw.
 
-Las piezas pequeñas y reutilizables de Astro van en `src/components/atoms/`: `LanguageGrid`, `ToolGrid` (grids de íconos de [skillicons.dev](https://skillicons.dev)), `SoftSkillList` (habilidades blandas), `CertCard` (tarjeta linkeable — certificados, cursos, reconocimientos), `FormacionCard` (tarjeta estática — formación académica), `GameArt`, `GameMosaic`, `UnmuteButton`. Todas son componentes Astro estáticos (sin JS ni frameworks de UI).
+Las piezas pequeñas y reutilizables de Astro van en `src/components/atoms/`: `LanguageGrid`, `ToolGrid` (grids de íconos de [skillicons.dev](https://skillicons.dev)), `SoftSkillList` (habilidades blandas), `CertCard` (tarjeta linkeable — certificados, cursos, reconocimientos), `FormacionCard` (tarjeta estática — formación académica), `GameArt`, `GameMosaic`, `UnmuteButton`, `PillLink` (botón pill con variantes `emerald`/`cyan`/`primary` para Docs/Manual/Ver sitio en la página de showcase), `IconLink` (enlace con ícono de imagen para GitHub y Docker en la página de showcase). Todas son componentes Astro estáticos (sin JS ni frameworks de UI).
 
 `SoftSkillList` asigna a cada habilidad un color distinto (clases literales de Tailwind, p. ej. `border-rose-400/40` / `bg-rose-400/10` / `text-rose-300`) fuera de la paleta del tema, para diferenciarlas visualmente sin salirse del tono oscuro. Las clases deben escribirse completas (no con template strings dinámicos) para que el escáner de Tailwind las detecte.
 
@@ -59,7 +60,28 @@ El punto de entrada de cada ítem es su `CertCard` en `Formacion.astro` (propied
 
 ## Showcase de proyectos
 
-Los datos de proyectos viven en `public/data/proyectos.json` (fuente de verdad en runtime) y sus tipos en `src/data/proyectos.ts` (`StackItem`, `Proyecto[]`, con `slug` e `imagenes` opcionales). Cuando un proyecto tiene `slug`, su tarjeta se renderiza como `<a href="/proyectos/{slug}">` con "Ver proyecto →"; sin `slug` se renderiza como `<article>` estático. La ruta dinámica `src/pages/proyectos/[slug].astro` usa `getStaticPaths()` sobre `proyectos` filtrando por `slug`, y muestra la galería de `imagenes` (o "Capturas próximamente." si el arreglo está vacío) con el mismo layout que `certificado-solana.astro`. Las capturas de cada proyecto viven en `public/proyectos/<slug>/`, recortadas para no mostrar barras de navegador/SO (barra de direcciones, marcadores, barra de tareas de Windows, barra de estado de Android, etc.) — solo el contenido de la app.
+Los datos de proyectos viven en `public/data/proyectos.json` (fuente de verdad en runtime) y sus tipos en `src/data/proyectos.ts`. Tipos relevantes:
+
+```ts
+type StackItem     = { nombre: string; badge: string };
+type ProyectoImagen = { src: string; alt: string; descripcion: string; grupo?: string };
+type Proyecto = {
+  nombre: string; descripcion: string; stack: StackItem[];
+  slug?: string; imagenes?: ProyectoImagen[];
+  repoUrl?: string; dockerHubUrl?: string; dockerHubUrls?: string[];
+  documentacionUrl?: string; manualUrl?: string; liveUrl?: string;
+  destacado?: boolean; notaCapturas?: string;
+  relacionados?: string[]; contiene?: string[]; anidadoEn?: string;
+};
+```
+
+- `dockerHubUrls` (array) admite múltiples imágenes Docker; `dockerHubUrl` (singular) existe para retrocompatibilidad.
+- `manualUrl` — PDF de manual de usuario (botón cian "Manual de usuario", diferente al botón verde "Documentación" de `documentacionUrl`).
+- `liveUrl` — URL del sitio en vivo (botón amarillo "Ver sitio").
+
+Cuando un proyecto tiene `slug`, su tarjeta se renderiza como `<a href="/proyectos/{slug}">` con "Ver proyecto →"; sin `slug` se renderiza como `<article>` estático. La ruta dinámica `src/pages/proyectos/[slug].astro` usa `getStaticPaths()` sobre `proyectos` filtrando por `slug`, y muestra la galería de `imagenes`. Las capturas de cada proyecto viven en `public/proyectos/<slug>/`, recortadas para no mostrar barras de navegador/SO.
+
+**Galería agrupada**: si alguna imagen tiene `grupo`, la galería se muestra en dos columnas lado a lado (`sm:grid-cols-2`), una columna por grupo. Grupos soportados: `"web"` (ícono Globe, etiqueta "Aplicación web") y `"bot"` (ícono Bot, etiqueta "Bot de Telegram"). Sin `grupo`, la galería es una lista plana. Los botones de la cabecera del showcase usan átomos: `IconLink` para GitHub/Docker y `PillLink` para Documentación/Manual/Ver sitio.
 
 Proyectos "contenedor" (uno que integra a otros como piezas propias, no como proyectos paralelos — p. ej. RedDragon integrando a Tsubasa Engine y Denki Pipeline Designer) usan `contiene: string[]` (nombres de los proyectos integrados). Esos proyectos integrados marcan `anidadoEn: 'Nombre del contenedor'` para no renderizarse como tarjeta propia en la grilla del Home (siguen teniendo su propia página de showcase). La tarjeta del contenedor ocupa `sm:col-span-2` y muestra una sección "Integra & encierra" con mini-tarjetas de cada proyecto integrado (con su propio ícono de GitHub, corona si aplica, y "Ver proyecto →"); se resalta con un color distinto (rojo) al ámbar de "destacado" normal, para diferenciarse visualmente. Mismo patrón replicado en la página de showcase del contenedor.
 
