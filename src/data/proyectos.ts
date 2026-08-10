@@ -21,6 +21,7 @@ export type Proyecto = {
 	documentacionUrl?: string;
 	manualUrl?: string;
 	liveUrl?: string;
+	videoUrl?: string;
 	destacado?: boolean;
 	notaCapturas?: string;
 	relacionados?: string[];

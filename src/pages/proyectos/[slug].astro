@@ -110,6 +110,17 @@ const gruposOrdenados = tieneGrupos
 				</div>
 			</div>
 
+			{proyecto.videoUrl && (
+				<div class="glass-card overflow-hidden rounded-2xl">
+					<video
+						src={proyecto.videoUrl}
+						controls
+						playsinline
+						class="w-full"
+					/>
+				</div>
+			)}
+
 			{
 				imagenes.length > 0 ? (
 					tieneGrupos ? (

@@ -17,6 +17,7 @@
       "https://hub.docker.com/r/edahisnacke/inventario-bot",
       "https://hub.docker.com/r/edahisnacke/inventario-agente"
     ],
+    "videoUrl": "/proyectos/inventario-casa/demo.mp4",
     "manualUrl": "/proyectos/inventario-casa/Manual-de-Usuario-Inventario.pdf",
     "destacado": true,
     "imagenes": [
