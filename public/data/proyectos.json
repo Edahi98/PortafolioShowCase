@@ -7,7 +7,8 @@
       { "nombre": "Telegram Bot", "badge": "https://img.shields.io/badge/-Telegram_Bot-26A5E4?style=for-the-badge&logo=telegram&logoColor=white" },
       { "nombre": "Langchain",    "badge": "https://img.shields.io/badge/-LangChain-1C3C3C?style=for-the-badge" },
       { "nombre": "Langgraph",    "badge": "https://img.shields.io/badge/-LangGraph-1C3C3C?style=for-the-badge" },
-      { "nombre": "IA Local",     "badge": "https://img.shields.io/badge/-IA_Local-7C3AED?style=for-the-badge" }
+      { "nombre": "IA Local",      "badge": "https://img.shields.io/badge/-IA_Local-7C3AED?style=for-the-badge" },
+      { "nombre": "IA Agéntica",  "badge": "https://img.shields.io/badge/-IA_Ag%C3%A9ntica-6D28D9?style=for-the-badge" }
     ],
     "slug": "inventario-casa",
     "repoUrl": "https://github.com/Edahi98/InventarioArticulosCasa",
