@@ -89,7 +89,7 @@ export function TarjetaProyecto({ proyecto, todos }: { proyecto: Proyecto; todos
 			<div
 				className={[
 					'pointer-events-none relative z-0 flex flex-1 flex-col gap-3',
-					badges >= 3 ? 'pr-32' : badges === 2 ? 'pr-24' : badges === 1 ? 'pr-16' : '',
+					badges >= 5 ? 'pr-56' : badges === 4 ? 'pr-44' : badges === 3 ? 'pr-32' : badges === 2 ? 'pr-24' : badges === 1 ? 'pr-16' : '',
 				]
 					.filter(Boolean)
 					.join(' ')}
