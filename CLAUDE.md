@@ -44,7 +44,7 @@ Al agregar nuevas secciones o páginas, reutilizar estas clases/variables en lug
 
 El campo `stack` en `public/data/proyectos.json` es `{ nombre: string; badge: string }[]` — cada tecnología lleva su propia URL de badge de shields.io (`style=for-the-badge`). Al agregar una tecnología nueva, añadir su entrada directamente en el JSON. El JSON se puede editar directamente en GitHub para actualizar proyectos sin redeploy; el componente lo carga en runtime desde GitHub raw.
 
-Las piezas pequeñas y reutilizables de Astro van en `src/components/atoms/`: `LanguageGrid`, `ToolGrid` (grids de íconos de [skillicons.dev](https://skillicons.dev)), `SoftSkillList` (habilidades blandas), `CertCard` (tarjeta linkeable — certificados, cursos, reconocimientos), `FormacionCard` (tarjeta estática — formación académica), `GameArt`, `GameMosaic`, `UnmuteButton`, `PillLink` (botón pill con variantes `emerald`/`cyan`/`primary` para Docs/Manual/Ver sitio en la página de showcase), `IconLink` (enlace con ícono de imagen para GitHub y Docker en la página de showcase). Todas son componentes Astro estáticos (sin JS ni frameworks de UI).
+Las piezas pequeñas y reutilizables de Astro van en `src/components/atoms/`: `LanguageGrid`, `ToolGrid` (grids de íconos de [skillicons.dev](https://skillicons.dev)), `SoftSkillList` (habilidades blandas), `CertCard` (tarjeta linkeable — certificados, cursos, reconocimientos), `FormacionCard` (tarjeta estática — formación académica), `GameArt`, `GameMosaic`, `UnmuteButton`. Los componentes transversales como `PillLink` (botón pill con variantes `emerald`/`cyan`/`primary` para Docs/Manual/Ver sitio) y `IconLink` (enlace con ícono de imagen) se encuentran en `src/shared/atoms/`. Todas son componentes Astro estáticos (sin JS ni frameworks de UI).
 
 `SoftSkillList` asigna a cada habilidad un color distinto (clases literales de Tailwind, p. ej. `border-rose-400/40` / `bg-rose-400/10` / `text-rose-300`) fuera de la paleta del tema, para diferenciarlas visualmente sin salirse del tono oscuro. Las clases deben escribirse completas (no con template strings dinámicos) para que el escáner de Tailwind las detecte.
 
@@ -52,11 +52,11 @@ Los datos de `Formacion.astro` viven en `src/data/formacion.ts` (interfaces `For
 
 ## Certificados y reconocimientos
 
-Los certificados (PDF) viven en `public/certificados/` y se muestran en una página dedicada (p. ej. `src/pages/certificado-solana.astro`, `src/pages/curso-webscraping.astro`) con el PDF embebido en un `<iframe h-[80vh]>`, usando el mismo layout con `Navbar` y las clases del tema.
+Los certificados (PDF) viven en `public/certificados/` y se muestran en una página dedicada (p. ej. `src/pages/certificado-solana.astro`, `src/pages/curso-webscraping.astro`) utilizando el layout estandarizado `src/components/layouts/PDF.astro`.
 
-Los reconocimientos (imagen PNG) viven en `public/reconocimientos/` y se muestran en una página dedicada (p. ej. `src/pages/reconocimiento-videojuegos.astro`) con `<img>` dentro de una `glass-card`. Si la imagen está en orientación vertical (retrato) pero el documento original es horizontal, rotarla -90° con PIL antes de guardarla.
+Los reconocimientos (imagen PNG) viven en `public/reconocimientos/` y se muestran en una página dedicada (p. ej. `src/pages/reconocimiento-videojuegos.astro`) utilizando el layout estandarizado `src/components/layouts/Page.astro`. Si la imagen está en orientación vertical (retrato) pero el documento original es horizontal, rotarla -90° con PIL antes de guardarla.
 
-El punto de entrada de cada ítem es su `CertCard` en `Formacion.astro` (propiedad `href` en `src/data/formacion.ts`). El layout de todas estas páginas sigue el mismo patrón: `Navbar` + título + contenido + enlace de retorno al home.
+El punto de entrada de cada ítem es su `CertCard` en `Formacion.astro` (propiedad `href` en `src/data/formacion.ts`). Estos layouts unifican la cabecera (Navbar), metadatos, título, visualización del contenido y botón de retorno.
 
 ## Showcase de proyectos
 
@@ -79,7 +79,7 @@ type Proyecto = {
 - `manualUrl` — PDF de manual de usuario (botón cian "Manual de usuario", diferente al botón verde "Documentación" de `documentacionUrl`).
 - `liveUrl` — URL del sitio en vivo (botón amarillo "Ver sitio").
 
-Cuando un proyecto tiene `slug`, su tarjeta se renderiza como `<a href="/proyectos/{slug}">` con "Ver proyecto →"; sin `slug` se renderiza como `<article>` estático. La ruta dinámica `src/pages/proyectos/[slug].astro` usa `getStaticPaths()` sobre `proyectos` filtrando por `slug`, y muestra la galería de `imagenes`. Las capturas de cada proyecto viven en `public/proyectos/<slug>/`, recortadas para no mostrar barras de navegador/SO.
+Cuando un proyecto tiene `slug`, su tarjeta se renderiza como `<a href="/proyectos/{slug}">` con "Ver proyecto →"; sin `slug` se renderiza como `<article>` estático. La ruta dinámica `src/pages/proyectos/[slug].astro` usa `getStaticPaths()` sobre `proyectos` filtrando por `slug`, y muestra la galería de `imagenes`. Esta página de showcase está modularizada con sus propios subcomponentes en `src/pages/proyectos/_atoms/` y `src/pages/proyectos/_organisms/`, junto a utilidades en `_proyectoSlugPage.ts`. Las capturas de cada proyecto viven en `public/proyectos/<slug>/`, recortadas para no mostrar barras de navegador/SO.
 
 **Galería agrupada**: si alguna imagen tiene `grupo`, la galería se muestra en dos columnas lado a lado (`sm:grid-cols-2`), una columna por grupo. Grupos soportados: `"web"` (ícono Globe, etiqueta "Aplicación web") y `"bot"` (ícono Bot, etiqueta "Bot de Telegram"). Sin `grupo`, la galería es una lista plana. Los botones de la cabecera del showcase usan átomos: `IconLink` para GitHub/Docker y `PillLink` para Documentación/Manual/Ver sitio.
 
