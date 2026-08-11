@@ -1,51 +1,17 @@
 ---
-import '../styles/global.css';
-import Navbar from '../components/Navbar.astro';
+import "../styles/global.css";
+import Page from "../components/layouts/Page.astro";
+import PDF from "../components/layouts/PDF.astro";
 ---
-<html lang="es" class="scroll-smooth">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Master en Web Scraping con Python + ChatGPT · Edahi Yaxquin Avila Garcia</title>
-		<meta
-			name="description"
-			content="Certificado de finalización del curso Master en Web Scraping con Python + ChatGPT [2024] en Udemy."
-		/>
-	</head>
-	<body class="min-h-screen text-slate-200 antialiased">
-		<Navbar />
-		<main class="mx-auto flex max-w-5xl flex-col gap-8 px-6 py-16 sm:px-8">
-			<div class="flex flex-col gap-3">
-				<a
-					href="/#cursos"
-					class="w-fit font-mono text-xs tracking-widest text-primary uppercase transition hover:text-secondary"
-				>
-					&larr; Volver a Cursos
-				</a>
-				<h1 class="text-2xl font-bold sm:text-4xl">
-					<span class="text-primary">Master en Web Scraping con Python + ChatGPT [2024]</span>
-				</h1>
-				<p class="text-sm text-slate-400">
-					Udemy · Frank Andrade &middot; 8 de noviembre de 2025 &middot; 8.5 horas
-				</p>
-			</div>
+<Page title="Master en Web Scraping con Python + ChatGPT [2024]">
+	<PDF
+		href_pdf="/certificados/webscraping-udemy.pdf"
+		src_pdf="/certificados/webscraping-udemy.pdf"
+		subtitulo="Udemy · Frank Andrade &middot; 8 de noviembre de 2025 &middot; 8.5 horas"
+		titulo="Master en Web Scraping con Python + ChatGPT [2024]"
+		url_pagina_anterior="/#cursos"
+		titulo_pagina_anterior="Volver a Cursos"
+		es_imagen={false}
+	/>
+</Page>
 
-			<div class="glass-card overflow-hidden rounded-2xl">
-				<iframe
-					src="/certificados/webscraping-udemy.pdf"
-					title="Certificado Master en Web Scraping con Python + ChatGPT"
-					class="h-[80vh] w-full"
-				></iframe>
-			</div>
-
-			<a
-				href="/certificados/webscraping-udemy.pdf"
-				target="_blank"
-				rel="noreferrer"
-				class="w-fit rounded-full border border-border px-5 py-2 text-sm font-semibold text-slate-200 transition hover:border-primary hover:text-primary"
-			>
-				Abrir PDF en una pestaña nueva
-			</a>
-		</main>
-	</body>
-</html>

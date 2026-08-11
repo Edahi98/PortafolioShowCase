@@ -1,0 +1,9 @@
+---
+const {src_pdf, titulo} = Astro.props;
+---
+<div class="glass-card overflow-hidden rounded-2xl">
+    <iframe
+        src={src_pdf}
+        title={titulo}
+        class="h-[80vh] w-full"></iframe>
+</div>

@@ -1,0 +1,25 @@
+---
+import './../../styles/global.css';
+import Navbar from './../Navbar.astro';
+import Footer from './../Footer.astro';
+
+const { title } = Astro.props;
+---
+<html lang="es" class="scroll-smooth">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Edahi Yaxquin Avila Garcia · {title}</title>
+		<meta
+			name="description"
+			content="Portafolio de Edahi Yaxquin Avila Garcia, desarrollador de software."
+		/>
+	</head>
+	<body class="min-h-screen text-slate-200 antialiased">
+		<Navbar />
+		<main class="mx-auto flex max-w-5xl flex-col gap-24 px-6 py-20 sm:px-8">
+            <slot/>
+		</main>
+		<Footer />
+	</body>
+</html>

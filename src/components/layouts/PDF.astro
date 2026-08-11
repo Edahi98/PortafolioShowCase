@@ -1,0 +1,30 @@
+---
+import TypePDF from "./atoms/TypePDF.astro";
+import TypePNG from "./atoms/TypePNG.astro";
+
+const { src_pdf, href_pdf, subtitulo, titulo, url_pagina_anterior, titulo_pagina_anterior, es_imagen } = Astro.props;
+---
+
+<div class="flex flex-col gap-3">
+    <a
+        href={url_pagina_anterior}
+        class="w-fit font-mono text-xs tracking-widest text-primary uppercase transition hover:text-secondary"
+    >
+        &larr; {titulo_pagina_anterior}
+    </a>
+    <h1 class="text-2xl font-bold sm:text-4xl">
+        <span class="text-primary">{titulo}</span>
+    </h1>
+    <p class="text-sm text-slate-400">{subtitulo}</p>
+</div>
+{
+    (es_imagen as boolean) ? <TypePNG src_pdf={src_pdf} titulo={titulo}/> : <TypePDF src_pdf={src_pdf} titulo={titulo}/>
+}
+<a
+    href={href_pdf}
+    target="_blank"
+    rel="noreferrer"
+    class="w-fit rounded-full border border-border px-5 py-2 text-sm font-semibold text-slate-200 transition hover:border-primary hover:text-primary"
+>
+    Abrir {(es_imagen as boolean) ? "Imagen" : "PDF"} en una pestaña nueva
+</a>

@@ -1,0 +1,10 @@
+---
+const {src_pdf, titulo} = Astro.props;
+---
+<div class="glass-card overflow-hidden rounded-2xl p-4">
+    <img
+        src={src_pdf}
+        alt={titulo}
+        class="w-full rounded-xl object-contain"
+    />
+</div>
