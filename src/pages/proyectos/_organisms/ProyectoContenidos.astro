@@ -1,0 +1,29 @@
+---
+import { Boxes } from '@lucide/astro';
+import ContenidoCard from '../_atoms/ContenidoCard.astro';
+import type { Proyecto } from '../../../data/proyectos';
+
+/**
+ * Sección "Integra & encierra": lista los proyectos integrados por un proyecto contenedor.
+ * @property contenidos - Proyectos integrados; si está vacío, la sección no se renderiza.
+ */
+interface Props {
+	contenidos: Proyecto[];
+}
+const { contenidos } = Astro.props;
+---
+{
+	contenidos.length > 0 && (
+		<div class="flex flex-col gap-3 border-t border-secondary/30 pt-8">
+			<h2 class="flex items-center gap-2 font-mono text-sm tracking-widest text-secondary uppercase">
+				<Boxes class="h-4 w-4" aria-hidden="true" />
+				Integra &amp; encierra
+			</h2>
+			<div class="grid gap-3 sm:grid-cols-2">
+				{contenidos.map((sub) => (
+					<ContenidoCard sub={sub} />
+				))}
+			</div>
+		</div>
+	)
+}

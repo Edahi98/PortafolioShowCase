@@ -1,0 +1,19 @@
+---
+import type { Proyecto } from '../../../data/proyectos';
+
+/**
+ * Pill de navegación hacia un proyecto relacionado.
+ * @property rel - Proyecto relacionado; si no tiene `slug`, enlaza a la grilla del Home.
+ */
+interface Props {
+	rel: Proyecto;
+}
+const { rel } = Astro.props;
+const href = rel.slug ? `/proyectos/${rel.slug}` : '/#proyectos';
+---
+<a
+	href={href}
+	class="rounded-full border border-border bg-surface-2 px-4 py-2 font-mono text-xs text-primary transition hover:border-primary/60"
+>
+	{rel.nombre}
+</a>

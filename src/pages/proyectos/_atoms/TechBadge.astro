@@ -1,0 +1,13 @@
+---
+import type { StackItem } from '../../../data/proyectos';
+
+/**
+ * Badge de shields.io para una tecnología del stack de un proyecto.
+ * @property tech - Tecnología a mostrar (`nombre` + URL del `badge`).
+ */
+interface Props {
+	tech: StackItem;
+}
+const { tech } = Astro.props;
+---
+<img src={tech.badge} alt={tech.nombre} class="h-6" />

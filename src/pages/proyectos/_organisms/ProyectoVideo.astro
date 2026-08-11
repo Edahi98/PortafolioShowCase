@@ -1,0 +1,25 @@
+---
+/**
+ * Video demo embebido del proyecto, con leyenda opcional debajo del reproductor.
+ * @property videoUrl - URL del video.
+ * @property videoDescripcion - Texto del `figcaption`; si falta, no se renderiza.
+ */
+interface Props {
+	videoUrl: string;
+	videoDescripcion?: string;
+}
+const { videoUrl, videoDescripcion } = Astro.props;
+---
+<figure class="glass-card overflow-hidden rounded-2xl">
+	<video
+		src={videoUrl}
+		controls
+		playsinline
+		class="w-full"
+	/>
+	{videoDescripcion && (
+		<figcaption class="border-t border-border px-6 py-4 text-sm text-slate-400">
+			{videoDescripcion}
+		</figcaption>
+	)}
+</figure>

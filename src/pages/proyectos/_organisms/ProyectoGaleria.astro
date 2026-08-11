@@ -1,0 +1,56 @@
+---
+import { Globe, Bot } from '@lucide/astro';
+import GaleriaImagen from '../_atoms/GaleriaImagen.astro';
+import { GRUPOS } from '../_proyectoSlugPage';
+import type { ProyectoImagen } from '../../../data/proyectos';
+
+/**
+ * Galería de capturas del proyecto: agrupada en columnas por `grupo` (web/bot)
+ * si aplica, o como lista plana; muestra un aviso si no hay capturas.
+ * @property imagenes - Capturas del proyecto.
+ * @property tieneGrupos - `true` si la galería debe mostrarse agrupada en columnas.
+ * @property gruposOrdenados - Identificadores de `grupo` únicos, en el orden a renderizar.
+ */
+interface Props {
+	imagenes: ProyectoImagen[];
+	tieneGrupos: boolean;
+	gruposOrdenados: string[];
+}
+const { imagenes, tieneGrupos, gruposOrdenados } = Astro.props;
+---
+{
+	imagenes.length > 0 ? (
+		tieneGrupos ? (
+			<div class="grid gap-8 sm:grid-cols-2">
+				{gruposOrdenados.map((grupo) => {
+					const meta = GRUPOS[grupo] ?? { label: grupo, icon: 'Globe' };
+					const imgs = imagenes.filter((img: ProyectoImagen) => img.grupo === grupo);
+					return (
+						<div class="flex flex-col gap-4">
+							<h2 class="flex items-center gap-2 font-mono text-xs tracking-widest text-secondary uppercase">
+								{meta.icon === 'Globe'
+									? <Globe class="h-4 w-4" aria-hidden="true" />
+									: <Bot class="h-4 w-4" aria-hidden="true" />
+								}
+								{meta.label}
+							</h2>
+							<div class="flex flex-col gap-4">
+								{imgs.map((imagen: ProyectoImagen) => (
+									<GaleriaImagen imagen={imagen} captionClass="border-t border-border px-4 py-3 text-sm text-slate-400" />
+								))}
+							</div>
+						</div>
+					);
+				})}
+			</div>
+		) : (
+			<div class="flex flex-col gap-6">
+				{imagenes.map((imagen: ProyectoImagen) => (
+					<GaleriaImagen imagen={imagen} />
+				))}
+			</div>
+		)
+	) : (
+		<p class="font-mono text-xs text-slate-500">Capturas próximamente.</p>
+	)
+}

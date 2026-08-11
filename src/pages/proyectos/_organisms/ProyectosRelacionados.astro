@@ -1,0 +1,25 @@
+---
+import RelacionadoPill from '../_atoms/RelacionadoPill.astro';
+import type { Proyecto } from '../../../data/proyectos';
+
+/**
+ * Sección de proyectos relacionados, como pills de navegación.
+ * @property relacionados - Proyectos relacionados; si está vacío, la sección no se renderiza.
+ */
+interface Props {
+	relacionados: Proyecto[];
+}
+const { relacionados } = Astro.props;
+---
+{
+	relacionados.length > 0 && (
+		<div class="flex flex-col gap-3 border-t border-border pt-8">
+			<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Proyectos relacionados</h2>
+			<div class="flex flex-wrap gap-2">
+				{relacionados.map((rel) => (
+					<RelacionadoPill rel={rel} />
+				))}
+			</div>
+		</div>
+	)
+}

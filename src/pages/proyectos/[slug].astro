@@ -1,253 +1,34 @@
 ---
-import '../../styles/global.css';
-import { Boxes, Crown, FileText, Globe, Bot, BookOpen, ExternalLink } from '@lucide/astro';
-import Navbar from '../../components/Navbar.astro';
-import PillLink from '../../components/atoms/PillLink.astro';
-import IconLink from '../../components/atoms/IconLink.astro';
-import { proyectos } from '../../data/proyectos';
-import type { ProyectoImagen } from '../../data/proyectos';
+import Page from '../../components/layouts/Page.astro';
+import { ProyectoSlugPage } from './_proyectoSlugPage';
+import ProyectoHeader from './_organisms/ProyectoHeader.astro';
+import ProyectoVideo from './_organisms/ProyectoVideo.astro';
+import ProyectoGaleria from './_organisms/ProyectoGaleria.astro';
+import ProyectoContenidos from './_organisms/ProyectoContenidos.astro';
+import ProyectosRelacionados from './_organisms/ProyectosRelacionados.astro';
 
-export function getStaticPaths() {
-	return proyectos
-		.filter((proyecto) => proyecto.slug)
-		.map((proyecto) => ({
-			params: { slug: proyecto.slug },
-			props: { proyecto },
-		}));
-}
+export const getStaticPaths = ProyectoSlugPage.getStaticPaths;
 
 const { proyecto } = Astro.props;
 
-const relacionados = (proyecto.relacionados ?? [])
-	.map((nombre: string) => proyectos.find((p) => p.nombre === nombre))
-	.filter((p): p is (typeof proyectos)[number] => Boolean(p));
-
-const contenidos = (proyecto.contiene ?? [])
-	.map((nombre: string) => proyectos.find((p) => p.nombre === nombre))
-	.filter((p): p is (typeof proyectos)[number] => Boolean(p));
-
-const imagenes = proyecto.imagenes ?? [];
-const tieneGrupos = imagenes.some((img: ProyectoImagen) => img.grupo);
-
-type GrupoMeta = { label: string; icon: 'Globe' | 'Bot' };
-const GRUPOS: Record<string, GrupoMeta> = {
-	web: { label: 'Aplicación web', icon: 'Globe' },
-	bot: { label: 'Bot de Telegram', icon: 'Bot' },
-};
-
-const gruposOrdenados = tieneGrupos
-	? [...new Set(imagenes.map((img: ProyectoImagen) => img.grupo).filter(Boolean))] as string[]
-	: [];
+const relacionados = ProyectoSlugPage.getRelacionados(proyecto);
+const contenidos = ProyectoSlugPage.getContenidos(proyecto);
+const imagenes = ProyectoSlugPage.getImagenes(proyecto);
+const tieneGrupos = ProyectoSlugPage.tieneGrupos(imagenes);
+const gruposOrdenados = tieneGrupos ? ProyectoSlugPage.getGruposOrdenados(imagenes) : [];
 ---
-<html lang="es" class="scroll-smooth">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>{proyecto.nombre} · Edahi Yaxquin Avila Garcia</title>
-		<meta name="description" content={proyecto.descripcion} />
-	</head>
-	<body class="min-h-screen text-slate-200 antialiased">
-		<Navbar />
-		<main class="mx-auto flex max-w-5xl flex-col gap-8 px-6 py-16 sm:px-8">
-			<div class="flex flex-col gap-3">
-				<a
-					href="/#proyectos"
-					class="w-fit font-mono text-xs tracking-widest text-primary uppercase transition hover:text-secondary"
-				>
-					&larr; Volver a Proyectos
-				</a>
-				<h1 class="flex items-center gap-3 text-2xl font-bold sm:text-4xl">
-					<span class="text-primary">{proyecto.nombre}</span>
-					{contenidos.length > 0 ? (
-						<Boxes class="h-6 w-6 shrink-0 text-secondary sm:h-8 sm:w-8" aria-label="Proyecto contenedor" />
-					) : (
-						proyecto.destacado && (
-							<Crown class="h-6 w-6 shrink-0 text-primary sm:h-8 sm:w-8" aria-label="Proyecto destacado" />
-						)
-					)}
-				</h1>
-				<p class="max-w-2xl text-sm text-slate-400">{proyecto.descripcion}</p>
-				<div class="flex flex-wrap items-center gap-2 pt-2">
-					{proyecto.stack.map((tech) => (
-						<img src={tech.badge} alt={tech.nombre} class="h-6" />
-					))}
-					{proyecto.repoUrl && (
-						<IconLink href={proyecto.repoUrl} label="Ver repositorio en GitHub">
-							<img src="https://skillicons.dev/icons?i=github" alt="Repositorio en GitHub" width={28} height={28} class="h-7 w-7" />
-						</IconLink>
-					)}
-					{proyecto.dockerHubUrl && (
-						<IconLink href={proyecto.dockerHubUrl} label="Ver imagen en Docker Hub">
-							<img src="https://skillicons.dev/icons?i=docker" alt="Imagen en Docker Hub" width={28} height={28} class="h-7 w-7" />
-						</IconLink>
-					)}
-					{(proyecto.dockerHubUrls ?? []).map((url: string) => {
-						const name = url.split('/').pop() ?? 'Docker Hub';
-						return (
-							<IconLink href={url} label={`Ver imagen: ${name}`}>
-								<img src="https://skillicons.dev/icons?i=docker" alt={name} width={28} height={28} class="h-7 w-7" title={name} />
-							</IconLink>
-						);
-					})}
-					{proyecto.documentacionUrl && (
-						<PillLink href={proyecto.documentacionUrl} variant="emerald">
-							<FileText class="h-3.5 w-3.5" aria-hidden="true" />
-							Documentación
-						</PillLink>
-					)}
-					{proyecto.manualUrl && (
-						<PillLink href={proyecto.manualUrl} variant="cyan">
-							<BookOpen class="h-3.5 w-3.5" aria-hidden="true" />
-							Manual de usuario
-						</PillLink>
-					)}
-					{proyecto.liveUrl && (
-						<PillLink href={proyecto.liveUrl} variant="primary">
-							<ExternalLink class="h-3.5 w-3.5" aria-hidden="true" />
-							Ver sitio
-						</PillLink>
-					)}
-				</div>
-			</div>
+<Page title={proyecto.nombre} description={proyecto.descripcion}>
+	<div class="flex flex-col gap-8">
+		<ProyectoHeader proyecto={proyecto} esContenedor={contenidos.length > 0} />
 
-			{proyecto.videoUrl && (
-				<figure class="glass-card overflow-hidden rounded-2xl">
-					<video
-						src={proyecto.videoUrl}
-						controls
-						playsinline
-						class="w-full"
-					/>
-					{proyecto.videoDescripcion && (
-						<figcaption class="border-t border-border px-6 py-4 text-sm text-slate-400">
-							{proyecto.videoDescripcion}
-						</figcaption>
-					)}
-				</figure>
-			)}
+		{proyecto.videoUrl && (
+			<ProyectoVideo videoUrl={proyecto.videoUrl} videoDescripcion={proyecto.videoDescripcion} />
+		)}
 
-			{
-				imagenes.length > 0 ? (
-					tieneGrupos ? (
-						<div class="grid gap-8 sm:grid-cols-2">
-							{gruposOrdenados.map((grupo) => {
-								const meta = GRUPOS[grupo] ?? { label: grupo, icon: 'Globe' };
-								const imgs = imagenes.filter((img: ProyectoImagen) => img.grupo === grupo);
-								return (
-									<div class="flex flex-col gap-4">
-										<h2 class="flex items-center gap-2 font-mono text-xs tracking-widest text-secondary uppercase">
-											{meta.icon === 'Globe'
-												? <Globe class="h-4 w-4" aria-hidden="true" />
-												: <Bot class="h-4 w-4" aria-hidden="true" />
-											}
-											{meta.label}
-										</h2>
-										<div class="flex flex-col gap-4">
-											{imgs.map((imagen: ProyectoImagen) => (
-												<figure class="glass-card overflow-hidden rounded-2xl">
-													<img src={imagen.src} alt={imagen.alt} loading="lazy" class="w-full" />
-													<figcaption class="border-t border-border px-4 py-3 text-sm text-slate-400">
-														{imagen.descripcion}
-													</figcaption>
-												</figure>
-											))}
-										</div>
-									</div>
-								);
-							})}
-						</div>
-					) : (
-						<div class="flex flex-col gap-6">
-							{imagenes.map((imagen: ProyectoImagen) => (
-								<figure class="glass-card overflow-hidden rounded-2xl">
-									<img src={imagen.src} alt={imagen.alt} loading="lazy" class="w-full" />
-									<figcaption class="border-t border-border px-6 py-4 text-sm text-slate-400">
-										{imagen.descripcion}
-									</figcaption>
-								</figure>
-							))}
-						</div>
-					)
-				) : (
-					<p class="font-mono text-xs text-slate-500">Capturas próximamente.</p>
-				)
-			}
+		<ProyectoGaleria imagenes={imagenes} tieneGrupos={tieneGrupos} gruposOrdenados={gruposOrdenados} />
 
-			{
-				contenidos.length > 0 && (
-					<div class="flex flex-col gap-3 border-t border-secondary/30 pt-8">
-						<h2 class="flex items-center gap-2 font-mono text-sm tracking-widest text-secondary uppercase">
-							<Boxes class="h-4 w-4" aria-hidden="true" />
-							Integra &amp; encierra
-						</h2>
-						<div class="grid gap-3 sm:grid-cols-2">
-							{contenidos.map((sub) => (
-								<div class="rounded-xl border border-secondary/30 bg-secondary/5 p-4 backdrop-blur transition hover:border-secondary/60">
-									<div class="flex items-center justify-between gap-2">
-										<div class="flex items-center gap-1.5">
-											<p class="text-sm font-semibold text-slate-100">{sub.nombre}</p>
-											{sub.destacado && (
-												<Crown class="h-3.5 w-3.5 shrink-0 text-primary" aria-label="Proyecto destacado" />
-											)}
-										</div>
-										{sub.repoUrl && (
-											<a
-												href={sub.repoUrl}
-												target="_blank"
-												rel="noreferrer"
-												aria-label="Ver repositorio en GitHub"
-												class="transition hover:opacity-80"
-											>
-												<img
-													src="https://skillicons.dev/icons?i=github"
-													alt="Repositorio en GitHub"
-													width={18}
-													height={18}
-													class="h-[18px] w-[18px]"
-												/>
-											</a>
-										)}
-									</div>
-									<p class="mt-1 text-xs text-slate-400">{sub.descripcion}</p>
-									<a
-										href={`/proyectos/${sub.slug}`}
-										class="mt-2 inline-block font-mono text-xs text-secondary transition hover:text-primary"
-									>
-										Ver proyecto &rarr;
-									</a>
-								</div>
-							))}
-						</div>
-					</div>
-				)
-			}
+		<ProyectoContenidos contenidos={contenidos} />
 
-			{
-				relacionados.length > 0 && (
-					<div class="flex flex-col gap-3 border-t border-border pt-8">
-						<h2 class="text-sm font-mono tracking-widest text-secondary uppercase">Proyectos relacionados</h2>
-						<div class="flex flex-wrap gap-2">
-							{relacionados.map((rel) =>
-								rel.slug ? (
-									<a
-										href={`/proyectos/${rel.slug}`}
-										class="rounded-full border border-border bg-surface-2 px-4 py-2 font-mono text-xs text-primary transition hover:border-primary/60"
-									>
-										{rel.nombre}
-									</a>
-								) : (
-									<a
-										href="/#proyectos"
-										class="rounded-full border border-border bg-surface-2 px-4 py-2 font-mono text-xs text-primary transition hover:border-primary/60"
-									>
-										{rel.nombre}
-									</a>
-								)
-							)}
-						</div>
-					</div>
-				)
-			}
-		</main>
-	</body>
-</html>
+		<ProyectosRelacionados relacionados={relacionados} />
+	</div>
+</Page>

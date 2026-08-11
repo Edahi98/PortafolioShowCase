@@ -1,0 +1,79 @@
+---
+import { Boxes, Crown, FileText, BookOpen, ExternalLink } from '@lucide/astro';
+import IconLink from '../../../shared/atoms/IconLink.astro';
+import PillLink from '../../../shared/atoms/PillLink.astro';
+import TechBadge from '../_atoms/TechBadge.astro';
+import type { Proyecto } from '../../../data/proyectos';
+
+/**
+ * Cabecera del showcase: título, badge de contenedor/destacado, descripción,
+ * stack y enlaces de acción (repo, Docker Hub, documentación, manual, sitio).
+ * @property proyecto - Proyecto mostrado en el showcase.
+ * @property esContenedor - `true` si el proyecto integra a otros (icono `Boxes` en vez de `Crown`).
+ */
+interface Props {
+	proyecto: Proyecto;
+	esContenedor: boolean;
+}
+const { proyecto, esContenedor } = Astro.props;
+---
+<div class="flex flex-col gap-3">
+	<a
+		href="/#proyectos"
+		class="w-fit font-mono text-xs tracking-widest text-primary uppercase transition hover:text-secondary"
+	>
+		&larr; Volver a Proyectos
+	</a>
+	<h1 class="flex items-center gap-3 text-2xl font-bold sm:text-4xl">
+		<span class="text-primary">{proyecto.nombre}</span>
+		{esContenedor ? (
+			<Boxes class="h-6 w-6 shrink-0 text-secondary sm:h-8 sm:w-8" aria-label="Proyecto contenedor" />
+		) : (
+			proyecto.destacado && (
+				<Crown class="h-6 w-6 shrink-0 text-primary sm:h-8 sm:w-8" aria-label="Proyecto destacado" />
+			)
+		)}
+	</h1>
+	<p class="max-w-2xl text-sm text-slate-400">{proyecto.descripcion}</p>
+	<div class="flex flex-wrap items-center gap-2 pt-2">
+		{proyecto.stack.map((tech) => (
+			<TechBadge tech={tech} />
+		))}
+		{proyecto.repoUrl && (
+			<IconLink href={proyecto.repoUrl} label="Ver repositorio en GitHub">
+				<img src="https://skillicons.dev/icons?i=github" alt="Repositorio en GitHub" width={28} height={28} class="h-7 w-7" />
+			</IconLink>
+		)}
+		{proyecto.dockerHubUrl && (
+			<IconLink href={proyecto.dockerHubUrl} label="Ver imagen en Docker Hub">
+				<img src="https://skillicons.dev/icons?i=docker" alt="Imagen en Docker Hub" width={28} height={28} class="h-7 w-7" />
+			</IconLink>
+		)}
+		{(proyecto.dockerHubUrls ?? []).map((url: string) => {
+			const name = url.split('/').pop() ?? 'Docker Hub';
+			return (
+				<IconLink href={url} label={`Ver imagen: ${name}`}>
+					<img src="https://skillicons.dev/icons?i=docker" alt={name} width={28} height={28} class="h-7 w-7" title={name} />
+				</IconLink>
+			);
+		})}
+		{proyecto.documentacionUrl && (
+			<PillLink href={proyecto.documentacionUrl} variant="emerald">
+				<FileText class="h-3.5 w-3.5" aria-hidden="true" />
+				Documentación
+			</PillLink>
+		)}
+		{proyecto.manualUrl && (
+			<PillLink href={proyecto.manualUrl} variant="cyan">
+				<BookOpen class="h-3.5 w-3.5" aria-hidden="true" />
+				Manual de usuario
+			</PillLink>
+		)}
+		{proyecto.liveUrl && (
+			<PillLink href={proyecto.liveUrl} variant="primary">
+				<ExternalLink class="h-3.5 w-3.5" aria-hidden="true" />
+				Ver sitio
+			</PillLink>
+		)}
+	</div>
+</div>
