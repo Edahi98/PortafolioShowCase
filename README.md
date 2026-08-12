@@ -98,7 +98,7 @@ public/
 └── videos/                       # assets del trailer (MP3, PNGs)
 ```
 
-Ver [CLAUDE.md](./CLAUDE.md) para el detalle completo del sistema de diseño y convenciones del proyecto.
+Ver [ARQUITECTURE.md](./ARQUITECTURE.md) para el detalle completo del sistema de diseño y convenciones del proyecto.
 
 ## Secciones
 
