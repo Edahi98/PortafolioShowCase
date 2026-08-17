@@ -2,6 +2,7 @@
 import { Boxes, Crown, FileText, BookOpen, ExternalLink } from '@lucide/astro';
 import IconLink from '../../../shared/atoms/IconLink.astro';
 import PillLink from '../../../shared/atoms/PillLink.astro';
+import CodeSnap from '../../../shared/atoms/CodeSnap.astro';
 import TechBadge from '../_atoms/TechBadge.astro';
 import type { Proyecto } from '../../../data/proyectos';
 
@@ -16,6 +17,10 @@ interface Props {
 	esContenedor: boolean;
 }
 const { proyecto, esContenedor } = Astro.props;
+
+const comandoClonar = proyecto.repoUrl
+	? `git clone ${proyecto.repoUrl.replace(/\/$/, '')}.git`
+	: null;
 ---
 <div class="flex flex-col gap-3">
 	<a
@@ -76,4 +81,5 @@ const { proyecto, esContenedor } = Astro.props;
 			</PillLink>
 		)}
 	</div>
+	{comandoClonar && <CodeSnap code={comandoClonar} label="Clonar el repositorio" />}
 </div>

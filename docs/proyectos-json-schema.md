@@ -25,7 +25,7 @@ El archivo es un **array JSON** de objetos `Proyecto`.
 | `slug` | `string` | — | Identificador URL. Si existe, la tarjeta enlaza a `/proyectos/{slug}` y se genera una página estática. |
 | `imagenes` | `Imagen[]` | — | Galería de capturas mostrada en la página del proyecto. |
 | `videos` | `Video[]` | — | Videos del proyecto. Se muestran apilados antes de la galería, en apartados separados según su `grupo`. |
-| `repoUrl` | `string` | — | URL del repositorio en GitHub. Muestra badge con ícono. |
+| `repoUrl` | `string` | — | URL del repositorio en GitHub. Muestra badge con ícono y, en la página del proyecto, un bloque `git clone` copiable. |
 | `dockerHubUrl` | `string` | — | URL de la imagen en Docker Hub. Muestra badge con ícono. Retrocompatibilidad: para varias imágenes usar `dockerHubUrls`. |
 | `dockerHubUrls` | `string[]` | — | URLs de varias imágenes en Docker Hub. Cada una muestra su propio badge. |
 | `documentacionUrl` | `string` | — | URL o ruta de la documentación (PDF u otro). Muestra badge verde. |
