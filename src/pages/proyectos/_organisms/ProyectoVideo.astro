@@ -25,15 +25,21 @@ const secciones = grupos.length > 0
 			{secciones.map(({ meta, videos: videosDeGrupo }) => (
 				<section class="flex flex-col gap-4">
 					{meta && (
-						<header class="flex flex-col gap-1">
-							<h2 class="flex items-center gap-2 font-mono text-sm tracking-widest text-secondary uppercase">
-								{meta.icon === 'Play'
-									? <Play class="h-4 w-4" aria-hidden="true" />
-									: <Clapperboard class="h-4 w-4" aria-hidden="true" />
-								}
-								{meta.label}
+						<header class="flex flex-col gap-3 border-t border-secondary/30 pt-8">
+							<h2 class="flex items-center gap-3">
+								<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-secondary/40 bg-secondary/10 text-secondary">
+									{meta.icon === 'Play'
+										? <Play class="h-5 w-5" aria-hidden="true" />
+										: <Clapperboard class="h-5 w-5" aria-hidden="true" />
+									}
+								</span>
+								<span class="font-mono text-lg font-semibold tracking-widest text-secondary uppercase sm:text-xl">
+									{meta.label}
+								</span>
 							</h2>
-							{meta.descripcion && <p class="text-sm text-slate-400">{meta.descripcion}</p>}
+							{meta.descripcion && (
+								<p class="max-w-2xl text-base text-slate-300">{meta.descripcion}</p>
+							)}
 						</header>
 					)}
 					<div class="flex flex-col gap-10">
