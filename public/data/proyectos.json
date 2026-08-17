@@ -17,8 +17,12 @@
       "https://hub.docker.com/r/edahisnacke/inventario-bot",
       "https://hub.docker.com/r/edahisnacke/inventario-agente"
     ],
-    "videoUrl": "/proyectos/inventario-casa/demo.mp4",
-    "videoDescripcion": "Demo de la aplicación web: navegación por el dashboard, registro y gestión de artículos del hogar.",
+    "videos": [
+      { "src": "/proyectos/inventario-casa/demo.mp4",                          "titulo": "Demo de la aplicación web",     "descripcion": "Navegación por el dashboard, registro y gestión de artículos del hogar." },
+      { "src": "/proyectos/inventario-casa/videos/01-primeros-pasos.mp4",      "titulo": "01 — Primeros pasos",           "descripcion": "Qué es el sistema y sus cuatro piezas (frontend, backend, agente y bot), cómo dejarlo arrancando con docker-compose y el usuario admin, y qué se le puede pedir al agente por Telegram." },
+      { "src": "/proyectos/inventario-casa/videos/02-variables-de-entorno.mp4", "titulo": "02 — Variables de entorno",     "descripcion": "Los cuatro archivos .env del proyecto (raíz, backend, agente y bot), las variables del backend agrupadas por tema y los errores de configuración más comunes." },
+      { "src": "/proyectos/inventario-casa/videos/03-urls-docker.mp4",         "titulo": "03 — URLs dentro de Docker",    "descripcion": "Por qué localhost no funciona entre contenedores, la cadena real de nombres de servicio (bot → agente → backend → db), host.docker.internal como puente hacia Ollama, y la diferencia entre URLs internas y públicas." }
+    ],
     "manualUrl": "/proyectos/inventario-casa/Manual-de-Usuario-Inventario.pdf",
     "destacado": true,
     "imagenes": [

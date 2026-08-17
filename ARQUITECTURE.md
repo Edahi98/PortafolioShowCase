@@ -65,9 +65,10 @@ Los datos de proyectos viven en `public/data/proyectos.json` (fuente de verdad e
 ```ts
 type StackItem     = { nombre: string; badge: string };
 type ProyectoImagen = { src: string; alt: string; descripcion: string; grupo?: string };
+type ProyectoVideo  = { src: string; titulo?: string; descripcion?: string };
 type Proyecto = {
   nombre: string; descripcion: string; stack: StackItem[];
-  slug?: string; imagenes?: ProyectoImagen[];
+  slug?: string; imagenes?: ProyectoImagen[]; videos?: ProyectoVideo[];
   repoUrl?: string; dockerHubUrl?: string; dockerHubUrls?: string[];
   documentacionUrl?: string; manualUrl?: string; liveUrl?: string;
   destacado?: boolean; notaCapturas?: string;
@@ -78,6 +79,7 @@ type Proyecto = {
 - `dockerHubUrls` (array) admite múltiples imágenes Docker; `dockerHubUrl` (singular) existe para retrocompatibilidad.
 - `manualUrl` — PDF de manual de usuario (botón cian "Manual de usuario", diferente al botón verde "Documentación" de `documentacionUrl`).
 - `liveUrl` — URL del sitio en vivo (botón amarillo "Ver sitio").
+- `videos` — lista de videos del proyecto (demos, explicativos). Se renderizan apilados en la sección "Videos" del showcase (`_organisms/ProyectoVideo.astro` + `_atoms/VideoFigura.astro`), cada uno con su título y descripción opcionales. Los archivos viven en `public/proyectos/<slug>/` (los explicativos, en su subcarpeta `videos/`).
 
 Cuando un proyecto tiene `slug`, su tarjeta se renderiza como `<a href="/proyectos/{slug}">` con "Ver proyecto →"; sin `slug` se renderiza como `<article>` estático. La ruta dinámica `src/pages/proyectos/[slug].astro` usa `getStaticPaths()` sobre `proyectos` filtrando por `slug`, y muestra la galería de `imagenes`. Esta página de showcase está modularizada con sus propios subcomponentes en `src/pages/proyectos/_atoms/` y `src/pages/proyectos/_organisms/`, junto a utilidades en `_proyectoSlugPage.ts`. Las capturas de cada proyecto viven en `public/proyectos/<slug>/`, recortadas para no mostrar barras de navegador/SO.
 

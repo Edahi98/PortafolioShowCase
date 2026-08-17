@@ -7,6 +7,12 @@ export type ProyectoImagen = {
 	grupo?: string;
 };
 
+export type ProyectoVideo = {
+	src: string;
+	titulo?: string;
+	descripcion?: string;
+};
+
 export type StackItem = { nombre: string; badge: string };
 
 export type Proyecto = {
@@ -21,8 +27,7 @@ export type Proyecto = {
 	documentacionUrl?: string;
 	manualUrl?: string;
 	liveUrl?: string;
-	videoUrl?: string;
-	videoDescripcion?: string;
+	videos?: ProyectoVideo[];
 	destacado?: boolean;
 	notaCapturas?: string;
 	relacionados?: string[];

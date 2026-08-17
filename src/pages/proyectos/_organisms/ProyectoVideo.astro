@@ -1,25 +1,25 @@
 ---
-/**
- * Video demo embebido del proyecto, con leyenda opcional debajo del reproductor.
- * @property videoUrl - URL del video.
- * @property videoDescripcion - Texto del `figcaption`; si falta, no se renderiza.
- */
+import { Clapperboard } from '@lucide/astro';
+import VideoFigura from '../_atoms/VideoFigura.astro';
+import type { ProyectoVideo } from '../../../data/proyectos';
+
 interface Props {
-	videoUrl: string;
-	videoDescripcion?: string;
+	videos: ProyectoVideo[];
 }
-const { videoUrl, videoDescripcion } = Astro.props;
+const { videos } = Astro.props;
 ---
-<figure class="glass-card overflow-hidden rounded-2xl">
-	<video
-		src={videoUrl}
-		controls
-		playsinline
-		class="w-full"
-	/>
-	{videoDescripcion && (
-		<figcaption class="border-t border-border px-6 py-4 text-sm text-slate-400">
-			{videoDescripcion}
-		</figcaption>
-	)}
-</figure>
+{
+	videos.length > 0 && (
+		<div class="flex flex-col gap-4">
+			<h2 class="flex items-center gap-2 font-mono text-sm tracking-widest text-secondary uppercase">
+				<Clapperboard class="h-4 w-4" aria-hidden="true" />
+				{videos.length > 1 ? 'Videos' : 'Video'}
+			</h2>
+			<div class="flex flex-col gap-6">
+				{videos.map((video) => (
+					<VideoFigura video={video} />
+				))}
+			</div>
+		</div>
+	)
+}

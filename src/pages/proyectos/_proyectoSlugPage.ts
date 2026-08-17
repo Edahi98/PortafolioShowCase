@@ -1,5 +1,5 @@
 import { proyectos } from '../../data/proyectos';
-import type { Proyecto, ProyectoImagen } from '../../data/proyectos';
+import type { Proyecto, ProyectoImagen, ProyectoVideo } from '../../data/proyectos';
 
 export type GrupoMeta = { label: string; icon: 'Globe' | 'Bot' };
 
@@ -47,6 +47,10 @@ export class ProyectoSlugPage {
 	 */
 	static getImagenes(proyecto: Proyecto): ProyectoImagen[] {
 		return proyecto.imagenes ?? [];
+	}
+
+	static getVideos(proyecto: Proyecto): ProyectoVideo[] {
+		return proyecto.videos ?? [];
 	}
 
 	/**

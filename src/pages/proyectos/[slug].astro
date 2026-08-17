@@ -13,6 +13,7 @@ const { proyecto } = Astro.props;
 
 const relacionados = ProyectoSlugPage.getRelacionados(proyecto);
 const contenidos = ProyectoSlugPage.getContenidos(proyecto);
+const videos = ProyectoSlugPage.getVideos(proyecto);
 const imagenes = ProyectoSlugPage.getImagenes(proyecto);
 const tieneGrupos = ProyectoSlugPage.tieneGrupos(imagenes);
 const gruposOrdenados = tieneGrupos ? ProyectoSlugPage.getGruposOrdenados(imagenes) : [];
@@ -21,9 +22,7 @@ const gruposOrdenados = tieneGrupos ? ProyectoSlugPage.getGruposOrdenados(imagen
 	<div class="flex flex-col gap-8">
 		<ProyectoHeader proyecto={proyecto} esContenedor={contenidos.length > 0} />
 
-		{proyecto.videoUrl && (
-			<ProyectoVideo videoUrl={proyecto.videoUrl} videoDescripcion={proyecto.videoDescripcion} />
-		)}
+		<ProyectoVideo videos={videos} />
 
 		<ProyectoGaleria imagenes={imagenes} tieneGrupos={tieneGrupos} gruposOrdenados={gruposOrdenados} />
 
