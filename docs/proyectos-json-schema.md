@@ -60,7 +60,6 @@ El archivo es un **array JSON** de objetos `Proyecto`.
 | `src` | `string` | ✅ | Ruta relativa (`/proyectos/slug/videos/01-intro.mp4`) o URL absoluta. |
 | `titulo` | `string` | — | Título en mono/uppercase sobre la descripción. Si falta, no se renderiza. |
 | `descripcion` | `string` | — | Pie de video bajo el reproductor. Si falta, no se renderiza. |
-| `colores` | `string[]` | — | Colores dominantes del video (hex). Si están presentes, el video se enmarca en una nube difuminada con esos colores; se usan los tres primeros como degradado. |
 | `grupo` | `string` | — | Apartado en el que se agrupa el video. Valores soportados: `"demo"` (ícono Play, "Demo" — el sistema en uso) y `"explicativo"` (ícono Clapperboard, "Cómo funciona por dentro" — arquitectura y configuración). |
 
 ---
@@ -75,7 +74,6 @@ El archivo es un **array JSON** de objetos `Proyecto`.
 - Las imágenes de proyectos propios viven en `public/proyectos/{slug}/` y se referencian como `/proyectos/{slug}/archivo.jpg`. Deben estar recortadas: sin barra de navegador, barra de tareas ni elementos del SO.
 - **Galería agrupada**: si al menos una imagen trae `grupo`, la galería se renderiza en dos columnas (una por grupo, en el orden de aparición); si ninguna lo trae, es una lista plana.
 - Los videos viven junto a las capturas en `public/proyectos/{slug}/`; los explicativos de una serie, en su subcarpeta `videos/`. El orden del array `videos` es el orden en que se muestran.
-- **Nube de color**: los videos con `colores` se envuelven en una nube difuminada con esos tonos (`NubeFrame`); sin `colores`, el video se muestra sin marco. Los hex se obtienen muestreando fotogramas del propio video, para que la nube coincida con su paleta real.
 - **Videos agrupados**: si al menos un video trae `grupo`, se renderiza un apartado por grupo (en el orden de aparición), cada uno con su encabezado y descripción; si ninguno lo trae, todos van en una sola lista sin encabezado.
 
 ---
@@ -124,8 +122,7 @@ El archivo es un **array JSON** de objetos `Proyecto`.
         "src": "/proyectos/reddragon/videos/01-primeros-pasos.mp4",
         "titulo": "01 — Primeros pasos",
         "descripcion": "Qué es el sistema, sus piezas y cómo dejarlo arrancando.",
-        "grupo": "explicativo",
-        "colores": ["#ebd155", "#efa77b", "#75a6f2"]
+        "grupo": "explicativo"
       }
     ],
     "imagenes": [

@@ -12,7 +12,6 @@ export type ProyectoVideo = {
 	titulo?: string;
 	descripcion?: string;
 	grupo?: string;
-	colores?: string[];
 };
 
 export type StackItem = { nombre: string; badge: string };
