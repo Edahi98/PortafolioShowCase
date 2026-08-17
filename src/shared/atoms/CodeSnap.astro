@@ -6,50 +6,69 @@ interface Props {
 	label?: string;
 }
 const { code, label } = Astro.props;
+
+const esUnaLinea = !code.includes('\n');
+const [comando, ...argumentos] = esUnaLinea ? code.split(' ') : [];
+const resto = argumentos.length > 0 ? ` ${argumentos.join(' ')}` : '';
 ---
-<div class="code-snap glass-card flex w-fit max-w-full flex-col gap-2 rounded-xl px-4 py-3">
-	{label && <span class="font-mono text-xs tracking-widest text-slate-400 uppercase">{label}</span>}
-	<div class="flex items-center gap-3">
-		<code class="overflow-x-auto font-mono text-sm whitespace-pre text-slate-200">{code}</code>
+<div
+	class="code-snap w-fit max-w-full overflow-hidden rounded-xl border border-border bg-surface-2 shadow-2xl shadow-black/40"
+	data-code={code}
+>
+	<div class="flex items-center gap-3 border-b border-border bg-black/20 px-4 py-2.5">
+		<span class="flex items-center gap-1.5" aria-hidden="true">
+			<span class="h-3 w-3 rounded-full bg-rose-500/80"></span>
+			<span class="h-3 w-3 rounded-full bg-yellow-400/80"></span>
+			<span class="h-3 w-3 rounded-full bg-emerald-400/80"></span>
+		</span>
+		{label && (
+			<span class="truncate font-mono text-xs tracking-widest text-slate-400 uppercase">{label}</span>
+		)}
 		<button
 			type="button"
-			class="copiar shrink-0 rounded-lg border border-border p-2 text-slate-400 transition hover:border-primary/60 hover:text-primary"
+			class="copiar ml-auto flex shrink-0 items-center gap-1.5 rounded-lg border border-border px-2 py-1 font-mono text-xs text-slate-400 transition hover:border-primary/60 hover:text-primary"
 			aria-label="Copiar al portapapeles"
 		>
-			<Copy class="icono-copiar h-4 w-4" aria-hidden="true" />
-			<Check class="icono-listo hidden h-4 w-4 text-primary" aria-hidden="true" />
+			<Copy class="icono-copiar h-3.5 w-3.5" aria-hidden="true" />
+			<Check class="icono-listo hidden h-3.5 w-3.5" aria-hidden="true" />
+			<span class="etiqueta">Copiar</span>
 		</button>
 	</div>
-	<span class="aviso hidden font-mono text-xs text-primary">Copiado</span>
+	<div class="flex items-start gap-3 px-5 py-4">
+		<span class="font-mono text-sm text-slate-600 select-none" aria-hidden="true">$</span>
+		<code class="overflow-x-auto font-mono text-sm whitespace-pre text-slate-200">{esUnaLinea ? <Fragment><span class="text-primary">{comando}</span>{resto}</Fragment> : code}</code>
+	</div>
 </div>
 
 <script>
 	document.querySelectorAll<HTMLElement>('.code-snap').forEach((snap) => {
 		const boton = snap.querySelector<HTMLButtonElement>('.copiar');
-		const codigo = snap.querySelector('code');
 		const iconoCopiar = snap.querySelector('.icono-copiar');
 		const iconoListo = snap.querySelector('.icono-listo');
-		const aviso = snap.querySelector('.aviso');
+		const etiqueta = snap.querySelector('.etiqueta');
+		const codigo = snap.dataset.code;
 		if (!boton || !codigo) return;
 
 		let temporizador: number | undefined;
 
 		boton.addEventListener('click', async () => {
 			try {
-				await navigator.clipboard.writeText(codigo.textContent ?? '');
+				await navigator.clipboard.writeText(codigo);
 			} catch {
 				return;
 			}
 
 			iconoCopiar?.classList.add('hidden');
 			iconoListo?.classList.remove('hidden');
-			aviso?.classList.remove('hidden');
+			boton.classList.add('border-primary/60', 'text-primary');
+			if (etiqueta) etiqueta.textContent = 'Copiado';
 
 			clearTimeout(temporizador);
 			temporizador = window.setTimeout(() => {
 				iconoCopiar?.classList.remove('hidden');
 				iconoListo?.classList.add('hidden');
-				aviso?.classList.add('hidden');
+				boton.classList.remove('border-primary/60', 'text-primary');
+				if (etiqueta) etiqueta.textContent = 'Copiar';
 			}, 2000);
 		});
 	});
