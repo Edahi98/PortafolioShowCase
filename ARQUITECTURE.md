@@ -65,7 +65,7 @@ Los datos de proyectos viven en `public/data/proyectos.json` (fuente de verdad e
 ```ts
 type StackItem     = { nombre: string; badge: string };
 type ProyectoImagen = { src: string; alt: string; descripcion: string; grupo?: string };
-type ProyectoVideo  = { src: string; titulo?: string; descripcion?: string };
+type ProyectoVideo  = { src: string; titulo?: string; descripcion?: string; grupo?: string; colores?: string[] };
 type Proyecto = {
   nombre: string; descripcion: string; stack: StackItem[];
   slug?: string; imagenes?: ProyectoImagen[]; videos?: ProyectoVideo[];
@@ -79,7 +79,11 @@ type Proyecto = {
 - `dockerHubUrls` (array) admite múltiples imágenes Docker; `dockerHubUrl` (singular) existe para retrocompatibilidad.
 - `manualUrl` — PDF de manual de usuario (botón cian "Manual de usuario", diferente al botón verde "Documentación" de `documentacionUrl`).
 - `liveUrl` — URL del sitio en vivo (botón amarillo "Ver sitio").
-- `videos` — lista de videos del proyecto (demos, explicativos). Se renderizan apilados en la sección "Videos" del showcase (`_organisms/ProyectoVideo.astro` + `_atoms/VideoFigura.astro`), cada uno con su título y descripción opcionales. Los archivos viven en `public/proyectos/<slug>/` (los explicativos, en su subcarpeta `videos/`).
+- `videos` — lista de videos del proyecto. Se renderizan antes de la galería (`_organisms/ProyectoVideo.astro` + `_atoms/VideoFigura.astro`), cada uno con su título y descripción opcionales. Los archivos viven en `public/proyectos/<slug>/` (los explicativos, en su subcarpeta `videos/`).
+
+**Videos agrupados**: igual que la galería, si algún video tiene `grupo` se renderiza un apartado por grupo (encabezado + descripción de la sección), en el orden de aparición; sin `grupo`, todos van en una lista única sin encabezado. Grupos soportados (`GRUPOS_VIDEO` en `_proyectoSlugPage.ts`): `"demo"` (ícono Play, "Demo" — el producto en uso) y `"explicativo"` (ícono Clapperboard, "Cómo funciona por dentro" — arquitectura y configuración). Los helpers `tieneGrupos`/`getGruposOrdenados` son compartidos entre imágenes y videos (tipo `Agrupable`).
+
+**Nube de color**: un video con `colores` (hex de sus tonos dominantes) se envuelve en `_atoms/NubeFrame.astro`, un marco con silueta de nube en SVG (círculos + cuerpo redondeado bajo un mismo degradado `userSpaceOnUse`, `blur` + `mix-blend-mode: screen` sobre el fondo oscuro). Sin `colores`, `NubeFrame` renderiza solo su slot, así que el mismo `VideoFigura` sirve para videos con y sin nube. Los colores se obtienen muestreando fotogramas del video con ffmpeg y quedándose con las familias de tono más saturadas — así la nube usa la paleta real de cada video, no una decorativa.
 
 Cuando un proyecto tiene `slug`, su tarjeta se renderiza como `<a href="/proyectos/{slug}">` con "Ver proyecto →"; sin `slug` se renderiza como `<article>` estático. La ruta dinámica `src/pages/proyectos/[slug].astro` usa `getStaticPaths()` sobre `proyectos` filtrando por `slug`, y muestra la galería de `imagenes`. Esta página de showcase está modularizada con sus propios subcomponentes en `src/pages/proyectos/_atoms/` y `src/pages/proyectos/_organisms/`, junto a utilidades en `_proyectoSlugPage.ts`. Las capturas de cada proyecto viven en `public/proyectos/<slug>/`, recortadas para no mostrar barras de navegador/SO.
 

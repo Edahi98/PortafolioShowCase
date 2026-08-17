@@ -1,25 +1,48 @@
 ---
-import { Clapperboard } from '@lucide/astro';
+import { Play, Clapperboard } from '@lucide/astro';
 import VideoFigura from '../_atoms/VideoFigura.astro';
+import { GRUPOS_VIDEO, ProyectoSlugPage } from '../_proyectoSlugPage';
 import type { ProyectoVideo } from '../../../data/proyectos';
 
 interface Props {
 	videos: ProyectoVideo[];
 }
 const { videos } = Astro.props;
+
+const grupos = ProyectoSlugPage.tieneGrupos(videos)
+	? ProyectoSlugPage.getGruposOrdenados(videos)
+	: [];
+const secciones = grupos.length > 0
+	? grupos.map((grupo) => ({
+			meta: GRUPOS_VIDEO[grupo] ?? { label: grupo, descripcion: '', icon: 'Play' as const },
+			videos: videos.filter((video) => video.grupo === grupo),
+		}))
+	: [{ meta: null, videos }];
 ---
 {
 	videos.length > 0 && (
-		<div class="flex flex-col gap-4">
-			<h2 class="flex items-center gap-2 font-mono text-sm tracking-widest text-secondary uppercase">
-				<Clapperboard class="h-4 w-4" aria-hidden="true" />
-				{videos.length > 1 ? 'Videos' : 'Video'}
-			</h2>
-			<div class="flex flex-col gap-6">
-				{videos.map((video) => (
-					<VideoFigura video={video} />
-				))}
-			</div>
+		<div class="flex flex-col gap-10">
+			{secciones.map(({ meta, videos: videosDeGrupo }) => (
+				<section class="flex flex-col gap-4">
+					{meta && (
+						<header class="flex flex-col gap-1">
+							<h2 class="flex items-center gap-2 font-mono text-sm tracking-widest text-secondary uppercase">
+								{meta.icon === 'Play'
+									? <Play class="h-4 w-4" aria-hidden="true" />
+									: <Clapperboard class="h-4 w-4" aria-hidden="true" />
+								}
+								{meta.label}
+							</h2>
+							{meta.descripcion && <p class="text-sm text-slate-400">{meta.descripcion}</p>}
+						</header>
+					)}
+					<div class="flex flex-col gap-10">
+						{videosDeGrupo.map((video) => (
+							<VideoFigura video={video} />
+						))}
+					</div>
+				</section>
+			))}
 		</div>
 	)
 }

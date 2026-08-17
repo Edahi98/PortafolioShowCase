@@ -1,0 +1,89 @@
+---
+interface Props {
+	colores?: string[];
+}
+const { colores = [] } = Astro.props;
+
+const [c1 = '#ebd155', c2 = c1, c3 = c2] = colores;
+const gradienteId = `nube-${[c1, c2, c3].join('').replace(/#/g, '')}`;
+
+const puffs = [
+	{ cx: 104, cy: 58, r: 44 },
+	{ cx: 192, cy: 52, r: 40 },
+	{ cx: 278, cy: 58, r: 44 },
+	{ cx: 340, cy: 70, r: 36 },
+	{ cx: 54, cy: 112, r: 40 },
+	{ cx: 346, cy: 126, r: 38 },
+	{ cx: 52, cy: 196, r: 40 },
+	{ cx: 348, cy: 190, r: 38 },
+	{ cx: 104, cy: 242, r: 44 },
+	{ cx: 192, cy: 248, r: 40 },
+	{ cx: 278, cy: 242, r: 44 },
+	{ cx: 340, cy: 232, r: 36 },
+];
+---
+{
+	colores.length > 0 ? (
+		<div class="nube">
+			<svg
+				class="nube-svg"
+				viewBox="0 0 400 300"
+				preserveAspectRatio="none"
+				aria-hidden="true"
+				focusable="false"
+			>
+				<defs>
+					<linearGradient
+						id={gradienteId}
+						gradientUnits="userSpaceOnUse"
+						x1="0"
+						y1="0"
+						x2="400"
+						y2="300"
+					>
+						<stop offset="0%" stop-color={c1} />
+						<stop offset="50%" stop-color={c2} />
+						<stop offset="100%" stop-color={c3} />
+					</linearGradient>
+				</defs>
+				<g fill={`url(#${gradienteId})`}>
+					{puffs.map((puff) => (
+						<circle cx={puff.cx} cy={puff.cy} r={puff.r} />
+					))}
+					<rect x="30" y="52" width="340" height="196" rx="86" />
+				</g>
+			</svg>
+			<div class="nube-contenido">
+				<slot />
+			</div>
+		</div>
+	) : (
+		<slot />
+	)
+}
+
+<style>
+	.nube {
+		position: relative;
+		padding: clamp(2rem, 5vw, 3.75rem);
+	}
+
+	.nube-svg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0.38;
+		filter: blur(16px);
+		mix-blend-mode: screen;
+		transition: opacity 400ms ease;
+	}
+
+	.nube:hover .nube-svg {
+		opacity: 0.5;
+	}
+
+	.nube-contenido {
+		position: relative;
+	}
+</style>
